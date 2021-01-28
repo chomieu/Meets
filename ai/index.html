@@ -23,7 +23,7 @@
             $("#recordBtn").on("click", function () {
                 $("#recordBtn").prop("disabled", true)
                 // Use the subscription key and configure the SpeechSDK object provided by the file referenced in the index.html file.
-                var speechConfig = SpeechSDK.SpeechConfig.fromSubscription(MSSDK_key, "eastus");
+                var speechConfig = SpeechSDK.SpeechConfig.fromSubscription(process.env.MSSDK_key, "eastus");
                 // Set speech recognition language to US English
                 speechConfig.speechRecognitionLanguage = "en-US"
                 // Add the user's microphone input
