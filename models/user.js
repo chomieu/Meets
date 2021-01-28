@@ -18,6 +18,14 @@ module.exports = function(sequelize, DataTypes) {
       plans: DataTypes.INTEGER,
       upcoming_plans: DataTypes.INTEGER,
     });
+
+    User.associate = function(models) {
+      // Associating Author with Posts
+      // When an Author is deleted, also delete any associated Posts
+      User.hasMany(models.UserDialogue, {
+        onDelete: "cascade"
+      });
+    };
     return User;
   };
 
