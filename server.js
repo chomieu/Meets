@@ -35,3 +35,5 @@ db.sequelize.sync({ force: false }).then(function() {
     console.log("App listening on PORT " + PORT);
   });
 });
+
+// just an app that takes input of name, activities, plans, and install all plans in table; boolean - private?; if not private others will be able to see it 
