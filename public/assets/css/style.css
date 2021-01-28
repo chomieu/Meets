@@ -1,0 +1,42 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+:root {
+    --color-1: #1a535c;
+    --color-2: #4ecdc4;
+    --color-3: #f7fff7;
+    --color-4: #ff6b6b;
+    --color-5: #ffe66d;
+}
+
+main {
+    display: flex;
+    flex-flow: column nowrap;
+    align-items: center;
+}
+
+.content {
+    padding: 10px;
+    width: 80%;
+}
+
+
+/* utils */
+.bc1 {
+    background: var(--color-1);
+}
+.bc2 {
+    background: var(--color-2);
+}
+.bc3 {
+    background: var(--color-3);
+}
+.bc4 {
+    background: var(--color-4);
+}
+.bc5 {
+    background: var(--color-5);
+}
