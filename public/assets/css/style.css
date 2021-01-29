@@ -60,11 +60,13 @@ nav {
 .event-box {
     margin: 1em 0;
     padding: 1em;
-    width: 10em;
-    height: 10em;
+    /* max-width: 10em;
+    max-height: 10em; */
     border: 1px solid black;
     border-radius: 10px;
 }
+
+
 
 .event-title {
     font-size: x-large;
