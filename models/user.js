@@ -44,7 +44,7 @@ module.exports = function(sequelize, DataTypes) {
 //         onDelete: "cascade"
 //       });
 //     };
-//     return User;
+    return User;
   };
 
 // User.beforeCreate(function(user){
