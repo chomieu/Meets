@@ -4,19 +4,15 @@
 // ******************************************************************************
 // *** Dependencies
 // =============================================================
-var express = require("express");
+const express = require("express");
 
 // Sets up the Express App
 // =============================================================
-var app = express();
-var PORT = process.env.PORT || 8080;
+const app = express();
+const PORT = process.env.PORT || 8080;
 
 // Requiring our models for syncing
-var db = require("./models");
-
-// Requiring our routes
-var routes = require("./controllers/controller.js");
-app.use(routes)
+const db = require("./models");
 
 // Sets up the Express app to handle data parsing
 app.use(express.urlencoded({ extended: true }));
@@ -26,10 +22,16 @@ app.use(express.json());
 app.use(express.static("public"));
 
 // Set Handlebars.
-var exphbs = require("express-handlebars");
+const exphbs = require("express-handlebars");
 
 app.engine("handlebars", exphbs({ defaultLayout: "main" }));
 app.set("view engine", "handlebars");
+
+// Requiring our routes
+const api_routes = require("./controllers/api-controller");
+const html_routes = require("./controllers/html-controller");
+app.use(api_routes)
+app.use(html_routes)
 
 // Syncing our sequelize models and then starting our express app
 db.sequelize.sync({ force: false }).then(function () {
@@ -37,3 +39,5 @@ db.sequelize.sync({ force: false }).then(function () {
     console.log("App listening on PORT " + PORT);
   });
 });
+
+// just an app that takes input of name, activities, plans, and install all plans in table; boolean - private?; if not private others will be able to see it 
