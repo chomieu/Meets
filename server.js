@@ -36,9 +36,13 @@ const exphbs = require("express-handlebars");
 app.engine("handlebars", exphbs({ defaultLayout: "main" }));
 app.set("view engine", "handlebars");
 
-// Requiring our routes
-const routes = require("./controllers/api-controller.js");
-app.use(routes)
+// Requiring our routes for user dialogue
+const userDialogueRoutes = require("./controllers/userController.js");
+app.use("/api", userDialogueRoutes)
+
+// Requiring our routes for the user
+const userRoutes = require("./controllers/userController.js");
+app.use(userRoutes)
 
 // Review routes from joe's demo
 const reviewRoutes = require("./controllers/reviewController.js");
