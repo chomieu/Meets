@@ -72,7 +72,7 @@ router.put("/api/users", (req,res) => {
 })
 
 // DELETE route for deleting user with a specific id
-router.delete("api/users/:id"), (req,res) => {
+router.delete("/api/users/:id", (req,res) => {
   db.User.destroy({
     where: {
       id: req.params.id
@@ -83,7 +83,7 @@ router.delete("api/users/:id"), (req,res) => {
     console.log((err.message));
     res.status(500).send(err.message);
   })
-}
+})
 
 
 // Export routes for server.js to use.
