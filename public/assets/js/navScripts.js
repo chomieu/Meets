@@ -3,11 +3,10 @@ $(document).ready(function () {
 
     let page = localStorage['currentPage']
     console.log(page);
-    $(`.${page}`).addClass("activePage")
+    $(`.${page}`).addClass("activePage disable")
 
     $('.dashboardBtn').on("click", function () {
         localStorage['currentPage'] = "dashboardBtn"
-        $(this).addClass("test")
         console.log("dashboard");
     })
     $('.eventBtn').click(function () {

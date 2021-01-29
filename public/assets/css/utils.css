@@ -1,0 +1,67 @@
+
+/* utils */
+/* flex */
+.dflex {
+    display: flex;
+}
+.dflex-col {
+    display: flex;
+    flex-direction: column;
+}
+.justify-between {
+    justify-content: space-between;
+}
+.justify-around {
+    justify-content: space-around;
+}
+.justify-evenly {
+    justify-content: space-evenly;
+}
+.justify-center {
+    justify-content: center;
+}
+.align-center {
+    align-items: center;
+}
+/* sizing */
+.h-full {
+    height: 100%;
+}
+.h-50 {
+    height: 50%;
+}
+.h-25 {
+    height: 25%;
+}
+/* background color */
+.bc1 {
+    background: var(--color-1);
+}
+.bc2 {
+    background: var(--color-2);
+}
+.bc3 {
+    background: var(--color-3);
+}
+.bc4 {
+    background: var(--color-4);
+}
+.bc5 {
+    background: var(--color-5);
+}
+/* text color */
+.tc1 {
+    color: var(--color-1);
+}
+.tc2 {
+    color: var(--color-2);
+}
+.tc3 {
+    color: var(--color-3);
+}
+.tc4 {
+    color: var(--color-4);
+}
+.tc5 {
+    color: var(--color-5);
+}

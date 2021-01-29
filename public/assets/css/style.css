@@ -2,6 +2,7 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
+    /* outline: 2px dotted green; */
 }
 
 :root {
@@ -18,12 +19,17 @@ main {
     align-items: center;
 }
 
+nav {
+    position: sticky;
+    top: 0;
+}
+
 .col {
-    border: 1px solid black;
+    margin: 0 10%;
 }
 
 .container {
-    min-height: 100vh;
+    min-height: 90vh;
 }
 
 .content {
@@ -31,18 +37,39 @@ main {
     width: 80%;
 }
 
+.userIcon-small {
+    width:30%;
+    border: 1px solid black;
+    border-radius: 100px;
+    background: var(--color-1);
+}
+
 .friend-box {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.5em;
+    padding-right: 1em;
+
     margin: 1em 0;
     border: 1px solid black;
     border-radius: 5px;
+    background: var(--color-4);
 }
 
 .event-box {
     margin: 1em 0;
+    padding: 1em;
     width: 10em;
     height: 10em;
     border: 1px solid black;
     border-radius: 10px;
+}
+
+.event-title {
+    font-size: x-large;
+    font-weight: bold;
+    text-transform: uppercase;
 }
 
 .hamburgerIcon span {
@@ -52,73 +79,18 @@ main {
 }
 
 .activePage {
-    background: var(--color-1);
-    color: var(--color-2);
-}
-
-/* utils */
-/* flex */
-.dflex {
-    display: flex;
-}
-.dflex-col {
-    display: flex;
-    flex-direction: column;
-}
-.justify-between {
-    justify-content: space-between;
-}
-.justify-around {
-    justify-content: space-around;
-}
-.justify-evenly {
-    justify-content: space-evenly;
-}
-.justify-center {
-    justify-content: center;
-}
-.align-center {
-    align-items: center;
-}
-/* sizing */
-.h-full {
-    height: 100%;
-}
-.h-50 {
-    height: 50%;
-}
-.h-25 {
-    height: 25%;
-}
-/* background color */
-.bc1 {
-    background: var(--color-1);
-}
-.bc2 {
     background: var(--color-2);
-}
-.bc3 {
-    background: var(--color-3);
-}
-.bc4 {
-    background: var(--color-4);
-}
-.bc5 {
-    background: var(--color-5);
-}
-/* text color */
-.tc1 {
     color: var(--color-1);
 }
-.tc2 {
-    color: var(--color-2);
+
+.disable {
+    pointer-events: none;
 }
-.tc3 {
-    color: var(--color-3);
-}
-.tc4 {
-    color: var(--color-4);
-}
-.tc5 {
-    color: var(--color-5);
+
+.ai-interaction {
+    width: 200px;
+    height: 200px;
+    border: 1px solid black;
+    border-radius: 10px;
+    
 }
