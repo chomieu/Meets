@@ -2,40 +2,64 @@ const bcrypt = require('bcrypt');
 
 module.exports = function(sequelize, DataTypes) {
     var User = sequelize.define("User", {
-      // user_name, first_name, last_name, password, email?
+
       username: {
+        type: DataTypes.STRING,
+        allowNull: false,
+        unique: true,
+        validate: {
+          len: [6]
+        }
+      },
+      password: {
         type: DataTypes.STRING,
         allowNull: false,
         validate: {
           len: [8]
         }
       },
-      first_name: {
-        type: DataTypes.STRING,
-        allowNull: false,
-        validate: {
-          len: [1]
-        }
-      },
-      last_name: {
-        type: DataTypes.STRING,
-        allowNull: false,
-        validate: {
-          len: [1]
-        }
-      },
-      // can be null if you have no connections
+      // email: {
+      //   type: DataTypes.STRING,
+      //   allowNull: false,
+      //   validate: {
+      //     isEmail:true
+      //   }
+      // },
+      // first_name: {
+      //   type: DataTypes.STRING,
+      //   allowNull: false,
+      //   validate: {
+      //     len: [1]
+      //   }
+      // },
+      // last_name: {
+      //   type: DataTypes.STRING,
+      //   allowNull: false,
+      //   validate: {
+      //     len: [1]
+      //   }
+      // },
+      // will be null by default
       associate_id: {
         type: DataTypes.INTEGER,
         allowNull: true,
+        defaultValue: 0,
         validate: {
           len: [1]
         }
       },
       // total number of plans in lifetime of account
-      plans: DataTypes.INTEGER,
+      plans: {
+        type: DataTypes.INTEGER,
+        allowNull: true,
+        defaultValue:0
+      },
       // number of plans made in upcoming week
-      upcoming_plans: DataTypes.INTEGER,
+      upcoming_plans: {
+        type: DataTypes.INTEGER,
+        allowNull: true,
+        defaultValue:0
+      },
     });
 
     User.associate = function(models) {
