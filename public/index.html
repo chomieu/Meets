@@ -6,25 +6,122 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
     <!-- <link rel="stylesheet" href="/assets/css/style.css" type="text/css" /> -->
-    
+
     <title>Document</title>
 </head>
 
 <body>
-    <form class="input-field">
-        <input placeholder="Placeholder" id="input" type="text">
-        <label for="input">User Input</label>
-        <button type="submit" id="submitBtn">Submit</button>
-    </form>
-    </form>
+
+    <div class="container">
+        <ul style="list-style-type:none;" class="row white-text" id="history"></ul>
+        <form class="input-field">
+            <input placeholder="Ask me anything." id="input" type="text">
+            <label for="input">Meets AI</label>
+            <button type="submit" class="btn" id="submitBtn">Submit</button>
+            <button id="recBtn" class="btn">Speak</button>
+        </form>
     </div>
-    <iframe width="350" height="430" allow="microphone;"
-        src="https://console.dialogflow.com/api-client/demo/embedded/6ea0cdb9-db09-493a-966a-b60e97f4a0f0"></iframe>
-    <button class="btn" id="recordBtn"></button>
+
+    <link href="https://fonts.googleapis.com/css?family=Titillium+Web:200" rel="stylesheet" type="text/css">
+    </div>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
     <script src="SpeechSDK/microsoft.cognitiveservices.speech.sdk.bundle.js"></script>
     <script src="speech-to-txt.js" type="text/javascript"></script>
 </body>
+
+<style type="text/css">
+    html {
+        box-sizing: border-box;
+    }
+
+    *,
+    *:before,
+    *:after {
+        box-sizing: inherit;
+    }
+
+    body {
+        background-color: #192837;
+        font-family: "Titillium Web", Arial, sans-serif;
+        font-size: 20px;
+        margin: 0;
+    }
+
+    .container {
+        position: fixed;
+        bottom: 0px;
+        margin: 2vw;
+        width: 95%;
+    }
+
+    input {
+        background-color: #126077;
+        border: 1px solid #3F7F93;
+        color: #A6CAE6;
+        font-family: "Titillium Web";
+        font-size: 20px;
+        line-height: 43px;
+        padding: 0 0.75em;
+        width: 400px;
+        -webkit-transition: all 0.35s ease-in;
+    }
+
+    textarea {
+        background-color: #070F24;
+        border: 1px solid #122435;
+        color: #606B88;
+        padding: 0.5em;
+        width: 100%;
+        -webkit-transition: all 0.35s ease-in;
+    }
+
+    input:active,
+    input:focus,
+    textarea:active,
+    textarea:focus {
+        outline: 1px solid #48788B;
+    }
+
+    .btn {
+        background-color: #126178;
+        border: 1px solid #549EAF;
+        color: #549EAF;
+        cursor: pointer;
+        display: inline-block;
+        font-family: "Titillium Web";
+        font-size: 20px;
+        line-height: 43px;
+        padding: 0 0.75em;
+        text-align: center;
+        text-transform: uppercase;
+        -webkit-transition: all 0.35s ease-in;
+    }
+
+    .btn:hover {
+        background-color: #1888A9;
+        color: #183035;
+    }
+
+    .spoken-response {
+        max-height: 0;
+        overflow: hidden;
+        -webkit-transition: all 0.35s ease-in;
+    }
+
+    .spoken-response.is-active {
+        max-height: 400px;
+    }
+
+    .spoken-response__text {
+        background-color: #040E23;
+        color: #7584A2;
+        padding: 1em;
+    }
+
+    li {
+        margin-bottom: 10px;
+    }
+</style>
 
 </html>
