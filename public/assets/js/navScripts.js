@@ -2,7 +2,6 @@ $(document).ready(function () {
     $('.sidenav').sidenav();
 
     let page = localStorage['currentPage']
-    console.log(page);
     $(`.${page}`).addClass("activePage disable")
 
     $('.dashboardBtn').on("click", function () {

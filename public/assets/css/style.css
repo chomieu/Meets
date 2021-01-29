@@ -87,10 +87,11 @@ nav {
     pointer-events: none;
 }
 
-.ai-interaction {
+.ai-interaction-box {
     width: 10em;
     height: 10em;
     border: 1px solid black;
     border-radius: 10px;
+    background: var(--color-5);
     
 }

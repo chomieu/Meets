@@ -1,67 +1,299 @@
 
 /* utils */
 /* flex */
-.dflex {
+.my-dflex {
     display: flex;
 }
-.dflex-col {
+.my-dflex-col {
     display: flex;
     flex-direction: column;
 }
-.justify-between {
+.my-justify-between {
     justify-content: space-between;
 }
-.justify-around {
+.my-justify-around {
     justify-content: space-around;
 }
-.justify-evenly {
+.my-justify-evenly {
     justify-content: space-evenly;
 }
-.justify-center {
+.my-justify-center {
     justify-content: center;
 }
-.align-center {
+.my-align-center {
     align-items: center;
 }
 /* sizing */
-.h-full {
+.my-h-full {
     height: 100%;
 }
-.h-50 {
+.my-h-50 {
     height: 50%;
 }
-.h-25 {
+.my-h-25 {
     height: 25%;
 }
+
+
+/* margins */
+
+.my-m-0 {
+    margin: 0;
+}
+.my-m-1 {
+    margin: 0.my-25em;
+}
+.my-m-2 {
+    margin: 0.my-50em;
+}
+.my-m-3 {
+    margin: 0.my-75em;
+}
+.my-m-4 {
+    margin: 1em;
+}
+
+.my-ml-0 {
+    margin-left: 0;
+}
+.my-ml-1 {
+    margin-left: 0.my-25em;
+}
+.my-ml-2 {
+    margin-left: 0.my-50em;
+}
+.my-ml-3 {
+    margin-left: 0.my-75em;
+}
+.my-ml-4 {
+    margin-left: 1em;
+}
+
+.my-mr-0 {
+    margin-right: 0;
+}
+.my-mr-1 {
+    margin-right: 0.my-25em;
+}
+.my-mr-2 {
+    margin-right: 0.my-50em;
+}
+.my-mr-3 {
+    margin-right: 0.my-75em;
+}
+.my-mr-4 {
+    margin-right: 1em;
+}
+
+.my-mrl-0 {
+    margin: 0;
+}
+.my-mrl-1 {
+    margin: 0 0.my-25em;
+}
+.my-mrl-2 {
+    margin: 0 0.my-50em;
+}
+.my-mrl-3 {
+    margin: 0 0.my-75em;
+}
+.my-mrl-4 {
+    margin: 0 1em;
+}
+
+.my-mt-0 {
+    margin-top: 0;
+}
+.my-mt-1 {
+    margin-top: 0.my-25em;
+}
+.my-mt-2 {
+    margin-top: 0.my-50em;
+}
+.my-mt-3 {
+    margin-top: 0.my-75em;
+}
+.my-mt-4 {
+    margin-top: 1em;
+}
+
+.my-mb-0 {
+    margin-bottom: 0;
+}
+.my-mb-1 {
+    margin-bottom: 0.my-25em;
+}
+.my-mb-2 {
+    margin-bottom: 0.my-50em;
+}
+.my-mb-3 {
+    margin-bottom: 0.my-75em;
+}
+.my-mb-4 {
+    margin-bottom: 1em;
+}
+
+.my-mtb-0 {
+    margin: 0;
+}
+.my-mtb-1 {
+    margin: 0.my-25em 0;
+}
+.my-mtb-2 {
+    margin: 0.my-50em 0;
+}
+.my-mtb-3 {
+    margin: 0.my-75em 0;
+}
+.my-mtb-4 {
+    margin: 1em 0 ;
+} 
+
+/* padding */
+
+.my-p-0 {
+    padding: 0;
+}
+.my-p-1 {
+    padding: 0.my-25em;
+}
+.my-p-2 {
+    padding: 0.my-50em;
+}
+.my-p-3 {
+    padding: 0.my-75em;
+}
+.my-p-4 {
+    padding: 1em;
+}
+
+.my-pl-0 {
+    padding-left: 0;
+}
+.my-pl-1 {
+    padding-left: 0.my-25em;
+}
+.my-pl-2 {
+    padding-left: 0.my-50em;
+}
+.my-pl-3 {
+    padding-left: 0.my-75em;
+}
+.my-pl-4 {
+    padding-left: 1em;
+}
+
+.my-pr-0 {
+    padding-right: 0;
+}
+.my-pr-1 {
+    padding-right: 0.my-25em;
+}
+.my-pr-2 {
+    padding-right: 0.my-50em;
+}
+.my-pr-3 {
+    padding-right: 0.my-75em;
+}
+.my-pr-4 {
+    padding-right: 1em;
+}
+
+.my-prl-0 {
+    padding: 0;
+}
+.my-prl-1 {
+    padding: 0 0.my-25em;
+}
+.my-prl-2 {
+    padding: 0 0.my-50em;
+}
+.my-prl-3 {
+    padding: 0 0.my-75em;
+}
+.my-prl-4 {
+    padding: 0 1em;
+}
+
+.my-pt-0 {
+    padding-top: 0;
+}
+.my-pt-1 {
+    padding-top: 0.my-25em;
+}
+.my-pt-2 {
+    padding-top: 0.my-50em;
+}
+.my-pt-3 {
+    padding-top: 0.my-75em;
+}
+.my-pt-4 {
+    padding-top: 1em;
+}
+
+.my-pb-0 {
+    padding-bottom: 0;
+}
+.my-pb-1 {
+    padding-bottom: 0.my-25em;
+}
+.my-pb-2 {
+    padding-bottom: 0.my-50em;
+}
+.my-pb-3 {
+    padding-bottom: 0.my-75em;
+}
+.my-pb-4 {
+    padding-bottom: 1em;
+}
+
+.my-ptb-0 {
+    padding: 0;
+}
+.my-ptb-1 {
+    padding: 0.my-25em 0;
+}
+.my-ptb-2 {
+    padding: 0.my-50em 0;
+}
+.my-ptb-3 {
+    padding: 0.my-75em 0;
+}
+.my-ptb-4 {
+    padding: 1em 0;
+}
+
 /* background color */
-.bc1 {
+.my-bc1 {
     background: var(--color-1);
 }
-.bc2 {
+.my-bc2 {
     background: var(--color-2);
 }
-.bc3 {
+.my-bc3 {
     background: var(--color-3);
 }
-.bc4 {
+.my-bc4 {
     background: var(--color-4);
 }
-.bc5 {
+.my-bc5 {
     background: var(--color-5);
 }
 /* text color */
-.tc1 {
+.my-tc1 {
     color: var(--color-1);
 }
-.tc2 {
+.my-tc2 {
     color: var(--color-2);
 }
-.tc3 {
+.my-tc3 {
     color: var(--color-3);
 }
-.tc4 {
+.my-tc4 {
     color: var(--color-4);
 }
-.tc5 {
+.my-tc5 {
     color: var(--color-5);
 }
+
+
