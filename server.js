@@ -4,12 +4,12 @@
 // ******************************************************************************
 // *** Dependencies
 // =============================================================
-var express = require("express");
+// var express = require("express");
 
 // Sets up the Express App
 // =============================================================
-var app = express();
-var PORT = process.env.PORT || 8080;
+// var app = express();
+// var PORT = process.env.PORT || 8080;
 
 // // Requiring our models for syncing
 // var db = require("./models");
@@ -20,8 +20,8 @@ var PORT = process.env.PORT || 8080;
 
 
 // Sets up the Express app to handle data parsing
-app.use(express.urlencoded({ extended: true }));
-app.use(express.json());
+// app.use(express.urlencoded({ extended: true }));
+// app.use(express.json());
 
 // // Set Handlebars.
 // var exphbs = require("express-handlebars");
@@ -36,16 +36,16 @@ app.use(express.json());
 //   });
 // });
 
-// const express = require('express');
-// const bodyParser = require('body-parser')
-// const { WebhookClient } = require('dialogflow-fulfillment');
-// const path = require('path');
-// const { DateTime } = require('actions-on-google');
-// const d = new Date()
+const express = require('express');
+const bodyParser = require('body-parser')
+const { WebhookClient } = require('dialogflow-fulfillment');
+const path = require('path');
+const { DateTime } = require('actions-on-google');
+const d = new Date()
 
-// const app = express()
-// app.use(bodyParser.json())
-// const port = process.env.PORT || 8080
+const app = express()
+app.use(bodyParser.json())
+const port = process.env.PORT || 8080
 
 app.get('/', (request, response) => {
   response.sendFile(path.join(__dirname + "/index.html"))
