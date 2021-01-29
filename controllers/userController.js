@@ -53,7 +53,7 @@ router.post("/login", (req, res) => {
 })
 
 // allows user to update their username
-router.put("/api/users", (req,res) => {
+router.put("/username/change", (req,res) => {
   db.User.update(
     req.body,
     {
