@@ -37,20 +37,19 @@ $(function () {
         $("#recBtn").prop("disabled", false)
 
         var input = { input: result.privText }
-        console.log(input)
+        $("#history").append($("<li>", { class: "col s12", text: result.privText }))
 
         // Send the POST request
         $.ajax("/api/input", {
           type: "POST",
           data: input
-        }).then(
-          function () {
-            // Reload the page to get the updated list
-            console.log("done")
+        }).then((res) => {
+            $("#history").append($("<li>", { class: "col s12 cyan-text", text: res }))
           }
         );
         // Log the result.
         window.console.log(result)
+        
 
         // Close the SpeechRecognizer object, and set the variable to undefined.
         recognizer.close();
