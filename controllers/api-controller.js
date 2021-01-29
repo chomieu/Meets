@@ -72,6 +72,7 @@ router.put("/api/users", (req,res) => {
 })
 
 // DELETE route for deleting user with a specific id
+// TODO: Future development - Delete flips a boolean to hide it and then checks daily until X days pass before being finally deleted
 router.delete("/api/users/:id", (req,res) => {
   db.User.destroy({
     where: {
