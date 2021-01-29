@@ -1,15 +1,15 @@
-// // *****************************************************************************
-// // Server.js - This file is the initial starting point for the Node/Express server.
-// //
-// // ******************************************************************************
-// // *** Dependencies
-// // =============================================================
-// var express = require("express");
+// *****************************************************************************
+// Server.js - This file is the initial starting point for the Node/Express server.
+//
+// ******************************************************************************
+// *** Dependencies
+// =============================================================
+var express = require("express");
 
-// // Sets up the Express App
-// // =============================================================
-// var app = express();
-// var PORT = process.env.PORT || 8080;
+// Sets up the Express App
+// =============================================================
+var app = express();
+var PORT = process.env.PORT || 8080;
 
 // // Requiring our models for syncing
 // var db = require("./models");
@@ -19,9 +19,9 @@
 // app.use(routes)
 
 
-// // Sets up the Express app to handle data parsing
-// app.use(express.urlencoded({ extended: true }));
-// app.use(express.json());
+// Sets up the Express app to handle data parsing
+app.use(express.urlencoded({ extended: true }));
+app.use(express.json());
 
 // // Set Handlebars.
 // var exphbs = require("express-handlebars");
@@ -47,17 +47,17 @@
 // app.use(bodyParser.json())
 // const port = process.env.PORT || 8080
 
-// app.get('/', (request, response) => {
-//   response.sendFile(path.join(__dirname + "/index.html"))
-// })
+app.get('/', (request, response) => {
+  response.sendFile(path.join(__dirname + "/index.html"))
+})
 
 // app.post('/', (request, response) => {
 //   dialogflowFulfillment(request, response)
 // })
 
-// app.listen(port, () => {
-//   console.log(`Listening on port ${port}`)
-// })
+app.listen(port, () => {
+  console.log(`Listening on port ${port}`)
+})
 
 // // app.get('/', (req, res) => {
 // //   res.send(meetsResponse)
