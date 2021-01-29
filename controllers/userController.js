@@ -3,7 +3,17 @@ const router = express.Router();
 const db = require('../models')
 const bcrypt = require('bcrypt')
 
+// GET route for retrieving all users from USER table
+router.get("/api/users", (req, res) => {
+  db.User.findAll().then(dbUser => {
+    res.json(dbUser);
+  }).catch(err => {
+    console.log(err.message);
+    res.status(500).send(err.message);
+  });
+});
 
+// allows user to signup for an account
 router.post("/signup", (req, res) => {
   db.User.create({
     username: req.body.username,
@@ -15,6 +25,7 @@ router.post("/signup", (req, res) => {
   })
 })
 
+// allows user to login and saves their session
 router.post("/login", (req, res) => {
   db.User.findOne({
     where: {
@@ -41,10 +52,28 @@ router.post("/login", (req, res) => {
   })
 })
 
+// allows user to update their username
+router.put("/api/users", (req,res) => {
+  db.User.update(
+    req.body,
+    {
+      where: {
+        id:req.body.id
+      }
+    }).then(dbUser => {
+      res.json(dbUser)
+    }).catch(err => {
+      console.log(err.message);
+      res.status(500).send(err.message);
+    })
+})
+
+// just allows you to fetch the data to see if you are logged in
 router.get("/readsessions", (req, res) => {
   res.json(req.session)
 })
 
+// gives access to pages if you are logged in
 router.get("/secretclub", (req, res) => {
   if (req.session.user) {
     res.send(`Welcome to teh club, ${req.session.user.username}!`)
@@ -53,9 +82,25 @@ router.get("/secretclub", (req, res) => {
   }
 })
 
+// allows user to logout
 router.get("/logout", (req,res) => {
   req.session.destroy()
   res.send('Logged out')
+})
+
+// DELETE route for deleting user with a specific id, to terminate an account
+// TODO: Future development - Delete flips a boolean to hide it and then checks daily until X days pass before being finally deleted
+router.delete("/api/users/:id", (req,res) => {
+  db.User.destroy({
+    where: {
+      id: req.params.id
+    }
+  }).then(dbUser => {
+    res.json(dbUser)
+  }).catch(err => {
+    console.log((err.message));
+    res.status(500).send(err.message);
+  })
 })
 
 module.exports = router;
