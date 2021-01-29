@@ -55,6 +55,22 @@ router.post("/api/users", (req, res) => {
   });
 });
 
+// PUT route for updating a user
+router.put("/api/users", (req,res) => {
+  db.User.update(
+    req.body,
+    {
+      where: {
+        id:req.body.id
+      }
+    }).then(dbUser => {
+      res.json(dbUser)
+    }).catch(err => {
+      console.log(err.message);
+      res.status(500).send(err.message);
+    })
+})
+
 // DELETE route for deleting user with a specific id
 router.delete("api/users/:id"), (req,res) => {
   db.User.destroy({
@@ -65,7 +81,7 @@ router.delete("api/users/:id"), (req,res) => {
     res.json(dbUser)
   }).catch(err => {
     console.log((err.message));
-    res.status(500).send(err.message)
+    res.status(500).send(err.message);
   })
 }
 
