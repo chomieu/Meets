@@ -5,7 +5,7 @@
 // *** Dependencies
 // =============================================================
 var express = require("express");
-
+// const session = 
 // Sets up the Express App
 // =============================================================
 var app = express();
@@ -23,6 +23,15 @@ require("./controllers/api-controller.js")(app);
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
+// app.use(session({
+//   secret: 'keyboard cat',
+//   resave: false,
+//   saveUninitialize: false,
+//   cookie: {
+//     maxAge: 1000*60*60*2
+//   }
+// }))
+
 // Set Handlebars.
 var exphbs = require("express-handlebars");
 
@@ -36,4 +45,3 @@ db.sequelize.sync({ force: false }).then(function() {
   });
 });
 
-// just an app that takes input of name, activities, plans, and install all plans in table; boolean - private?; if not private others will be able to see it 
