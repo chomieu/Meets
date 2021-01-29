@@ -15,8 +15,8 @@ var PORT = process.env.PORT || 8080;
 var db = require("./models");
 
 // Requiring our routes
-var routes = require("./controllers/controller.js");
-app.use(routes)
+require("./controllers/api-controller.js")(app);
+// app.use(routes)
 
 
 // Sets up the Express app to handle data parsing
