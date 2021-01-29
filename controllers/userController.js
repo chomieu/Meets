@@ -22,8 +22,8 @@ router.post("/signup", (req, res) => {
     res.json(data);
   }).catch(err => {
     res.status(500).json(err)
-  })
-})
+  });
+});
 
 // allows user to login and saves their session
 router.post("/login", (req, res) => {
@@ -49,8 +49,8 @@ router.post("/login", (req, res) => {
     }
   }).catch(err => {
     res.status(500).json(err)
-  })
-})
+  });
+});
 
 // allows user to update their username
 router.put("/username/change", (req,res) => {
@@ -65,8 +65,8 @@ router.put("/username/change", (req,res) => {
     }).catch(err => {
       console.log(err.message);
       res.status(500).send(err.message);
-    })
-})
+    });
+});
 
 // just allows you to fetch the data to see if you are logged in
 router.get("/readsessions", (req, res) => {
@@ -80,13 +80,13 @@ router.get("/secretclub", (req, res) => {
   } else {
     res.status(401).send("Please login to access this page.")
   }
-})
+});
 
 // allows user to logout
 router.get("/logout", (req,res) => {
   req.session.destroy()
   res.send('Logged out')
-})
+});
 
 // DELETE route for deleting user with a specific id, to terminate an account
 // TODO: Future development - Delete flips a boolean to hide it and then checks daily until X days pass before being finally deleted
@@ -100,7 +100,7 @@ router.delete("/api/users/:id", (req,res) => {
   }).catch(err => {
     console.log((err.message));
     res.status(500).send(err.message);
-  })
-})
+  });
+});
 
 module.exports = router;
