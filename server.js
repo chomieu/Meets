@@ -1,6 +1,5 @@
 const express = require('express');
 const bodyParser = require('body-parser')
-const { GoogleAuth } = require('google-auth-library')
 const { WebhookClient } = require('dialogflow-fulfillment');
 const { DateTime } = require('actions-on-google');
 const { response } = require('express');
@@ -8,11 +7,6 @@ const path = require('path');
 const d = new Date()
 const app = express()
 const port = process.env.PORT || 8080
-
-require('dotenv').config()
-
-const googleCreds = JSON.parse(process.env.CREDS)
-new GoogleAuth(googleCreds);
 
 app.use(express.urlencoded({ extended: true }))
 app.use(express.json())
