@@ -1,7 +1,24 @@
 var SpeechSDK
 var recognizer
 
-$("document").ready(function () {
+$(function () {
+  $("#submitBtn").on("click", function (event) {
+    // Make sure to preventDefault on a submit event
+    event.preventDefault()
+    var input = { input: $("#input").val() }
+    console.log(input)
+
+    // Send the POST request
+    $.ajax("/api/input", {
+      type: "POST",
+      data: input
+    }).then(
+      function () {
+        // Reload the page to get the updated list
+        console.log("done")
+      }
+    );
+  });
 
   $("#recordBtn").on("click", function () {
     $("#recordBtn").prop("disabled", true)
@@ -21,6 +38,19 @@ $("document").ready(function () {
         // Make the button to start speech recognition work again.
         $("#recordBtn").prop("disabled", false)
 
+        var input = { input: result.privText }
+        console.log(input)
+
+        // Send the POST request
+        $.ajax("/api/input", {
+          type: "POST",
+          data: input
+        }).then(
+          function () {
+            // Reload the page to get the updated list
+            console.log("done")
+          }
+        );
         // Log the result.
         window.console.log(result)
 
