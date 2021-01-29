@@ -52,7 +52,7 @@ app.post('/api/input', (request, response) => {
         intentResponse = await detectIntent(projectId, sessionId, query, context, languageCode);
         console.log('Detected intent');
         switch (intentResponse.queryResult.intent.displayName) {
-          case "Past": response.send(intentResponse.queryResult.fulfillmentText.replace(".", " ") + "at " + d.getHours() % 12 + " PM $wag"); break
+          case "Past": response.send(`${intentResponse.queryResult.fulfillmentText} at ${d.getHours() % 12} PM $wag`); break
           default: response.send(intentResponse.queryResult.fulfillmentText)
         }
         // Use the context from this response for next queries
@@ -68,27 +68,3 @@ app.post('/api/input', (request, response) => {
 app.listen(port, () => {
   console.log(`Listening on port ${port}`)
 })
-
-// const dialogflowFulfillment = (request, response) => {
-//   const agent = new WebhookClient({ request, response })
-//   const meetsResponse = request.body
-//   // req.body holds the JSON output
-//   // meetsResponse.queryResult.queryText = user input
-//   // meetsResponse.queryResult.parameters.person.name = person's name
-//   // meetsResponse.queryResult.fulfillmentText = ai response
-
-//   function welcome(agent) { // no changes to welcome intent 
-//     agent.add(meetsResponse.queryResult.fulfillmentText)
-//   }
-
-//   function past(agent) { // custom responses for past intent
-//     agent.add(meetsResponse.queryResult.fulfillmentText.replace(".", " ") + "at " + d.getHours() % 12 + " PM $wag") // Adds custom response back to the AI's dialog
-//   }
-
-//   let intentMap = new Map();
-//   intentMap.set("Default Welcome Intent", welcome)
-//   intentMap.set("Past", past)
-
-//   agent.handleRequest(intentMap)
-
-// }
