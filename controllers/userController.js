@@ -29,7 +29,7 @@ router.post("/signup", (req, res) => {
 router.post("/login", (req, res) => {
   db.User.findOne({
     where: {
-      username: require.body.username
+      username: req.body.username
     }
   }).then(userData => {
     if (!userData) {
