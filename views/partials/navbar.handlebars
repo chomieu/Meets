@@ -1,16 +1,35 @@
-    <nav>
-        <div class="nav-wrapper">
-            <a href="#" class="brand-logo">Logo</a>
-            <ul id="nav-mobile" class="right hide-on-med-and-down">
-                <li>
-                    <a href="sass.html">Sass</a>
-                </li>
-                <li>
-                    <a href="badges.html">Components</a>
-                </li>
-                <li>
-                    <a href="collapsible.html">JavaScript</a>
-                </li>
-            </ul>
+<script src="assets/js/navScripts.js"></script>
+<nav>
+    <div class="nav-wrapper bc1">
+        <a href="#" data-target="slide-out" class="sidenav-trigger"><i class="material-icons">menu</i></a>
+        <a href="#!" class="brand-logo">Mee+s</a>
+        <ul class="right hide-on-med-and-down">
+            <li><a class="waves-effect waves-light btn">Button</a></li>
+            <li><a class="waves-effect waves-light btn">Button <i class="material-icons right">cloud</i></a></li>
+            <li><a class="waves-effect waves-light btn-large">Large Button</a></li>
+        </ul>
+    </div>
+</nav>
+
+<ul id="slide-out" class="sidenav">
+    <li>
+        <div class="user-view">
+            <div class="background">
+                <img src="images/office.jpg">
+            </div>
+            <a href="#user"><img class="circle" src="images/yuna.jpg"></a>
+            <a href="#name"><span class="name tc4">John Doe</span></a>
+            <a href="#email"><span class="email tc4">jdandturk@gmail.com</span></a>
         </div>
-    </nav>
+    </li>
+    <li><a class="dashboardBtn" href="/dashboard"><i class="material-icons">dashboard</i>Dashboard</a></li>
+    <li><a class="eventBtn" href="/events"><i class="material-icons">event_available</i>All Events</a></li>
+    <li><a class="friendsBtn" href="/friends"><i class="material-icons">emoji_people</i>Friends</a></li>
+    <li>
+        <div class="divider"></div>
+    </li>
+    <li><a class="subheader">Your Info</a></li>
+    <li><a class="profileBtn" href="/profile"><i class="material-icons">emoji_people</i>Profile</a></li>
+    <li><a class="settingsBtn" href="/settings"><i class="material-icons">settings</i>Settings</a></li>
+    <li><a href="/">Logout</a></li>
+</ul>

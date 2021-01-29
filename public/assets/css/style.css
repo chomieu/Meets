@@ -1,4 +1,4 @@
-*{
+* {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
@@ -18,13 +18,79 @@ main {
     align-items: center;
 }
 
+.col {
+    border: 1px solid black;
+}
+
+.container {
+    min-height: 100vh;
+}
+
 .content {
     padding: 10px;
     width: 80%;
 }
 
+.friend-box {
+    margin: 1em 0;
+    border: 1px solid black;
+    border-radius: 5px;
+}
+
+.event-box {
+    margin: 1em 0;
+    width: 10em;
+    height: 10em;
+    border: 1px solid black;
+    border-radius: 10px;
+}
+
+.hamburgerIcon span {
+    height: 5px;
+    width: 5px;
+    background: white;
+}
+
+.activePage {
+    background: var(--color-1);
+    color: var(--color-2);
+}
 
 /* utils */
+/* flex */
+.dflex {
+    display: flex;
+}
+.dflex-col {
+    display: flex;
+    flex-direction: column;
+}
+.justify-between {
+    justify-content: space-between;
+}
+.justify-around {
+    justify-content: space-around;
+}
+.justify-evenly {
+    justify-content: space-evenly;
+}
+.justify-center {
+    justify-content: center;
+}
+.align-center {
+    align-items: center;
+}
+/* sizing */
+.h-full {
+    height: 100%;
+}
+.h-50 {
+    height: 50%;
+}
+.h-25 {
+    height: 25%;
+}
+/* background color */
 .bc1 {
     background: var(--color-1);
 }
@@ -39,4 +105,20 @@ main {
 }
 .bc5 {
     background: var(--color-5);
+}
+/* text color */
+.tc1 {
+    color: var(--color-1);
+}
+.tc2 {
+    color: var(--color-2);
+}
+.tc3 {
+    color: var(--color-3);
+}
+.tc4 {
+    color: var(--color-4);
+}
+.tc5 {
+    color: var(--color-5);
 }
