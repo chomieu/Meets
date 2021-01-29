@@ -13,8 +13,8 @@ router.get("/api/userdialogue", (req, res) => {
   }
   db.UserDialogue.findAll(
     {
-    where: query
-  }
+      where: query
+    }
   ).then(dbUserDialogue => {
     res.json(dbUserDialogue);
   }).catch(err => {
@@ -56,12 +56,12 @@ router.post("/api/users", (req, res) => {
 });
 
 // PUT route for updating a user
-router.put("/api/users", (req,res) => {
+router.put("/api/users", (req, res) => {
   db.User.update(
     req.body,
     {
       where: {
-        id:req.body.id
+        id: req.body.id
       }
     }).then(dbUser => {
       res.json(dbUser)
@@ -72,7 +72,7 @@ router.put("/api/users", (req,res) => {
 })
 
 // DELETE route for deleting user with a specific id
-router.delete("/api/users/:id", (req,res) => {
+router.delete("/api/users/:id", (req, res) => {
   db.User.destroy({
     where: {
       id: req.params.id

@@ -28,8 +28,8 @@ app.engine("handlebars", exphbs({ defaultLayout: "main" }));
 app.set("view engine", "handlebars");
 
 // Requiring our routes
-const api_routes = require("./controllers/api-controller");
-const html_routes = require("./controllers/html-controller");
+const api_routes = require("./controllers/api-controller.js");
+const html_routes = require("./controllers/html-controller.js");
 app.use(api_routes)
 app.use(html_routes)
 
