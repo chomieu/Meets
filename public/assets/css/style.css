@@ -25,7 +25,7 @@ nav {
 }
 
 .col {
-    margin: 0 10%;
+    margin: 0 1em;
 }
 
 .container {
@@ -37,7 +37,7 @@ nav {
     width: 80%;
 }
 
-.userIcon-small {
+.userIcon {
     width:30%;
     border: 1px solid black;
     border-radius: 100px;
@@ -88,8 +88,8 @@ nav {
 }
 
 .ai-interaction {
-    width: 200px;
-    height: 200px;
+    width: 10em;
+    height: 10em;
     border: 1px solid black;
     border-radius: 10px;
     
