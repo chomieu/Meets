@@ -10,7 +10,7 @@ const session = require("express-session")
 // Sets up the Express App
 // =============================================================
 const app = express();
-const PORT = process.env.PORT || 8080;
+const PORT = process.env.PORT || 3000;
 
 // Requiring our models for syncing
 const db = require("./models");
@@ -37,7 +37,7 @@ app.engine("handlebars", exphbs({ defaultLayout: "main" }));
 app.set("view engine", "handlebars");
 
 // Requiring our routes for user dialogue
-const userDialogueRoutes = require("./controllers/userController.js");
+const userDialogueRoutes = require("./controllers/userDialogueController.js");
 app.use("/api", userDialogueRoutes)
 
 // Requiring our routes for the user

@@ -1,13 +1,14 @@
 const express = require("express");
-const db = require("../models");
+
 const router = express.Router();
+
+const db = require("../models");
 
 // use router.get router.post router.put router.delete
 
 
 // Routes
 // =============================================================
-module.exports = function(app) {
 
   // GET route for getting all of the events and return them to user
   router.get("/", function(req, res) {
@@ -36,13 +37,15 @@ module.exports = function(app) {
     router.post("/", function(req,res){
       if(!req.session.user){
         res.status(401).send("You have to login first!")
-      }
+      } else{
+      console.log(req.body)
       db.Event.create(req.body).then(function(dbEvent){
         res.json(dbEvent)
       }).catch(err =>{
         console.log(err.message);
         res.status(500).send(err.message)
       })
+    }
     });
 
     // PUT route to UPDATE events
@@ -66,18 +69,31 @@ module.exports = function(app) {
     
     // Delete an event
     router.delete("/:id", function(req,res){
-      db.Event.destroy({
-        where: {
-          id: req.params.id
+      if(req.session.user){
+        // Needs to pass user id of the event
+        console.log(req.session.user.id);
+          console.log(req.params);
+        if(req.session.user.id===parseInt(req.params.id)){
+          db.Event.destroy({
+            where: {
+              id: req.params.id
+            }
+          }).then(function(dbEvent){
+            res.json(dbEvent)
+          }).catch(err =>{
+            console.log(err.message);
+            res.status(500).send(err.message)
+          })
+        } else{
+          res.send("this is not your event!")
         }
-      }).then(function(dbEvent){
-        res.json(dbEvent)
-      }).catch(err =>{
-        console.log(err.message);
-        res.status(500).send(err.message)
-      })
+      
+      } else {
+        res.send("please sign in")
+      }
+      
     })
-  };
+  
 
   
 
