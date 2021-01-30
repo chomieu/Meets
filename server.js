@@ -37,7 +37,7 @@ app.engine("handlebars", exphbs({ defaultLayout: "main" }));
 app.set("view engine", "handlebars");
 
 // Requiring our routes for user dialogue
-const userDialogueRoutes = require("./controllers/userController.js");
+const userDialogueRoutes = require("./controllers/userDialogueController.js");
 app.use("/api", userDialogueRoutes)
 
 // Requiring our routes for the user
