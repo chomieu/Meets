@@ -51,6 +51,7 @@ const db = require("../models");
     // PUT route to UPDATE events
     router.put("/", function(req, res){
       if(req.session.user){
+        if(req.session.user.id===parseInt(req.params.id)){
       db.Event.update(req.body,
         {
           where: {
@@ -62,6 +63,7 @@ const db = require("../models");
           console.log(err.message);
           res.status(500).send(err.message)
         })
+      }
       } else{
         res.send("please sign in")
       }
