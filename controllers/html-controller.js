@@ -19,12 +19,20 @@ router.get("/events", (req, res) => {
     res.render("partials/events");
 })
 
-router.get("/events/:id", (req, res) => {
-    res.render("partials/one_event");
+router.get("/event/edit", (req, res) => {
+    res.render("partials/oneEvent");
 })
 
 router.get("/friends", (req, res) => {
     res.render("partials/friends");
+})
+
+router.get("/friend/one", (req, res) => {
+    res.render("partials/oneFriend");
+})
+
+router.get("/ai_chat", (req, res) => {
+    res.render("partials/aiChat");
 })
 
 router.get("/profile", (req, res) => {

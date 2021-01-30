@@ -66,12 +66,20 @@ nav {
     border-radius: 10px;
 }
 
-
+.event-header{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
 
 .event-title {
     font-size: x-large;
     font-weight: bold;
     text-transform: uppercase;
+}
+
+.event-date {
+    font-size: large;
 }
 
 .hamburgerIcon span {
@@ -95,5 +103,27 @@ nav {
     border: 1px solid black;
     border-radius: 10px;
     background: var(--color-5);
-    
+    box-shadow: 2px 2px 6px black;
+}
+
+.ai-icon {
+    padding: 1em;
+    width: 80%;
+}
+
+.chatbox {
+    display: flex;
+    align-items: flex-end;
+    margin: 1em 0 ;
+    border: 1px solid black;
+    border-radius: 15px;
+    background: var(--color-2);
+}
+
+.chatbox form {
+    margin: 1em;
+    padding: 1em;
+    border-radius: 15px;
+    border: 2px solid black;
+    background: white;
 }

@@ -25,7 +25,7 @@
 }
 /* sizing */
 
-.my-full-width{
+.my-width-full{
     width: 100%;
 }
 
@@ -37,7 +37,7 @@
     width: 25%;
 }
 
-.my-full-height{
+.my-height-full{
     height: 100%;
 }
 
@@ -309,6 +309,12 @@
 }
 .my-tc5 {
     color: var(--color-5);
+}
+.my-tc-white{
+    color: white;
+}
+.my-tc-black{
+    color: black;
 }
 
 
