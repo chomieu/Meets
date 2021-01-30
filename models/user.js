@@ -41,15 +41,7 @@ module.exports = function(sequelize, DataTypes) {
       //     len: [1]
       //   }
       // },
-      // will be null by default
-      associate_id: {
-        type: DataTypes.INTEGER,
-        allowNull: true,
-        defaultValue: 0,
-        validate: {
-          len: [1]
-        }
-      },
+      // will be null by default,
       // total number of plans in lifetime of account
       plans: {
         type: DataTypes.INTEGER,
@@ -68,7 +60,8 @@ module.exports = function(sequelize, DataTypes) {
       User.hasMany(models.UserDialogue, {
         onDelete: "cascade"
       });
-    };
+      User.belongsToMany(models.User, { as: 'Associate', through: 'UserAssociate' })
+    };  
 
     // utilize bcrypt to encrypt password
     User.beforeCreate(user=>{

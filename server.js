@@ -19,6 +19,9 @@ const db = require("./models");
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
+// Static directory
+app.use(express.static("public"));
+
 // Allows for login sessions via cookies, login lasts for two hours
 // TODO: Future-development: Secure cookies!
 app.use(session({
@@ -49,8 +52,8 @@ const eventRoutes = require("./controllers/eventController.js");
 app.use("/api/events", eventRoutes)
 
 // Syncing our sequelize models and then starting our express app
-db.sequelize.sync({ force: false }).then(function() {
-  app.listen(PORT, function() {
+db.sequelize.sync({ force: false }).then(function () {
+  app.listen(PORT, function () {
     console.log("App listening on PORT " + PORT);
   });
 });
