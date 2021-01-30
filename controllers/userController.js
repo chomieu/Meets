@@ -117,7 +117,7 @@ router.get("/connect/:id", (req,res)=> {
       res.status(500).send(err);
     })
   } else {
-    res.send("Please make like a tree and leaf.")
+    res.send("Please sign in.")
   }
 })
 
