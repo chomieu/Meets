@@ -5,6 +5,7 @@ module.exports = function(sequelize, DataTypes) {
 
       username: {
         type: DataTypes.STRING,
+        unique:true,
         allowNull: false,
         unique: true,
         validate: {
@@ -17,6 +18,7 @@ module.exports = function(sequelize, DataTypes) {
         validate: {
           len: [8]
         }
+      
       },
       // email: {
       //   type: DataTypes.STRING,
@@ -68,5 +70,3 @@ module.exports = function(sequelize, DataTypes) {
 
     return User;
   };
-
-// TODO: add image to user column

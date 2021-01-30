@@ -10,7 +10,7 @@ const session = require("express-session")
 // Sets up the Express App
 // =============================================================
 const app = express();
-const PORT = process.env.PORT || 8080;
+const PORT = process.env.PORT || 3000;
 
 // Requiring our models for syncing
 const db = require("./models");
@@ -48,8 +48,8 @@ const userRoutes = require("./controllers/userController.js");
 app.use(userRoutes)
 
 // Review routes from joe's demo
-const reviewRoutes = require("./controllers/reviewController.js");
-app.use("/api/reviews", reviewRoutes)
+const eventRoutes = require("./controllers/eventController.js");
+app.use("/api/events", eventRoutes)
 
 // Syncing our sequelize models and then starting our express app
 db.sequelize.sync({ force: false }).then(function () {
@@ -58,4 +58,3 @@ db.sequelize.sync({ force: false }).then(function () {
   });
 });
 
-// just an app that takes input of name, activities, plans, and install all plans in table; boolean - private?; if not private others will be able to see it 
