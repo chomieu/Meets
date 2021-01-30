@@ -15,7 +15,8 @@ var PORT = process.env.PORT || 8080;
 var db = require("./models");
 
 // Requiring our routes
-require("./controllers/api-controller.js")(app);
+const eventRoutes = require("./controllers/eventController.js");
+app.use("/api/events", eventRoutes)
 // app.use(routes)
 
 
