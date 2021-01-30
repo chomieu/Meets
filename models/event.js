@@ -18,6 +18,7 @@ module.exports = function (sequelize, DataTypes) {
         location: {
             type: DataTypes.STRING,
             allowNull: false,
+            default: "Appointment",
             validate: {
                 len: [1]
             }

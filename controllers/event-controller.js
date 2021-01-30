@@ -1,6 +1,6 @@
 const express = require("express");
 const db = require("../models");
-// const bcrypt = require("bcrypt");
+const bcrypt = require("bcrypt");
 const router = express.Router();
 
 // use router.get router.post router.put router.delete
@@ -11,18 +11,15 @@ const router = express.Router();
 module.exports = function(app) {
 
   // GET route for getting all of the events and return them to user
-  app.get("/api/events", function(req, res) {
-    var query = {};
-    if (req.query.user_id) {
-      query.userId = req.query.user_id;
-    }
-    db.Event.findAll({
-      where: query
-    }).then(function(dbEvent) {
-      res.json(dbEvent);
+  router.get("/api/events", function(req, res) {
+    db.Event.findAll({}).then(function(dbEvent){
+      res.json(dbEvent)
+    }).catch(err =>{
+      console.log(err.message);
+      res.status(500).send(err.message)
     });
   });
-
+  
 
   // router.get("/myevents", (req,res)=>{
   //   if(!req.session.user){
