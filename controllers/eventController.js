@@ -71,8 +71,6 @@ const db = require("../models");
     router.delete("/:id", function(req,res){
       if(req.session.user){
         // Needs to pass user id of the event
-        console.log(req.session.user.id);
-          console.log(req.params);
         if(req.session.user.id===parseInt(req.params.id)){
           db.Event.destroy({
             where: {
