@@ -2,10 +2,25 @@ var express = require("express");
 
 var router = express.Router();
 
+const db = require('../models')
+
 // use router.get router.post router.put router.delete
 router.get("/", (req, res) => {
-    res.render("index")
+  res.render("index")
 })
+
+// router.get('/login', (req,res) => {
+//   res.render('login')
+// })
+
+// db.Review.findAll().then(data => {
+//   const jsonData = data.map(element => element.toJSON())
+//   const hbsObj = {
+//     reviews:jsonData
+//   }
+//   res.render('index',hbsObj)
+// })
+
 
 router.get("/register", (req, res) => {
     res.render("partials/register");
@@ -45,3 +60,33 @@ router.get("/settings", (req, res) => {
 
 // Export routes for server.js to use.
 module.exports = router;
+
+//login js file
+
+// $("#login").submit(event=>{
+//   event.preventDefault();
+//   $.post("/login",{
+//     username:$("#username").val(),
+//     password:$("#password").val()
+//   }).then(data => {
+//     console.log("Signed up!");
+//     window.location.href = '/'
+//   }).fail(err => {
+//     console.log("Signup failed!");
+//     console.log(err);
+//     alert("signup failed")
+//   })
+// })
+
+// $("#addReview").submit(event => {
+//   event.preventDefault();
+//   $.post('api/reviews', {
+//     title: $("#title").val(),
+//     reviews:$("#review").val(),
+//     score:$("#scpre").val()
+//   }).then(data => {
+//     window.location.href = '/'
+//   }).fail(err => {
+//     alert("review failed")
+//   })
+// })
