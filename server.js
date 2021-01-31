@@ -29,7 +29,7 @@ app.use(session({
   resave: false,
   saveUninitialize: false,
   cookie: {
-    maxAge: 1000*60*60*2
+    maxAge: 1000 * 60 * 60 * 2
   }
 }))
 
@@ -50,6 +50,10 @@ app.use(userRoutes)
 // Review routes from joe's demo
 const eventRoutes = require("./controllers/eventController.js");
 app.use("/api/events", eventRoutes)
+
+// HTML routes
+const html_routes = require("./controllers/html-controller.js");
+app.use(html_routes)
 
 // AI Routes
 const { WebhookClient } = require('dialogflow-fulfillment');
