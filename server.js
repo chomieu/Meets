@@ -56,10 +56,6 @@ const html_routes = require("./controllers/html-controller.js");
 app.use(html_routes)
 
 // AI Routes
-const { WebhookClient } = require('dialogflow-fulfillment');
-const { DateTime } = require('actions-on-google');
-const { response } = require('express');
-
 app.post('/api/input', (request, response) => {
   const projectId = 'meets-dnx9'; // projectId: ID of the GCP project where Dialogflow agent is deployed
   const sessionId = '123456'; // sessionId: String representing a random number or hashed user identifier
