@@ -1,0 +1,129 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    /* outline: 2px dotted green; */
+}
+
+:root {
+    --color-1: #1a535c;
+    --color-2: #4ecdc4;
+    --color-3: #f7fff7;
+    --color-4: #ff6b6b;
+    --color-5: #ffe66d;
+}
+
+main {
+    display: flex;
+    flex-flow: column nowrap;
+    align-items: center;
+}
+
+nav {
+    position: sticky;
+    top: 0;
+}
+
+.col {
+    margin: 0 1em;
+}
+
+.container {
+    min-height: 90vh;
+}
+
+.content {
+    padding: 10px;
+    width: 80%;
+}
+
+.userIcon {
+    width:30%;
+    border: 1px solid black;
+    border-radius: 100px;
+    background: var(--color-1);
+}
+
+.friend-box {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.5em;
+    padding-right: 1em;
+
+    margin: 1em 0;
+    border: 1px solid black;
+    border-radius: 5px;
+    background: var(--color-4);
+}
+
+.event-box {
+    margin: 1em 0;
+    padding: 1em;
+    /* max-width: 10em;
+    max-height: 10em; */
+    border: 1px solid black;
+    border-radius: 10px;
+}
+
+.event-header{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.event-title {
+    font-size: x-large;
+    font-weight: bold;
+    text-transform: uppercase;
+}
+
+.event-date {
+    font-size: large;
+}
+
+.hamburgerIcon span {
+    height: 5px;
+    width: 5px;
+    background: white;
+}
+
+.activePage {
+    background: var(--color-2);
+    color: var(--color-1);
+}
+
+.disable {
+    pointer-events: none;
+}
+
+.ai-interaction-box {
+    width: 10em;
+    height: 10em;
+    border: 1px solid black;
+    border-radius: 10px;
+    background: var(--color-5);
+    box-shadow: 2px 2px 6px black;
+}
+
+.ai-icon {
+    padding: 1em;
+    width: 80%;
+}
+
+.chatbox {
+    display: flex;
+    align-items: flex-end;
+    margin: 1em 0 ;
+    border: 1px solid black;
+    border-radius: 15px;
+    background: var(--color-2);
+}
+
+.chatbox form {
+    margin: 1em;
+    padding: 1em;
+    border-radius: 15px;
+    border: 2px solid black;
+    background: white;
+}

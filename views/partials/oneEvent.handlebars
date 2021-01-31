@@ -1,0 +1,42 @@
+<div class="wrapper">
+    {{> navbar }}
+    <div class="container">
+        <h1>One Event</h1>
+        <form>
+            <div class="checkboxes my-dflex my-justify-around">
+                <label>
+                    <input type="checkbox" value="true" />
+                    <span>Public Event</span>
+                </label>
+                <label>
+                    <input type="checkbox" value="true" />
+                    <span>Indoor</span>
+                </label>
+            </div>
+            <input type="text" name="name" id="" placeholder="Name" />
+            <input type="number" name="max_people" id="" placeholder="Max number of People" />
+            <input type="text" name="location" id="" placeholder="location" />
+            <div class="input-field">
+                <select>
+                    <option value="" selected disabled>Pick a Category</option>
+                    <option value="">Causual</option>
+                    <option value="">Sporting</option>
+                    <option value="">Music</option>
+                    <option value="">Food</option>
+                    <option value="">Party</option>
+                    <option value="">Meeting</option>
+                    <option value="">Online</option>
+                    <option value="">Conference</option>
+                    <option value="">Family</option>
+                    <option value="">Appointment</option>
+                </select>
+            </div>
+            <button class="btn right my-bc4">Save</button>
+        </form>
+        <div class="btns my-mt-4">
+            <a class="btn" href="/event/edit"> Edit </a>
+            <a class="btn" href=""> Delete </a>
+            <a class="btn" href=""> Share </a>
+        </div>
+    </div>
+</div>

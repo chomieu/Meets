@@ -1,21 +1,60 @@
-const express = require('express');
-const bodyParser = require('body-parser')
+// *****************************************************************************
+// Server.js - This file is the initial starting point for the Node/Express server.
+//
+// ******************************************************************************
+// *** Dependencies
+// =============================================================
+const express = require("express");
+const session = require("express-session")
+
+// Sets up the Express App
+// =============================================================
+const app = express();
+const PORT = process.env.PORT || 3000;
+
+// Requiring our models for syncing
+const db = require("./models");
+
+// Sets up the Express app to handle data parsing
+app.use(express.urlencoded({ extended: true }));
+app.use(express.json());
+
+// Static directory
+app.use(express.static("public"));
+
+// Allows for login sessions via cookies, login lasts for two hours
+// TODO: Future-development: Secure cookies!
+app.use(session({
+  secret: 'keyboard cat',
+  resave: false,
+  saveUninitialize: false,
+  cookie: {
+    maxAge: 1000*60*60*2
+  }
+}))
+
+// Set Handlebars.
+const exphbs = require("express-handlebars");
+
+app.engine("handlebars", exphbs({ defaultLayout: "main" }));
+app.set("view engine", "handlebars");
+
+// Requiring our routes for user dialogue
+const userDialogueRoutes = require("./controllers/userDialogueController.js");
+app.use("/api", userDialogueRoutes)
+
+// Requiring our routes for the user
+const userRoutes = require("./controllers/userController.js");
+app.use(userRoutes)
+
+// Review routes from joe's demo
+const eventRoutes = require("./controllers/eventController.js");
+app.use("/api/events", eventRoutes)
+
+// AI Routes
 const { WebhookClient } = require('dialogflow-fulfillment');
 const { DateTime } = require('actions-on-google');
 const { response } = require('express');
-const path = require('path');
-const d = new Date()
-const app = express()
-const port = process.env.PORT || 8080
-
-app.use(express.urlencoded({ extended: true }))
-app.use(express.json())
-app.use(bodyParser.json())
-app.use(express.static("public"))
-
-app.get('/', (request, response) => {
-  response.sendFile(path.join(__dirname + "/index.html"))
-})
 
 app.post('/api/input', (request, response) => {
   const projectId = 'meets-dnx9'; // projectId: ID of the GCP project where Dialogflow agent is deployed
@@ -52,7 +91,7 @@ app.post('/api/input', (request, response) => {
         intentResponse = await detectIntent(projectId, sessionId, query, context, languageCode);
         console.log('Detected intent');
         switch (intentResponse.queryResult.intent.displayName) {
-          case "Past": response.send(`${intentResponse.queryResult.fulfillmentText} at ${d.getHours() % 12} PM $wag`); break
+          case "Past": response.send(`${intentResponse.queryResult.fulfillmentText} at 10PM $wag`); break
           default: response.send(intentResponse.queryResult.fulfillmentText)
         }
         // Use the context from this response for next queries
@@ -65,6 +104,10 @@ app.post('/api/input', (request, response) => {
   executeQueries(projectId, sessionId, queries, languageCode);
 })
 
-app.listen(port, () => {
-  console.log(`Listening on port ${port}`)
-})
+// Syncing our sequelize models and then starting our express app
+db.sequelize.sync({ force: false }).then(function () {
+  app.listen(PORT, function () {
+    console.log("App listening on PORT " + PORT);
+  });
+});
+
