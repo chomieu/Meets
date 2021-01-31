@@ -1,8 +1,12 @@
 const { Model } = require('sequelize/types')
-var apiController = require('./api-controller')
-var htmlController = require('./html-controller')
+const eventController = require('./eventController')
+const htmlController = require('./html-controller')
+const userController = require('./userController')
+const userDialogueController = require('./userDialogueController')
 
 Model.exports = {
-    apiController,
-    htmlController
+    eventController,
+    htmlController,
+    userController,
+    userDialogueController
 }
