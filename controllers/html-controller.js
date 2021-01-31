@@ -87,8 +87,24 @@ router.get("/profile", (req, res) => {
 
 // update username/password/first name/last name/etc
 // query for single user who is logged in
-router.get("/settings", (req, res) => {
-    res.render("partials/settings");
+router.get("/settings/:id", (req, res) => {
+  db.User.findOne({
+    where: {
+      id:req.params.id
+    }
+  }).then(dbUser => {
+    // take data that is an object with all of the users associations, turn it into JSON
+    const userJson = userData.toJSON();
+    // make an object that is just the usernames of the associations
+    const hbsObj = {
+      username:userJson.username,
+      password:userJson.password
+    }
+    //pass that object to the frontend
+    res.render("partials/settings", hbsObj);
+  }).catch(err => {
+    res.status(500).json(err)
+  })
 })
 
 // Export routes for server.js to use.
