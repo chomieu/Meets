@@ -149,22 +149,23 @@ router.delete("/api/users/:id", (req, res) => {
   });
 });
 
-// route for connect/follow button
-router.get("/connect/:id", (req, res) => {
-  if (req.session.user) {
-    db.User.findOne({
-      where: {
-        id: req.session.user.id
-      }
-    }).then(userData => {
-      userData.addAssociate(req.params.id)
-      res.json(userData)
-    }).catch(err => {
-      res.status(500).send(err);
-    })
-  } else {
-    res.send("Please sign in.")
-  }
-})
+// TODO: I wrote this twice?
+// // route for connect/follow button
+// router.get("/connect/:id", (req, res) => {
+//   if (req.session.user) {
+//     db.User.findOne({
+//       where: {
+//         id: req.session.user.id
+//       }
+//     }).then(userData => {
+//       userData.addAssociate(req.params.id)
+//       res.json(userData)
+//     }).catch(err => {
+//       res.status(500).send(err);
+//     })
+//   } else {
+//     res.send("Please sign in.")
+//   }
+// })
 
 module.exports = router;
