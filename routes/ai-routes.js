@@ -1,13 +1,12 @@
-var db = require("../models");
+const db = require("../models");
+const dialogflow = require('@google-cloud/dialogflow'); 
 
 module.exports = function (app) {
-  // AI Routes
   app.post('/api/input', (request, response) => {
-    const projectId = 'meets-dnx9'; // projectId: ID of the GCP project where Dialogflow agent is deployed
-    const sessionId = '123456'; // sessionId: String representing a random number or hashed user identifier
-    const queries = [request.body.input] // queries: A set of sequential queries to be send to Dialogflow agent for Intent Detection
-    const languageCode = 'en'; // languageCode: Indicates the language Dialogflow agent should use to detect intents
-    const dialogflow = require('@google-cloud/dialogflow'); // Imports the Dialogflow library
+    const projectId = 'meets-dnx9'; 
+    const sessionId = '123456'; 
+    const queries = [request.body.input] 
+    const languageCode = 'en'; 
     const sessionClient = new dialogflow.SessionsClient(); // Instantiates a session client
 
     async function detectIntent(projectId, sessionId, query, contexts, languageCode) {
@@ -27,32 +26,45 @@ module.exports = function (app) {
       return responses[0];
     }
 
+    // Find user's friend in the request and get their events
+    async function getData(friend) {
+      db.User.findOne({
+        where: {
+          name: friend
+        },
+        include: [db.Event]
+      }).then(function(dbUser) {
+        response.json(dbUser)
+      })
+    }
+
     async function executeQueries(projectId, sessionId, queries, languageCode) {
       // Keeping the context across queries let's us simulate an ongoing conversation with the bot
-      let context;
-      let intentResponse;
+      let context, aiRes, fromDB
       for (const query of queries) {
         try {
-          intentResponse = await detectIntent(projectId, sessionId, query, context, languageCode);
-          switch (intentResponse.queryResult.intent.displayName) {
+          aiRes = await detectIntent(projectId, sessionId, query, context, languageCode);
+          fromDB = await getData(aiRes.queryResult.parameters.person.name)
+          // write a function to choose 1 (past/future/now) event from DB or respond that there's no plan
+          function matchIntent(fromDB) {
+            var eventJSON = fromDB.Event[0]
+          }
+          switch (aiRes.queryResult.intent.displayName) {
             case "Boss":
-              response.send(`${intentResponse.queryResult.fulfillmentText} `) // pass userID here
+              response.send(`${aiRes.queryResult.fulfillmentText} `) // pass userID (should be same as sessionID) here
             case "Past":
-              // write function
-              response.send(`${intentResponse.queryResult.fulfillmentText} at 10PM $wag`)
+              response.send(`${aiRes.queryResult.fulfillmentText} at 10PM $wag`)
               break
             case "Now":
-              // write function
-              response.send(`${intentResponse.queryResult.fulfillmentText} would you like to know what's on their schedule?`)
+              response.send(`${aiRes.queryResult.fulfillmentText} would you like to know what's on their schedule?`)
               break
             case "Future":
-              // write function
-              response.send(`${intentResponse.queryResult.fulfillmentText} would you like to join them?`)
+              response.send(`${aiRes.queryResult.fulfillmentText} would you like to join them?`)
               break
-            default: response.send(intentResponse.queryResult.fulfillmentText)
+            default: response.send(aiRes.queryResult.fulfillmentText)
           }
           // Use the context from this response for next queries
-          context = intentResponse.queryResult.outputContexts;
+          context = aiRes.queryResult.outputContexts;
         } catch (error) {
           console.log(error);
         }
@@ -62,43 +74,3 @@ module.exports = function (app) {
   })
 };
 
-// app.get("/api/authors", function (req, res) {
-//     // Here we add an "include" property to our options in our findAll query
-//     // We set the value to an array of the models we want to include in a left outer join
-//     // In this case, just db.Post
-//     db.Author.findAll({
-//         include: [db.Post]
-//     }).then(function (dbAuthor) {
-//         res.json(dbAuthor);
-//     });
-// });
-
-// app.get("/api/authors/:id", function (req, res) {
-//     // Here we add an "include" property to our options in our findOne query
-//     // We set the value to an array of the models we want to include in a left outer join
-//     // In this case, just db.Post
-//     db.Author.findOne({
-//         where: {
-//             id: req.params.id
-//         },
-//         include: [db.Post]
-//     }).then(function (dbAuthor) {
-//         res.json(dbAuthor);
-//     });
-// });
-
-// app.post("/api/authors", function (req, res) {
-//     db.Author.create(req.body).then(function (dbAuthor) {
-//         res.json(dbAuthor);
-//     });
-// });
-
-// app.delete("/api/authors/:id", function (req, res) {
-//     db.Author.destroy({
-//         where: {
-//             id: req.params.id
-//         }
-//     }).then(function (dbAuthor) {
-//         res.json(dbAuthor);
-//     });
-// });
