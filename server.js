@@ -10,7 +10,7 @@ const session = require("express-session")
 // Sets up the Express App
 // =============================================================
 const app = express();
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 8080;
 
 // Requiring our models for syncing
 const db = require("./models");
@@ -27,7 +27,7 @@ app.use(express.static("public"));
 app.use(session({
   secret: 'keyboard cat',
   resave: false,
-  saveUninitialize: false,
+  saveUninitialized: false,
   cookie: {
     maxAge: 1000*60*60*2
   }

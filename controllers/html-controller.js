@@ -7,21 +7,20 @@ router.get("/", (req, res) => {
   res.render("index")
 })
 
-// router.get('/login', (req,res) => {
-//   res.render('login')
-// })
 
-// db.Review.findAll().then(data => {
-//   const jsonData = data.map(element => element.toJSON())
-//   const hbsObj = {
-//     reviews:jsonData
-//   }
-//   res.render('index',hbsObj)
-// })
-
-// no data from backend sent to this route
+// Signup route
 router.get("/signup", (req, res) => {
-    res.render("partials/register");
+    res.render("partials/register", {
+      user:req.session.user
+    })
+})
+
+// Login route
+//TODO: need a login handlebars file?
+router.get("/login", (req, res) => {
+    res.render("partials/login", {
+      user:req.session.user
+    })
 })
 
 // list of the upcoming events for user, top Y?
@@ -49,8 +48,25 @@ router.get("/event/edit", (req, res) => {
 })
 
 // findAll where you have an assciation with them
-router.get("/friends", (req, res) => {
-    res.render("partials/friends");
+router.get("/friends", (req, res) => { // use friends/:id if they don't need to be logged in
+  // find a single user that is logged in
+  db.User.findOne({
+    where:{
+      id:req.session.user.id //req.params.id if they don't need to be logged in
+    },
+    include:[db.UserAssociate]
+  }).then(userData => {
+    // take data that is an object with all of the users associations, turn it into JSON
+    const userJson = userData.toJSON();
+    // make an object that is just the usernames of the associations
+    const hbsObj = {
+      username:userJson.username
+    }
+    //pass that object to the frontend
+    res.render("partials/friends", hbsObj);
+  }).catch(err => {
+    res.status(500).json(err)
+  })
 })
 
 // findOne user, findAll events for that user
@@ -106,4 +122,17 @@ module.exports = router;
 //   }).fail(err => {
 //     alert("review failed")
 //   })
+// })
+
+
+// router.get('/login', (req,res) => {
+//   res.render('login')
+// })
+
+// db.Review.findAll().then(data => {
+//   const jsonData = data.map(element => element.toJSON())
+//   const hbsObj = {
+//     reviews:jsonData
+//   }
+//   res.render('index',hbsObj)
 // })
