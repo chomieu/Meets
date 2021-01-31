@@ -113,17 +113,30 @@ nav {
 
 .chatbox {
     display: flex;
-    align-items: flex-end;
+    flex-direction: column;
+    justify-content: flex-end;
     margin: 1em 0 ;
+    padding: 1em;
     border: 1px solid black;
     border-radius: 15px;
     background: var(--color-2);
 }
 
 .chatbox form {
-    margin: 1em;
+    margin-top: 1em;
     padding: 1em;
     border-radius: 15px;
     border: 2px solid black;
     background: white;
+}
+
+.btn {
+    margin-top: 0.5em;
+    margin-left: 0.25em;
+}
+
+p {
+    font-family: "Titillium Web";
+    font-size: 20px;
+    overflow-wrap: break-word;
 }
