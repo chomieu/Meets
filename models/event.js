@@ -19,7 +19,7 @@ module.exports = function (sequelize, DataTypes) {
         // location: {
         //     type: DataTypes.STRING,
         //     allowNull: false,
-        //     default: "Appointment",
+        //
         //     validate: {
         //         len: [1]
         //     }
@@ -27,8 +27,9 @@ module.exports = function (sequelize, DataTypes) {
         // category: {
         //     type: DataTypes.STRING,
         //     allowNull: false,
+        //     defaultValue: "Appointment",
         //     validate: {
-        //         len: [1]
+        //         len: [1],
         //     }
         // },
         // isIndoor: DataTypes.BOOLEAN,
@@ -38,6 +39,10 @@ module.exports = function (sequelize, DataTypes) {
         //     validate: {
         //         len: [1]
         //     }
+        // },
+        // description: {
+        //     type: DataTypes.TEXT,
+        //     allowNull: true,
         // },
     });
     Event.associate = function (models) {

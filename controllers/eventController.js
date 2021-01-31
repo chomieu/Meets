@@ -51,7 +51,6 @@ const db = require("../models");
     // PUT route to UPDATE events
     router.put("/", function(req, res){
       if(req.session.user){
-        if(req.session.user.id===parseInt(req.params.id)){
       db.Event.update(req.body,
         {
           where: {
@@ -63,16 +62,34 @@ const db = require("../models");
           console.log(err.message);
           res.status(500).send(err.message)
         })
-      }
       } else{
         res.send("please sign in")
       }
     })
-    
+    // router.get("/:id", (req, res) => {
+    //   db.Event.findOne({
+    //     where: {
+    //       id: req.params.id
+    //     }
+    //   }).then(data => {
+    //     const jsonData = data.Event.map(obj => obj.toJSON())
+    //     const hbsobj = {
+    //       events: jsonData
+    //     }
+    //     console.log(req.params.id);
+    //     res.json(data);
+    //     res.render('index', hbsobj)
+    //   }).catch(err => {
+    //     console.log((err.message));
+    //     res.status(500).send(err.message);
+    //   });
+    // });
     // Delete an event
     router.delete("/:id", function(req,res){
       if(req.session.user){
         // Needs to pass user id of the event
+        console.log(req.session.user.id);
+          console.log(req.params);
         if(req.session.user.id===parseInt(req.params.id)){
           db.Event.destroy({
             where: {
