@@ -6,13 +6,13 @@ $(function () {
     // Make sure to preventDefault on a submit event
     event.preventDefault()
     var input = { input: $("#input").val() }
-    $("#history").append($("<li>", { class: "col s12", text: $("#input").val() }))
+    $("#history").append($("<p>", { class: "col s12", text: $("#input").val() }))
     // Send the POST request
     $.ajax("/api/input", {
       type: "POST",
       data: input
     }).then((res) => {
-      $("#history").append($("<li>", { class: "col s12 cyan-text", text: res }))
+      $("#history").append($("<p>", { class: "col s12 white-text", text: res }))
       $("#input").val("")
     }
     );
@@ -37,14 +37,14 @@ $(function () {
         $("#recBtn").prop("disabled", false)
 
         var input = { input: result.privText }
-        $("#history").append($("<li>", { class: "col s12", text: result.privText }))
+        $("#history").append($("<p>", { class: "col s12", text: result.privText }))
 
         // Send the POST request
         $.ajax("/api/input", {
           type: "POST",
           data: input
         }).then((res) => {
-            $("#history").append($("<li>", { class: "col s12 cyan-text", text: res }))
+            $("#history").append($("<p>", { class: "col s12 white-text", text: res }))
           }
         );
         // Log the result.
