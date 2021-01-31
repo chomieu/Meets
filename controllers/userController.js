@@ -74,7 +74,7 @@ router.put("/connect", (req, res) => {
 })
 
 // DELETE route to remove connections between users
-router.put("/disconnect", (req, res) => {
+router.delete("/disconnect", (req, res) => {
   //TODO: if (req.session.user) {
     // find the logged in user
   db.User.findOne({
