@@ -1,11 +1,44 @@
-var feedback = function(res) {
-  if (res.success) {
-    var imgUrl = res.data.link
-    $("#pfp").html(`<p>${imgUrl}</p> <img src="${imgUrl}">`)
-  }
-}
+$('document').ready(function () {
+  $('input[type=file]').on('change', function () {
+    var $files = $(this).get(0).files;
 
-new Imgur({
-  clientid: 'dedf89882fddbf0',
-  callback: feedback
-})
+    if ($files.length) {
+      // Reject big files
+      if ($files[0].size > $(this).data('max-size') * 1024) {
+        console.log('Please select a smaller file');
+        return false;
+      }
+
+      // Begin file upload
+      console.log('Uploading file to Imgur..');
+
+      // Replace ctrlq with your own API key
+      var apiUrl = 'https://api.imgur.com/3/image';
+      var apiKey = 'dedf89882fddbf0';
+
+      var settings = {
+        async: false,
+        crossDomain: true,
+        processData: false,
+        contentType: false,
+        type: 'POST',
+        url: apiUrl,
+        headers: {
+          Authorization: 'Client-ID ' + apiKey,
+          Accept: 'application/json',
+        },
+        mimeType: 'multipart/form-data',
+      };
+
+      var formData = new FormData();
+      formData.append('image', $files[0]);
+      settings.data = formData;
+
+      // Response contains stringified JSON
+      // Image URL available at response.data.link
+      $.ajax(settings).done(function (response) {
+        console.log(response);
+      });
+    }
+  });
+});
