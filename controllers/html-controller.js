@@ -95,7 +95,7 @@ router.get("/settings/:id", (req, res) => {
   }).then(dbUser => {
     // take data that is an object with all of the users associations, turn it into JSON
     const userJson = userData.toJSON();
-    // make an object that is just the usernames of the associations
+    // make an object that is just the username and password for editing?
     const hbsObj = {
       username:userJson.username,
       password:userJson.password
