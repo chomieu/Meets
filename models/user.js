@@ -63,8 +63,8 @@ module.exports = function (sequelize, DataTypes) {
       foreignKey: {
         allowNull: false
       }
-    })
-    User.belongsToMany(models.User, { as: 'Associate', through: 'UserAssociate' })
+    });
+    User.belongsToMany(models.User, { as: 'Associate', through: 'UserAssociate' });
   };
 
   // utilize bcrypt to encrypt password

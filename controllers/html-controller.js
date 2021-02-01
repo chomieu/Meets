@@ -7,25 +7,18 @@ router.get("/", (req, res) => {
   res.render("index")
 })
 
-
 // Signup route
 router.get("/signup", (req, res) => {
-  res.render("partials/register", {
-    user: req.session.user
-  })
+  res.render("partials/register")
 })
 
 // Login route
-//TODO: need a login handlebars file?
 router.get("/login", (req, res) => {
-  res.render("partials/login", {
-    user: req.session.user
-  })
+  res.render("partials/login")
 })
 
 // list of the upcoming events for user, top Y?
 // TODO: get request to fetch data and render. Reference date(ORDER BY DESC) and userid tied to event 
-
 router.get("/api/allEvents/:id", function (req, res) {
   // console.log(req.params);
   db.Event.findAll({
@@ -44,37 +37,36 @@ router.get("/api/allEvents/:id", function (req, res) {
 });
 
 
-// router.get()
-// toggle to include others events
-// list of X connections
-// chat - when AI is asked for past/future intent of TARGETNAME - query TARGETNAME for event in past/future -
-// maybe a POST request to the AI handler with a GET request to the database nested inside?
-
+// GET route to fetch associations and events from the database to display on the dashboard
 router.get("/dashboard/:id", (req, res) => {
   // TODO: Toggle to findAll friends events instead
   // findOne user and all of their events
 
   // AI fetches a user and target feeds into this call
+
   db.User.findOne({
     where: {
       id: req.params.id //req.session.user.id if they need to be logged in
     },
     include: [{
       model:db.Event,
-      // order: [dateTime, 'DESC'],
-      limit: 1
-    },
-    {
-      model: db.User,
-      as: 'Associate',
-      limit: 1 // number of connections sent
-      // order: [upcoming_plans, 'DESC']
-    }],
-
+      limit: 10
+    }]
   }).then(userData => {
-    res.json(userData)
-    // res.render("partials/dashboard");
+    userData.getAssociate(
+      {
+        limit: 2, // values can be changed
+        include: [{
+          model:db.Event,
+          limit: 2 // value can be changed
+        }]
+      }
+      ).then(aSockData => {
+      // res.json(aSockData)
+      res.render("partials/dashboard", aSockData);
+    })
   }).catch(err => {
+    console.log(err);
     res.status(500).json(err)
   })
 })

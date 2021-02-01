@@ -33,13 +33,13 @@ module.exports = function (sequelize, DataTypes) {
         //     }
         // },
         // isIndoor: DataTypes.BOOLEAN,
-        dateTime: {
-            type: DataTypes.DATE,
-            allowNull: false,
-            validate: {
-                len: [1]
-            }
-        },
+        // dateTime: {
+        //     type: DataTypes.DATE,
+        //     allowNull: false,
+        //     validate: {
+        //         len: [1]
+        //     }
+        // },
         // description: {
         //     type: DataTypes.TEXT,
         //     allowNull: true,
