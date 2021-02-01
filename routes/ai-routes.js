@@ -40,12 +40,12 @@ module.exports = function (app) {
       return responses[0];
     }
 
-    // Find user's friend in the request and get their events
+    // // Find user's friend in the request and get their events
     // async function getData(friend, intent) {
     //   // grab one from past/future/now depending on time
     //   db.User.findOne({
     //     where: {
-    //       name: friend
+    //       username: friend
     //     },
     //     include: [db.Event]
     //   }).then(function(dbUser) {
@@ -59,11 +59,13 @@ module.exports = function (app) {
       for (const query of queries) {
         try {
           aiRes = await (await detectIntent(projectId, sessionId, query, context, languageCode));
+
           // fromDB = await getData(aiRes.parameters.person.name, aiRes.intent.displayName)
-          // write a function to choose 1 (past/future/now) event from DB or respond that there's no plan
+          // // write a function to choose 1 (past/future/now) event from DB or respond that there's no plan
           // function matchIntent(fromDB) {
           //   var eventJSON = fromDB.Event[0]
           // }
+
           switch (aiRes.queryResult.intent.displayName) {
             case "Echo":
               util.promisify(fs.writeFile)("ai-audio.wav", aiRes.outputAudio, 'binary');

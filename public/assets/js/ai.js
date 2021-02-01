@@ -1,8 +1,8 @@
 var SpeechSDK
 var recognizer
 
-$(function () {
-  $("#submitBtn").on("click", function (event) {
+$('document').ready(function () {
+  $(".aiForm").on("click", function (event) {
     // Make sure to preventDefault on a submit event
     event.preventDefault()
     var toAI = { input: $("#input").val() }
@@ -13,7 +13,7 @@ $(function () {
       type: "POST",
       data: toAI
     }).then((res) => {
-      $("#history").append($("<p>", { class: "col s12 white-text", text: res }))
+      $("#history").append($("<p>", { class: "col s12 green-text", text: res }))
     }
     );
   });
@@ -44,7 +44,7 @@ $(function () {
           type: "POST",
           data: toAI
         }).then((res) => {
-            $("#history").append($("<p>", { class: "col s12 white-text", text: res }))
+            $("#history").append($("<p>", { class: "col s12 green-text", text: res }))
           }
         );
         // Log the result.
