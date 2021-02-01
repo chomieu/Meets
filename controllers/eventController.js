@@ -41,6 +41,8 @@ router.post("/", function (req, res) {
     console.log(req.body)
     db.Event.create(req.body).then(function (dbEvent) {
       res.json(dbEvent)
+      db.Event.findAll() // find all events for the signed in user, count the total # of events
+      db.User.update() // update the user with the total # of events
     }).catch(err => {
       console.log(err.message);
       res.status(500).send(err.message)

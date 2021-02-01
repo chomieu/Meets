@@ -27,7 +27,7 @@ app.use(express.static("public"));
 app.use(session({
   secret: 'keyboard cat',
   resave: false,
-  saveUninitialize: false,
+  saveUninitialized: false,
   cookie: {
     maxAge: 1000 * 60 * 60 * 2
   }
@@ -117,4 +117,3 @@ db.sequelize.sync({ force: false }).then(function () {
     console.log("App listening on PORT " + PORT);
   });
 });
-
