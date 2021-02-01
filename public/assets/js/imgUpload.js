@@ -12,32 +12,23 @@ $('document').ready(function () {
       // Begin file upload
       console.log('Uploading file to Imgur..');
 
-      // Replace ctrlq with your own API key
-      var apiUrl = 'https://api.imgur.com/3/image';
-      var apiKey = 'dedf89882fddbf0';
-
-      var settings = {
-        async: false,
-        crossDomain: true,
-        processData: false,
-        contentType: false,
-        type: 'POST',
-        url: apiUrl,
-        headers: {
-          Authorization: 'Client-ID ' + apiKey,
-          Accept: 'application/json',
-        },
-        mimeType: 'multipart/form-data',
-      };
-
       var formData = new FormData();
       formData.append('image', $files[0]);
-      settings.data = formData;
 
       // Response contains stringified JSON
       // Image URL available at response.data.link
-      $.ajax(settings).done(function (response) {
+      $.ajax({
+        type: "POST",
+        url: "https://api.imgur.com/3/image",
+        data: formData,
+        processData: false,
+        contentType: false,
+        headers: {
+          "Authorization": "Client-ID 08bc9cecc19e296",
+        }
+      }).done(function (response) {
         console.log(response);
+        console.log("done")
       });
     }
   });
