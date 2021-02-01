@@ -47,6 +47,9 @@ app.use("/api", userDialogueRoutes)
 const userRoutes = require("./controllers/userController.js");
 app.use(userRoutes)
 
+const htmlRoutes = require("./controllers/html-controller.js");
+app.use(htmlRoutes);
+
 // Review routes from joe's demo
 const eventRoutes = require("./controllers/eventController.js");
 app.use("/api/events", eventRoutes)
