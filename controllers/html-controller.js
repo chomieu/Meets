@@ -68,9 +68,9 @@ router.get("/dashboard/:id", (req, res) => {
         }]
       }
     ).then(aSockData => {
-      console.log('-------------------');
-      console.log(aSockData);
-      console.log('-------------------');
+      // console.log('-------------------');
+      // console.log(aSockData);
+      // console.log('-------------------');
       // console.log(userData);
       // res.json(aSockData)
       const hbsObj = {
@@ -78,8 +78,8 @@ router.get("/dashboard/:id", (req, res) => {
         friends: aSockData
       }
       console.log(hbsObj);
-      res.json(hbsObj)
-      // res.render("partials/dashboard", hbsObj);
+      // res.json(hbsObj)
+      res.render("partials/dashboard", hbsObj);
     })
   }).catch(err => {
     console.log(err);
