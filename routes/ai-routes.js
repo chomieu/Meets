@@ -27,44 +27,45 @@ module.exports = function (app) {
     }
 
     // Find user's friend in the request and get their events
-    async function getData(friend) {
-      db.User.findOne({
-        where: {
-          name: friend
-        },
-        include: [db.Event]
-      }).then(function(dbUser) {
-        response.json(dbUser)
-      })
-    }
+    // async function getData(friend, intent) {
+    //   // grab one from past/future/now depending on time
+    //   db.User.findOne({
+    //     where: {
+    //       name: friend
+    //     },
+    //     include: [db.Event]
+    //   }).then(function(dbUser) {
+    //     response.json(dbUser)
+    //   })
+    // }
 
     async function executeQueries(projectId, sessionId, queries, languageCode) {
       // Keeping the context across queries let's us simulate an ongoing conversation with the bot
       let context, aiRes, fromDB
       for (const query of queries) {
         try {
-          aiRes = await detectIntent(projectId, sessionId, query, context, languageCode);
-          fromDB = await getData(aiRes.queryResult.parameters.person.name)
+          aiRes = await (await detectIntent(projectId, sessionId, query, context, languageCode)).queryResult;
+          // fromDB = await getData(aiRes.parameters.person.name, aiRes.intent.displayName)
           // write a function to choose 1 (past/future/now) event from DB or respond that there's no plan
-          function matchIntent(fromDB) {
-            var eventJSON = fromDB.Event[0]
-          }
-          switch (aiRes.queryResult.intent.displayName) {
+          // function matchIntent(fromDB) {
+          //   var eventJSON = fromDB.Event[0]
+          // }
+          switch (aiRes.intent.displayName) {
             case "Boss":
-              response.send(`${aiRes.queryResult.fulfillmentText} `) // pass userID (should be same as sessionID) here
+              response.send(`${aiRes.fulfillmentText} `) // pass userID (should be same as sessionID) here
             case "Past":
-              response.send(`${aiRes.queryResult.fulfillmentText} at 10PM $wag`)
+              response.send(`${aiRes.fulfillmentText} at 10PM $wag`)
               break
             case "Now":
-              response.send(`${aiRes.queryResult.fulfillmentText} would you like to know what's on their schedule?`)
+              response.send(`${aiRes.fulfillmentText} would you like to know what's on their schedule?`)
               break
             case "Future":
-              response.send(`${aiRes.queryResult.fulfillmentText} would you like to join them?`)
+              response.send(`${aiRes.fulfillmentText} would you like to join them?`)
               break
-            default: response.send(aiRes.queryResult.fulfillmentText)
+            default: response.send(aiRes.fulfillmentText)
           }
           // Use the context from this response for next queries
-          context = aiRes.queryResult.outputContexts;
+          context = aiRes.outputContexts;
         } catch (error) {
           console.log(error);
         }
