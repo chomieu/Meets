@@ -29,6 +29,24 @@ router.get("/signup", (req, res) => {
 // list of the upcoming events for user, top Y?
 // TODO: get request to fetch data and render. Reference date(ORDER BY DESC) and userid tied to event 
 
+router.get("/api/allEvents/:id", function (req, res) {
+  // console.log(req.params);
+  db.Event.findAll({
+    where: {
+      id: req.params.id
+    },
+    order: [
+      ['dateTime', "DESC"]
+    ]
+  }).then(function (dbEvent) {
+    res.render('./partials/events', dbEvent)
+  }).catch(err => {
+    console.log(err.message);
+    res.status(500).send(err.message)
+  });
+});
+
+
 // router.get()
 // toggle to include others events
 // list of X connections
@@ -38,33 +56,75 @@ router.get("/dashboard", (req, res) => {
   res.render("partials/dashboard");
 })
 
-// takes you to a single event?
 // find one single event and all the associated data
-// TODO: findOne()
-
 router.get("/api/events/:id", (req, res) => {
-  db.Event.findOne({
+  if (req.session.user) {
+    db.Event.findOne({
+      where: {
+        id: req.params.id
+      }
+    }).then(function (dbEvent) {
+      const dbEventsJson = dbEvent.toJSON()
+      const hbsobj = {
+        events: dbEventsJson
+      }
+      console.log(dbEventsJson);
+      console.log(hbsobj);
+      res.render('./partials/oneEvent', hbsobj)
+      // console.log(req.params.id);
+      // res.json(data);
+
+    }).catch(err => {
+      console.log((err.message));
+      res.status(500).send(err.message);
+    });
+  } else {
+    res.send("please sign in")
+  }
+})
+
+// friends activities - query the user's associations, then query the associations events and return the Z events for them at that time (of the original event)
+
+router.get("/api/friendEvents/:id", (req, res) => {
+  db.User.findOne({
     where: {
       id: req.params.id
-    }
-  }).then(data => {
-    const jsonData = data.map(element => element.toJSON())
+      // swap with req.session.user.id if they need to be logged in
+    },
+    include: [{ 
+      model: db.User, 
+      as: 'Associate',
+      include: [db.Event]
+    }]
+    // [{
+
+      // model: db.UserAssociate,
+      // include: [db.Event]
+    // }]
+
+  }).then(function (dbAssociate) {
+    const dbAssociateJson = dbAssociate.toJSON()
     const hbsobj = {
-      events: jsonData
+      events: dbAssociateJson
     }
-    console.log(req.params.id);
-    // res.json(data);
-    res.render('index', hbsobj)
+    // console.log(dbEventsJson);
+    // console.log(hbsobj);
+    res.render('./partials/oneFriend', hbsobj)
   }).catch(err => {
-    console.log((err.message));
-    res.status(500).send(err.message);
-  });
-});
-// friends activities - query the user's associations, then query the associations events and return the Z events for them at that time (of the original event)
+    console.log(err.message);
+    res.status(500).send(err.message)
+  })
+})
+
 // query for any associate that has an event at the same time
 router.get("/events", (req, res) => {
   res.render("partials/events");
 })
+
+
+
+
+
 
 // findOne for a single event, then check to make sure that you are logged in and that you are the admin
 // TODO: findOne() event while ensuring logged in userID and userID who created event are the same 
