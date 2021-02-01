@@ -8,14 +8,14 @@ $(function () {
     var input = { input: $("#input").val() }
     $("#history").append($("<p>", { class: "col s12", text: $("#input").val() }))
     // Send the POST request
-    $.ajax("/api/input", {
-      type: "POST",
-      data: input
-    }).then((res) => {
-      $("#history").append($("<p>", { class: "col s12 white-text", text: res }))
-      $("#input").val("")
-    }
-    );
+    // $.ajax("/api/input", {
+    //   type: "POST",
+    //   data: input
+    // }).then((res) => {
+    //   $("#history").append($("<p>", { class: "col s12 white-text", text: res }))
+    //   $("#input").val("")
+    // }
+    // );
   });
 
   $("#recBtn").on("click", function () {
@@ -44,12 +44,12 @@ $(function () {
           type: "POST",
           data: input
         }).then((res) => {
-            $("#history").append($("<p>", { class: "col s12 white-text", text: res }))
-          }
+          $("#history").append($("<p>", { class: "col s12 white-text", text: res }))
+        }
         );
         // Log the result.
         window.console.log(result)
-        
+
 
         // Close the SpeechRecognizer object, and set the variable to undefined.
         recognizer.close();
