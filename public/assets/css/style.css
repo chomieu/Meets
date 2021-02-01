@@ -37,7 +37,7 @@ nav {
 }
 
 .userIcon {
-    width:30%;
+    width: 30%;
     border: 1px solid black;
     border-radius: 100px;
     background: var(--color-1);
@@ -47,11 +47,9 @@ nav {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 0.5em;
-    padding-right: 1em;
+    padding: 0.5em 1em 0.5em 0.5em;
 
     margin: 1em 0;
-    border: 1px solid black;
     border-radius: 5px;
     background: var(--color-4);
 }
@@ -63,7 +61,7 @@ nav {
     border-radius: 10px;
 }
 
-.event-header{
+.event-header {
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -113,6 +111,17 @@ nav {
     bottom: 0px;
     margin: 2vw;
     width: 95%;
+}
+
+.chat-content {
+    display: flex;
+    flex-direction: column;
+    align-items: baseline;
+    height: 75vh;
+    overflow: auto;
+    background: white;
+    border: 1px solid black;
+    border-radius: 10px;
 }
 
 .btn {

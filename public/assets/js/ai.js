@@ -49,7 +49,7 @@ $('document').ready(function () {
         );
         // Log the result.
         window.console.log(result)
-        
+
 
         // Close the SpeechRecognizer object, and set the variable to undefined.
         recognizer.close();

@@ -1,6 +1,8 @@
 $(document).ready(function () {
     $('.sidenav').sidenav();
 
+
+
     let page = localStorage['currentPage']
     $(`.${page}`).addClass("activePage")
 
