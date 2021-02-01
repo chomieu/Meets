@@ -1,4 +1,5 @@
 var express = require("express");
+const { Session } = require("express-session");
 
 var router = express.Router();
 
@@ -53,7 +54,9 @@ router.get("/api/allEvents/:id", function (req, res) {
 // chat - when AI is asked for past/future intent of TARGETNAME - query TARGETNAME for event in past/future -
 // maybe a POST request to the AI handler with a GET request to the database nested inside?
 router.get("/dashboard", (req, res) => {
-  res.render("partials/dashboard");
+  let user = req.session.user
+  console.log(user);
+  res.render("partials/dashboard", user);
 })
 
 // find one single event and all the associated data
@@ -91,15 +94,15 @@ router.get("/api/friendEvents/:id", (req, res) => {
       id: req.params.id
       // swap with req.session.user.id if they need to be logged in
     },
-    include: [{ 
-      model: db.User, 
+    include: [{
+      model: db.User,
       as: 'Associate',
       include: [db.Event]
     }]
     // [{
 
-      // model: db.UserAssociate,
-      // include: [db.Event]
+    // model: db.UserAssociate,
+    // include: [db.Event]
     // }]
 
   }).then(function (dbAssociate) {
