@@ -51,6 +51,10 @@ app.use(userRoutes)
 const eventRoutes = require("./controllers/eventController.js");
 app.use("/api/events", eventRoutes)
 
+// Review routes from joe's demo
+const htmlRoutes = require("./controllers/html-controller.js");
+app.use(htmlRoutes)
+
 // Syncing our sequelize models and then starting our express app
 db.sequelize.sync({ force: false }).then(function () {
   app.listen(PORT, function () {

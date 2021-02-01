@@ -48,21 +48,26 @@ router.get("/event/edit", (req, res) => {
 })
 
 // findAll where you have an assciation with them
-router.get("/friends", (req, res) => { // use friends/:id if they don't need to be logged in
+router.get("/friends/:id", (req, res) => { // use friends/:id if they don't need to be logged in
   // find a single user that is logged in
   db.User.findOne({
     where:{
-      id:req.session.user.id //req.params.id if they don't need to be logged in
+      id: req.params.id //req.session.user.id if they don't need to be logged in
     },
-    include:[db.UserAssociate]
+    include:[{
+      model:db.User,
+      as: 'Associate',
+    }]
   }).then(userData => {
     // take data that is an object with all of the users associations, turn it into JSON
+    console.log(userData);
     const userJson = userData.toJSON();
     // make an object that is just the usernames of the associations
     const hbsObj = {
       username:userJson.username
     }
     //pass that object to the frontend
+    // res.json(userData)
     res.render("partials/friends", hbsObj);
   }).catch(err => {
     res.status(500).json(err)
