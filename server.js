@@ -10,7 +10,7 @@ const session = require("express-session")
 // Sets up the Express App
 // =============================================================
 const app = express();
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 8080;
 
 // Requiring our models for syncing
 const db = require("./models");
@@ -46,6 +46,9 @@ app.use("/api", userDialogueRoutes)
 // Requiring our routes for the user
 const userRoutes = require("./controllers/userController.js");
 app.use(userRoutes)
+
+const htmlRoutes = require("./controllers/html-controller.js");
+app.use(htmlRoutes);
 
 // Review routes from joe's demo
 const eventRoutes = require("./controllers/eventController.js");

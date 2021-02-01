@@ -60,6 +60,11 @@ module.exports = function(sequelize, DataTypes) {
       User.hasMany(models.UserDialogue, {
         onDelete: "cascade"
       });
+      User.hasMany(models.Event,{
+        foreignKey: {
+          allowNull: false
+        }
+      })
       User.belongsToMany(models.User, { as: 'Associate', through: 'UserAssociate' })
     };  
 
