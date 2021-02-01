@@ -12,7 +12,7 @@ module.exports = function (app) {
     const sessionClient = new dialogflow.SessionsClient(); // Instantiates a session client
     const fs = require('fs'); // for writing audio output
     const util = require('util');
-    
+
     async function detectIntent(projectId, sessionId, query, contexts, languageCode) {
       // The path to identify the agent that owns the created intent.
       const sessionPath = sessionClient.projectAgentSessionPath(projectId, sessionId);
@@ -20,14 +20,14 @@ module.exports = function (app) {
       // The text query request.
       const request = {
         session: sessionPath,
-        queryInput: { 
-          text: { 
-            text: query, 
-            languageCode: languageCode, 
-          }, 
-        }, 
+        queryInput: {
+          text: {
+            text: query,
+            languageCode: languageCode,
+          },
+        },
       };
-      
+
       if (projectId === "echo-fmhq") {
         request.outputAudioConfig = { audioEncoding: 'OUTPUT_AUDIO_ENCODING_LINEAR_16', }
       }
@@ -55,7 +55,7 @@ module.exports = function (app) {
 
     async function executeQueries(projectId, sessionId, queries, languageCode) {
       // Keeping the context across queries let's us simulate an ongoing conversation with the bot
-      let context, aiRes, fromDB, echo
+      let context, aiRes, fromDB, echo, aiName = 'Meets A.I'
       for (const query of queries) {
         try {
           aiRes = await (await detectIntent(projectId, sessionId, query, context, languageCode));
@@ -71,20 +71,29 @@ module.exports = function (app) {
               sound.play(filepath)
               response.send(aiRes.queryResult.fulfillmentText)
               return
-            // case "AgentNameChange":
-            // case "AgentNameGet":
-            // case "AgentNameSave":
+            case "AgentNameGet":
+              if (aiName) {
+                echo = `${aiRes.queryResult.fulfillmentText} ${aiName}.`
+              } else {
+                echo = `I don't have a name, why don't you give me one?`
+              }
+              break
+            case "AgentNameChange":
+            case "AgentNameSave":
+              aiName = aiRes.queryResult.parameters.fields['given-name'].stringValue
+              echo = aiRes.queryResult.fulfillmentText
+              break
             case "Boss":
-              echo = `${aiRes.queryResult.fulfillmentText} Chomie` // pass userID (should be same as sessionID) here
+              echo = `${aiRes.queryResult.fulfillmentText} Chomie.` // pass userID (should be same as sessionID) here
               break
             case "Past":
-              echo = `${aiRes.queryResult.fulfillmentText} at 10PM $wag`
+              echo = `${aiRes.queryResult.fulfillmentText} at 10PM $wag.` // + 1 past event
               break
             case "Now":
-              echo = `${aiRes.queryResult.fulfillmentText} would you like to know what's on their schedule?`
+              echo = `${aiRes.queryResult.fulfillmentText}, would you like to know what's on their schedule?` // either available or busy
               break
             case "Future":
-              echo = `${aiRes.queryResult.fulfillmentText} would you like to join them?`
+              echo = `${aiRes.queryResult.fulfillmentText}, would you like to join them?` // 
               break
             default: echo = aiRes.queryResult.fulfillmentText
           }
