@@ -1,4 +1,6 @@
 var express = require("express");
+const { Session } = require("express-session");
+
 var router = express.Router();
 const db = require('../models')
 
@@ -45,25 +47,39 @@ router.get("/dashboard/:id", (req, res) => {
   // AI fetches a user and target feeds into this call
 
   db.User.findOne({
+    attributes: ['username'],
     where: {
       id: req.params.id //req.session.user.id if they need to be logged in
     },
     include: [{
-      model:db.Event,
+      model: db.Event,
+      attributes: ['UserId','name'],
       limit: 10
     }]
   }).then(userData => {
     userData.getAssociate(
       {
+        attributes: ['username'],
         limit: 2, // values can be changed
         include: [{
-          model:db.Event,
+          model: db.Event,
+          attributes: ['UserId','name'],
           limit: 2 // value can be changed
         }]
       }
-      ).then(aSockData => {
+    ).then(aSockData => {
+      console.log('-------------------');
+      console.log(aSockData);
+      console.log('-------------------');
+      // console.log(userData);
       // res.json(aSockData)
-      res.render("partials/dashboard", aSockData);
+      const hbsObj = {
+        userEvents: userData.Events,
+        friends: aSockData
+      }
+      console.log(hbsObj);
+      res.json(hbsObj)
+      // res.render("partials/dashboard", hbsObj);
     })
   }).catch(err => {
     console.log(err);
@@ -107,15 +123,15 @@ router.get("/api/friendEvents/:id", (req, res) => {
       id: req.params.id
       // swap with req.session.user.id if they need to be logged in
     },
-    include: [{ 
-      model: db.User, 
+    include: [{
+      model: db.User,
       as: 'Associate',
       include: [db.Event]
     }]
     // [{
 
-      // model: db.UserAssociate,
-      // include: [db.Event]
+    // model: db.UserAssociate,
+    // include: [db.Event]
     // }]
 
   }).then(function (dbAssociate) {
