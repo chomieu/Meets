@@ -10,7 +10,6 @@ router.get("/", (req, res) => {
 
 // Signup route
 router.get("/signup", (req, res) => {
-<<<<<<< HEAD
   res.render("partials/register", {
     user: req.session.user
   })
@@ -22,9 +21,6 @@ router.get("/login", (req, res) => {
   res.render("partials/login", {
     user: req.session.user
   })
-=======
-  res.render("partials/register");
->>>>>>> dev
 })
 
 // list of the upcoming events for user, top Y?
@@ -53,8 +49,7 @@ router.get("/api/allEvents/:id", function (req, res) {
 // list of X connections
 // chat - when AI is asked for past/future intent of TARGETNAME - query TARGETNAME for event in past/future -
 // maybe a POST request to the AI handler with a GET request to the database nested inside?
-<<<<<<< HEAD
-// TODO:
+
 router.get("/dashboard/:id", (req, res) => {
   // TODO: Toggle to findAll friends events instead
   // findOne user and all of their events
@@ -83,13 +78,8 @@ router.get("/dashboard/:id", (req, res) => {
     res.status(500).json(err)
   })
 })
-// takes you to a single event?
-=======
-router.get("/dashboard", (req, res) => {
-  res.render("partials/dashboard");
-})
 
->>>>>>> dev
+// takes you to a single event?
 // find one single event and all the associated data
 router.get("/api/events/:id", (req, res) => {
   if (req.session.user) {
@@ -174,7 +164,6 @@ router.get("/event/edit", (req, res) => {
 // Already handled in eventcontroller with put request?
 
 // findAll where you have an assciation with them
-<<<<<<< HEAD
 router.get("/friends/:id", (req, res) => { // use friends/:id if they don't need to be logged in
   // find a single user that is logged in
   db.User.findOne({
@@ -199,10 +188,6 @@ router.get("/friends/:id", (req, res) => { // use friends/:id if they don't need
   }).catch(err => {
     res.status(500).json(err)
   })
-=======
-router.get("/friends", (req, res) => {
-  res.render("partials/friends");
->>>>>>> dev
 })
 
 // findOne user, findAll events for that user
@@ -223,7 +208,6 @@ router.get("/profile", (req, res) => {
 
 // update username/password/first name/last name/etc
 // query for single user who is logged in
-<<<<<<< HEAD
 router.get("/settings/:id", (req, res) => {
   db.User.findOne({
     where: {
@@ -242,10 +226,6 @@ router.get("/settings/:id", (req, res) => {
   }).catch(err => {
     res.status(500).json(err)
   })
-=======
-router.get("/settings", (req, res) => {
-  res.render("partials/settings");
->>>>>>> dev
 })
 
 // Export routes for server.js to use.
