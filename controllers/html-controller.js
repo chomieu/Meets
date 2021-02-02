@@ -212,11 +212,14 @@ router.get("/event/new", (req, res) => {
 // TODO: ???
 // pass content of event with ID = X
 // send isEdit boolean --> if TRUE then EDITABLE (on frontend)
-router.get("/event/edit", (req, res) => {
+router.get("/event/:event_id", (req, res) => {
+
   res.render("partials/oneEvent");
 })
-// Already handled in eventcontroller with put request?
 
+
+
+// Already handled in eventcontroller with put request?
 // findAll where you have an assciation with them
 router.get("/friends", (req, res) => {
   if (req.session.user) {
