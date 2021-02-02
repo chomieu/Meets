@@ -23,7 +23,6 @@ app.use(express.json());
 app.use(express.static("public"));
 
 // Allows for login sessions via cookies, login lasts for two hours
-// TODO: Future-development: Secure cookies!
 app.use(session({
   secret: 'keyboard cat',
   resave: false,
