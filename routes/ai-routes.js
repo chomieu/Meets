@@ -151,7 +151,7 @@ router.post('/api/input', (request, response) => {
             break
           case "Past":
             fromDB = getPast(aiRes.queryResult.parameters.fields.person.structValue.fields.name.stringValue)
-            if (formDB) {
+            if (fromDB) {
               echo = `${aiRes.queryResult.fulfillmentText} ${fromDB.Event.dataValues.name} on ${fromDB.Event.dataValues.dateTime}`
             } else {
               echo = `${aiRes.queryResult.fulfillmentText} nothing planned.`
@@ -159,7 +159,7 @@ router.post('/api/input', (request, response) => {
             break
           case "Now":
             fromDB = getPresent(aiRes.queryResult.parameters.fields.person.structValue.fields.name.stringValue)
-            if (formDB) {
+            if (fromDB) {
               echo = `${aiRes.queryResult.fulfillmentText} is currently unavailable. ${aiRes.queryResult.fulfillmentText} has ${fromDB.Event.dataValues.name} planned for ${fromDB.Event.dataValues.dateTime}`
             } else {
               echo = `${aiRes.queryResult.fulfillmentText} seems to be available. ${aiRes.queryResult.fulfillmentText} has nothing planned on their schedule for the past hour.`
@@ -167,7 +167,7 @@ router.post('/api/input', (request, response) => {
             break
           case "Future":
             fromDB = getFuture(aiRes.queryResult.parameters.fields.person.structValue.fields.name.stringValue)
-            if (formDB) {
+            if (fromDB) {
               echo = `${aiRes.queryResult.fulfillmentText} planned for ${fromDB.Event.dataValues.dateTime}`
             } else {
               echo = `${aiRes.queryResult.fulfillmentText} no future events at this moment.`
