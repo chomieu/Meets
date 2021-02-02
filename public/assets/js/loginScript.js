@@ -15,10 +15,11 @@ $(document).ready(function () {
             type: "POST",
             data: input
         }).then((resp) => {
-            console.log(resp);
             sessionStorage['user'] = JSON.stringify(resp)
             localStorage['currentPage'] = "dashboardBtn"
-            window.location = (`/dashboard`)
+            window.location = ("/dashboard")
+        }).catch((err) => {
+            $(".red-text").text("Login Failed!")
         })
 
     })
