@@ -112,7 +112,7 @@ nav {
 
 .chatbox {
     position: fixed;
-    bottom: 0px;
+    bottom: 0;
     margin: 2vw;
     width: 95%;
 }

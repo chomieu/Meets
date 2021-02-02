@@ -101,7 +101,7 @@ router.get("/events/:id", (req, res) => {
     }).then(function (dbEvent) {
       const dbEventsJson = dbEvent.toJSON()
       const hbsobj = {
-        user:req.session.user,
+        user: req.session.user,
         events: dbEventsJson
       }
       console.log(dbEventsJson);
@@ -112,7 +112,7 @@ router.get("/events/:id", (req, res) => {
       res.status(500).send(err.message);
     });
   } else {
-    res.send("please sign in")
+    res.redirect("/");
   }
 })
 
@@ -156,11 +156,11 @@ router.get("/sameTime/", function (req, res) {
       model: db.User,
       include: [{
         model: db.User,
-      as: 'Associate',
-      // include: [db.Event]
+        as: 'Associate',
+        // include: [db.Event]
       }],
     }],
-    
+
   }).then(function (dbAssociateEvents) {
     const dbAssociateEventsJson = dbAssociateEvents.map(element => element.toJSON())
     const hbsobj = {
@@ -168,7 +168,7 @@ router.get("/sameTime/", function (req, res) {
       user: req.session.user
     }
     // res.json(dbAssociateEvents)
-    
+
     // console.log(dbEventsJson);
     // console.log(hbsobj);
     res.render('./partials/events', hbsobj)
@@ -204,7 +204,7 @@ router.get("/events", (req, res) => {
 
 // render the new event route
 router.get("/event/new", (req, res) => {
-  res.render("partials/oneEvent");
+  res.render("partials/oneEvent", { isNewRecord: true });
 })
 
 // TODO: Render the edit event page if you are logged in and you are the owner
@@ -236,6 +236,24 @@ router.get("/event/edit/:event_id", (req, res) => {
   res.render("partials/oneEvent");
 })
 
+// findOne for a single event, then check to make sure that you are logged in and that you are the admin
+// TODO: findOne() event while ensuring logged in userID and userID who created event are the same 
+
+// if true, then you can edit and access the POST request
+
+// QUERY to findOne event
+
+// // TODO: ???
+// // pass content of event with ID = X
+// // send isEdit boolean --> if TRUE then EDITABLE (on frontend)
+// router.get("/event/:event_id", (req, res) => {
+
+//   res.render("partials/oneEvent");
+// })
+
+
+
+// Already handled in eventcontroller with put request?
 // findAll where you have an assciation with them
 router.get("/friends", (req, res) => {
   if (req.session.user) {
@@ -254,7 +272,7 @@ router.get("/friends", (req, res) => {
       const userJson = userData.toJSON();
       // make an object that is just the usernames of the associations
       const hbsObj = {
-        user:req.session.user,
+        user: req.session.user,
         username: userJson.username
       }
       //pass that object to the frontend
