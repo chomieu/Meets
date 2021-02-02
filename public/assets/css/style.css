@@ -2,7 +2,6 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    /* outline: 2px dotted green; */
 }
 
 :root {
@@ -12,6 +11,10 @@
     --color-4: #ff6b6b;
     --color-5: #ffe66d;
 }
+/* 
+.btn {
+    background-color: var(--color-5);
+} */
 
 main {
     display: flex;
@@ -58,8 +61,6 @@ nav {
 .event-box {
     margin: 1em 0;
     padding: 1em;
-    /* max-width: 10em;
-    max-height: 10em; */
     border: 1px solid black;
     border-radius: 10px;
 }
@@ -110,22 +111,10 @@ nav {
 }
 
 .chatbox {
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-end;
-    margin: 1em 0;
-    padding: 1em;
-    border: 1px solid black;
-    border-radius: 15px;
-    background: var(--color-2);
-}
-
-.chatbox form {
-    margin-top: 1em;
-    padding: 1em;
-    border-radius: 15px;
-    border: 2px solid black;
-    background: white;
+    position: fixed;
+    bottom: 0px;
+    margin: 2vw;
+    width: 95%;
 }
 
 .chat-content {

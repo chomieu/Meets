@@ -64,7 +64,7 @@ router.post("/", function (req, res) {
         db.User.update({
           plans: eventData.length,
           // this will be updated on page load as well
-          upcoming_plans:upcomingEvents.length
+          upcoming_plans: upcomingEvents.length
         }, {
           where: {
             id: req.session.user.id
