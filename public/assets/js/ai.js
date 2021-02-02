@@ -1,21 +1,23 @@
-var SpeechSDK
+// var SpeechSDK
 var recognizer
 
-$(function () {
-  $("#submitBtn").on("click", function (event) {
+$('document').ready(function () {
+  $(".aiForm").on("submit", function (event) {
     // Make sure to preventDefault on a submit event
     event.preventDefault()
-    var input = { input: $("#input").val() }
+    var toAI = { input: $("#input").val() }
     $("#history").append($("<p>", { class: "col s12", text: $("#input").val() }))
+    $("#input").val("")
     // Send the POST request
-    // $.ajax("/api/input", {
-    //   type: "POST",
-    //   data: input
-    // }).then((res) => {
-    //   $("#history").append($("<p>", { class: "col s12 white-text", text: res }))
-    //   $("#input").val("")
-    // }
-    // );
+    $.ajax("/api/input", {
+      type: "POST",
+      data: toAI
+    }).then(async (res) => {
+      $("#history").append($("<p>", { class: "col s12 green-text", text: res.text }))
+      let sX = new Audio(`/assets/js/ai-audio-${res.random}.wav`)
+      await sX.play()
+    }
+    );
   });
 
   $("#recBtn").on("click", function () {
@@ -36,16 +38,16 @@ $(function () {
         // Make the button to start speech recognition work again.
         $("#recBtn").prop("disabled", false)
 
-        var input = { input: result.privText }
+        var toAI = { input: result.privText }
         $("#history").append($("<p>", { class: "col s12", text: result.privText }))
 
         // Send the POST request
         $.ajax("/api/input", {
           type: "POST",
-          data: input
+          data: toAI
         }).then((res) => {
-          $("#history").append($("<p>", { class: "col s12 white-text", text: res }))
-        }
+            $("#history").append($("<p>", { class: "col s12 green-text", text: res }))
+          }
         );
         // Log the result.
         window.console.log(result)

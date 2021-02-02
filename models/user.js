@@ -56,7 +56,7 @@ module.exports = function (sequelize, DataTypes) {
     image: {
       type: DataTypes.STRING,
       allowNull: true,
-      defaultValue: ''
+      defaultValue: 'https://i.imgur.com/0I3sDie.png'
     }
   });
 
