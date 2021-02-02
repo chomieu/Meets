@@ -53,6 +53,11 @@ module.exports = function (sequelize, DataTypes) {
       allowNull: true,
       defaultValue: 0
     },
+    image: {
+      type: DataTypes.STRING,
+      allowNull: true,
+      defaultValue: 'https://i.imgur.com/0I3sDie.png'
+    }
   });
 
   User.associate = function (models) {

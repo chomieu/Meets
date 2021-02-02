@@ -7,31 +7,31 @@ module.exports = function (sequelize, DataTypes) {
                 len: [1]
             }
         },
-        // max_people: {
-        //     type: DataTypes.INTEGER,
-        //     allowNull: false,
-        //     validate: {
-        //         len: [1]
-        //     }
-        // },
-        // isPublic: DataTypes.BOOLEAN,
-        // location: {
-        //     type: DataTypes.STRING,
-        //     allowNull: false,
-        //
-        //     validate: {
-        //         len: [1]
-        //     }
-        // },
-        // category: {
-        //     type: DataTypes.STRING,
-        //     allowNull: false,
-        //     defaultValue: "Appointment",
-        //     validate: {
-        //         len: [1],
-        //     }
-        // },
-        // isIndoor: DataTypes.BOOLEAN,
+        max_people: {
+            type: DataTypes.INTEGER,
+            allowNull: false,
+            validate: {
+                len: [1]
+            }
+        },
+        isPublic: DataTypes.BOOLEAN,
+        location: {
+            type: DataTypes.STRING,
+            allowNull: false,
+        
+            validate: {
+                len: [1]
+            }
+        },
+        category: {
+            type: DataTypes.STRING,
+            allowNull: false,
+            defaultValue: "Appointment",
+            validate: {
+                len: [1],
+            }
+        },
+        isIndoor: DataTypes.BOOLEAN,
         dateTime: {
             type: DataTypes.DATE,
             allowNull: false,
@@ -39,10 +39,10 @@ module.exports = function (sequelize, DataTypes) {
                 len: [1]
             }
         },
-        // description: {
-        //     type: DataTypes.TEXT,
-        //     allowNull: true,
-        // },
+        description: {
+            type: DataTypes.TEXT,
+            allowNull: true,
+        },
     });
     Event.associate = function (models) {
         // We're saying that a Event should belong to an User
