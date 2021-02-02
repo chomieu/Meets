@@ -64,7 +64,11 @@ router.post('/api/input', (request, response) => {
       ],
       order: [['Events', 'dateTime', 'ASC']]
     }).then(function (dbUser) {
-      return dbUser.Events[0]
+      if (dbUser) {
+        return dbUser.Events[0]
+      } else {
+        return 0
+      }
     })
   }
 
@@ -111,7 +115,11 @@ router.post('/api/input', (request, response) => {
       ],
       order: [['Events', 'dateTime', 'ASC']]
     }).then(function (dbUser) {
-      return dbUser.Events[0]
+      if (dbUser) {
+        return dbUser.Events[0]
+      } else {
+        return 0
+      }
     })
   }
 
@@ -141,20 +149,29 @@ router.post('/api/input', (request, response) => {
             aiName = aiRes.queryResult.parameters.fields['given-name'].stringValue
             echo = aiRes.queryResult.fulfillmentText
             break
-          case "Boss":
-            echo = `${aiRes.queryResult.fulfillmentText} Chomie.` // pass userID (should be same as sessionID) here
-            break
           case "Past":
-            fromDB = await getPast(aiRes.queryResult.parameters.fields.person.structValue.fields.name.stringValue)
-            echo = `${aiRes.queryResult.fulfillmentText} at 10PM $wag.`
+            fromDB = getPast(aiRes.queryResult.parameters.fields.person.structValue.fields.name.stringValue)
+            if (formDB) {
+              echo = `${aiRes.queryResult.fulfillmentText} ${fromDB.Event.dataValues.name} on ${fromDB.Event.dataValues.dateTime}`
+            } else {
+              echo = `${aiRes.queryResult.fulfillmentText} nothing planned.`
+            }
             break
           case "Now":
-            fromDB = await getPresent(aiRes.queryResult.parameters.fields.person.structValue.fields.name.stringValue)
-            echo = `${aiRes.queryResult.fulfillmentText}, would you like to know what's on their schedule?`
+            fromDB = getPresent(aiRes.queryResult.parameters.fields.person.structValue.fields.name.stringValue)
+            if (formDB) {
+              echo = `${aiRes.queryResult.fulfillmentText} is currently unavailable. ${aiRes.queryResult.fulfillmentText} has ${fromDB.Event.dataValues.name} planned for ${fromDB.Event.dataValues.dateTime}`
+            } else {
+              echo = `${aiRes.queryResult.fulfillmentText} seems to be available. ${aiRes.queryResult.fulfillmentText} has nothing planned on their schedule for the past hour.`
+            }
             break
           case "Future":
-            fromDB = await getFuture(aiRes.queryResult.parameters.fields.person.structValue.fields.name.stringValue)
-            echo = `${aiRes.queryResult.fulfillmentText}, would you like to join them?`
+            fromDB = getFuture(aiRes.queryResult.parameters.fields.person.structValue.fields.name.stringValue)
+            if (formDB) {
+              echo = `${aiRes.queryResult.fulfillmentText} planned for ${fromDB.Event.dataValues.dateTime}`
+            } else {
+              echo = `${aiRes.queryResult.fulfillmentText} no future events at this moment.`
+            }
             break
           default: echo = aiRes.queryResult.fulfillmentText
         }
