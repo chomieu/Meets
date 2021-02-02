@@ -4,7 +4,7 @@ const { Session } = require("express-session");
 var router = express.Router();
 const db = require('../models')
 
-// use router.get router.post router.put router.delete
+// Landing page, same as login page
 router.get("/", (req, res) => {
   res.render("index")
 })
@@ -19,13 +19,12 @@ router.get("/login", (req, res) => {
   res.render("index")
 })
 
-// list of the upcoming events for user, top Y?
-// TODO: get request to fetch data and render. Reference date(ORDER BY DESC) and userid tied to event 
-router.get("/api/allEvents/:id", function (req, res) {
+// list of the upcoming events for user
+router.get("/allEvents/:id", function (req, res) {
   if (req.session.user) {
     db.Event.findAll({
       where: {
-        id: req.params.id
+        id: req.params.id // req.session.user.id
       },
       order: [
         ['dateTime', "DESC"]
@@ -75,18 +74,12 @@ router.get("/dashboard", (req, res) => {
           }]
         }
       ).then(aSockData => {
-        // console.log('-------------------');
-        // console.log(aSockData);
-        // console.log('-------------------');
-        // console.log(userData);
-        // res.json(aSockData)
         const hbsObj = {
           user: req.session.user, // include this in EVERY hbars object for every route that renders a page
           userEvents: userData.Events,
           friends: aSockData
         }
         console.log(hbsObj);
-        // res.json(hbsObj)
         res.render("partials/dashboard", hbsObj);
       })
     }).catch(err => {
@@ -100,7 +93,7 @@ router.get("/dashboard", (req, res) => {
 
 // takes you to a single event?
 // find one single event and all the associated data
-router.get("/api/events/:id", (req, res) => {
+router.get("/events/:id", (req, res) => {
   if (req.session.user) {
     db.Event.findOne({
       where: {
@@ -129,7 +122,7 @@ router.get("/api/events/:id", (req, res) => {
 
 // friends activities - query the user's associations, then query the associations events and return the Z events for them at that time (of the original event)
 
-router.get("/api/friendEvents/:id", (req, res) => {
+router.get("/friendEvents/:id", (req, res) => {
   if (req.session.user) {
     db.User.findOne({
       where: {
@@ -141,20 +134,12 @@ router.get("/api/friendEvents/:id", (req, res) => {
         as: 'Associate',
         include: [db.Event]
       }]
-      // [{
-
-      // model: db.UserAssociate,
-      // include: [db.Event]
-      // }]
-
     }).then(function (dbAssociate) {
       const dbAssociateJson = dbAssociate.toJSON()
       const hbsobj = {
         user: req.session.user,
         events: dbAssociateJson
       }
-      // console.log(dbEventsJson);
-      // console.log(hbsobj);
       res.render('./partials/oneFriend', hbsobj)
     }).catch(err => {
       console.log(err.message);
@@ -226,20 +211,23 @@ router.get("/friends/:id", (req, res) => { // use friends/:id if they don't need
 })
 
 // findOne user, findAll events for that user
+//TODO:
 router.get("/friend/one", (req, res) => {
   res.render("partials/oneFriend");
 })
 
 // chat - when AI is asked for past/future intent of TARGETNAME - query TARGETNAME for event in past/future -
 // maybe a POST request to the AI handler with a GET request to the database nested inside?
+//TODO:
 router.get("/ai_chat", (req, res) => {
   res.render("partials/aiChat");
 })
 
+// TODO: Bonus if needed
 // can this be the same as the dashboard? any extra info?
-router.get("/profile", (req, res) => {
-  res.render("partials/profile");
-})
+// router.get("/profile", (req, res) => {
+//   res.render("partials/profile");
+// })
 
 // update username/password/first name/last name/etc
 // query for single user who is logged in
@@ -249,7 +237,7 @@ router.get("/settings/:id", (req, res) => {
     where: {
       id: req.params.id
     }
-  }).then(dbUser => {
+  }).then(userData => {
     // take data that is an object with all of the users associations, turn it into JSON
     const userJson = userData.toJSON();
     // make an object that is just the username and password for editing?
@@ -270,46 +258,3 @@ router.get("/settings/:id", (req, res) => {
 
 // Export routes for server.js to use.
 module.exports = router;
-
-//login js file
-
-// $("#login").submit(event=>{
-//   event.preventDefault();
-//   $.post("/login",{
-//     username:$("#username").val(),
-//     password:$("#password").val()
-//   }).then(data => {
-//     console.log("Signed up!");
-//     window.location.href = '/'
-//   }).fail(err => {
-//     console.log("Signup failed!");
-//     console.log(err);
-//     alert("signup failed")
-//   })
-// })
-
-// $("#addReview").submit(event => {
-//   event.preventDefault();
-//   $.post('api/reviews', {
-//     title: $("#title").val(),
-//     reviews:$("#review").val(),
-//     score:$("#scpre").val()
-//   }).then(data => {
-//     window.location.href = '/'
-//   }).fail(err => {
-//     alert("review failed")
-//   })
-// })
-
-
-// router.get('/login', (req,res) => {
-//   res.render('login')
-// })
-
-// db.Review.findAll().then(data => {
-//   const jsonData = data.map(element => element.toJSON())
-//   const hbsObj = {
-//     reviews:jsonData
-//   }
-//   res.render('index',hbsObj)
-// })
