@@ -23,22 +23,22 @@ router.get("/login", (req, res) => {
 // TODO: get request to fetch data and render. Reference date(ORDER BY DESC) and userid tied to event 
 router.get("/api/allEvents/:id", function (req, res) {
   if (req.session.user) {
-  db.Event.findAll({
-    where: {
-      id: req.params.id
-    },
-    order: [
-      ['dateTime', "DESC"]
-    ]
-  }).then(function (dbEvent) {
-    res.render('./partials/events', dbEvent)
-  }).catch(err => {
-    console.log(err.message);
-    res.status(500).send(err.message)
-  });
-} else {
-  res.send("please sign in")
-}
+    db.Event.findAll({
+      where: {
+        id: req.params.id
+      },
+      order: [
+        ['dateTime', "DESC"]
+      ]
+    }).then(function (dbEvent) {
+      res.render('./partials/events', dbEvent)
+    }).catch(err => {
+      console.log(err.message);
+      res.status(500).send(err.message)
+    });
+  } else {
+    res.send("please sign in")
+  }
 });
 
 
@@ -56,7 +56,7 @@ router.get("/dashboard", (req, res) => {
     },
     include: [{
       model: db.Event,
-      attributes: ['UserId','name'],
+      attributes: ['UserId', 'name'],
       limit: 10
     }]
   }).then(userData => {
@@ -66,7 +66,7 @@ router.get("/dashboard", (req, res) => {
         limit: 2, // values can be changed
         include: [{
           model: db.Event,
-          attributes: ['UserId','name'],
+          attributes: ['UserId', 'name'],
           limit: 2 // value can be changed
         }]
       }
@@ -124,65 +124,67 @@ router.get("/api/events/:id", (req, res) => {
 
 router.get("/api/friendEvents/:id", (req, res) => {
   if (req.session.user) {
-  db.User.findOne({
-    where: {
-      id: req.params.id
-      // swap with req.session.user.id if they need to be logged in
-    },
-    include: [{
-      model: db.User,
-      as: 'Associate',
-      include: [db.Event]
-    }]
-    // [{
+    db.User.findOne({
+      where: {
+        id: req.params.id
+        // swap with req.session.user.id if they need to be logged in
+      },
+      include: [{
+        model: db.User,
+        as: 'Associate',
+        include: [db.Event]
+      }]
+      // [{
 
-    // model: db.UserAssociate,
-    // include: [db.Event]
-    // }]
+      // model: db.UserAssociate,
+      // include: [db.Event]
+      // }]
 
-  }).then(function (dbAssociate) {
-    const dbAssociateJson = dbAssociate.toJSON()
-    const hbsobj = {
-      events: dbAssociateJson,
-      user: req.session.user
-    }
-    // console.log(dbEventsJson);
-    // console.log(hbsobj);
-    res.render('./partials/oneFriend', hbsobj)
-  }).catch(err => {
-    console.log(err.message);
-    res.status(500).send(err.message)
-  })
-} else {
-  res.send("please sign in")
-}
+    }).then(function (dbAssociate) {
+      const dbAssociateJson = dbAssociate.toJSON()
+      const hbsobj = {
+        events: dbAssociateJson,
+        user: req.session.user
+      }
+      // console.log(dbEventsJson);
+      // console.log(hbsobj);
+      res.render('./partials/oneFriend', hbsobj)
+    }).catch(err => {
+      console.log(err.message);
+      res.status(500).send(err.message)
+    })
+  } else {
+    res.send("please sign in")
+  }
 })
 
 // query for any associate that has an event at the same time
-router.get("/api/sameTime:id", function(req, res){
-  console.log(req.body.dateTime);
+router.get("/html/sameTime/", function (req, res) {
   // if(req.body.dateTime===req.params.id)
-  db.User.findAll({
+  db.Event.findAll({
     where: {
-      id: req.params.id
+      dateTime: req.body.dateTime
     },
-    include: [{ 
-      model: db.User, 
+    include: [{
+      model: db.User,
+      include: [{
+        model: db.User,
       as: 'Associate',
-      include: [db.Event]
+      // include: [db.Event]
+      }],
     }],
-      where: {
-        dateTime: req.body.dateTime
-      }
-  }).then(function (dbAssociate) {
-    const dbAssociateJson = dbAssociate.toJSON()
+    
+  }).then(function (dbAssociateEvents) {
+    const dbAssociateEventsJson = dbAssociateEvents.map(element => element.toJSON())
     const hbsobj = {
-      events: dbAssociateJson,
+      events: dbAssociateEventsJson,
       user: req.session.user
     }
+    // res.json(dbAssociateEvents)
+    
     // console.log(dbEventsJson);
     // console.log(hbsobj);
-    res.render('./partials/oneFriend', hbsobj)
+    res.render('./partials/events', hbsobj)
   }).catch(err => {
     console.log(err.message);
     res.status(500).send(err.message)
@@ -201,32 +203,6 @@ router.get("/events", (req, res) => {
 // TODO: findOne() event while ensuring logged in userID and userID who created event are the same 
 
 // if true, then you can edit and access the POST request
-
-// QUERY to findOne event
-
-
-router.put("/event/edit", function (req, res) {
-  if (req.session.user) {
-    db.Event.update(req.body,
-      {
-        where: {
-          id: req.params.id
-        }
-      }).then(function (dbEventEdit) {
-        const dbEventsEditJson = dbEventEdit.toJSON()
-        const hbsobj = {
-          events: dbEventsEditJson,
-          user: req.session.user
-        }
-        res.render("partials/oneEvent", hbsobj)
-      }).catch(err => {
-        console.log(err.message);
-        res.status(500).send(err.message)
-      })
-  } else {
-    res.send("please sign in")
-  }
-})
 // Already handled in eventcontroller with put request?
 
 // findAll where you have an assciation with them

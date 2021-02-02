@@ -3,6 +3,7 @@ const express = require("express");
 const router = express.Router();
 
 const db = require("../models");
+const user = require("../models/user");
 
 // use router.get router.post router.put router.delete
 
@@ -11,24 +12,31 @@ const db = require("../models");
 // =============================================================
 
 // GET route for getting all of the events and return them to user
-// router.get("/", function (req, res) {
-//   db.Event.findAll({}).then(function (dbEvent) {
-//     res.json(dbEvent)
-//   }).catch(err => {
-//     console.log(err.message);
-//     res.status(500).send(err.message)
-//   });
-// });
+router.get("/", function (req, res) {
+  db.Event.findAll({}).then(function (dbEvent) {
+    res.json(dbEvent)
+  }).catch(err => {
+    console.log(err.message);
+    res.status(500).send(err.message)
+  });
+});
 
 
 router.get("/myevents", (req, res) => {
   if (!req.session.user) {
     res.status(404).send("please sign in")
   } else {
-    db.Event.findAll({
+    db.User.findAll({
       where: {
-        UserId: req.sessions.user.id
-      }
+        id: req.session.user.id
+      },
+      include: [db.Event]
+    }).then(function (dbEvent) {
+      console.log(req.session.user.id);
+      res.json(dbEvent)
+    }).catch(err => {
+      console.log(err.message);
+      res.status(500).send(err.message)
     })
   }
 })
@@ -106,24 +114,7 @@ router.put("/", function (req, res) {
     res.send("please sign in")
   }
 })
-// router.get("/:id", (req, res) => {
-//   db.Event.findOne({
-//     where: {
-//       id: req.params.id
-//     }
-//   }).then(data => {
-//     const jsonData = data.Event.map(obj => obj.toJSON())
-//     const hbsobj = {
-//       events: jsonData
-//     }
-//     console.log(req.params.id);
-//     res.json(data);
-//     res.render('index', hbsobj)
-//   }).catch(err => {
-//     console.log((err.message));
-//     res.status(500).send(err.message);
-//   });
-// });
+
 // Delete an event
 router.delete("/:id", function (req, res) {
   console.log(req.body.UserId);
