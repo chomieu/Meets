@@ -1,7 +1,7 @@
 var express = require("express");
+const { Session } = require("express-session");
 
 var router = express.Router();
-
 const db = require('../models')
 
 // use router.get router.post router.put router.delete
@@ -9,26 +9,18 @@ router.get("/", (req, res) => {
   res.render("index")
 })
 
-// router.get('/login', (req,res) => {
-//   res.render('login')
-// })
-
-// db.Review.findAll().then(data => {
-//   const jsonData = data.map(element => element.toJSON())
-//   const hbsObj = {
-//     reviews:jsonData
-//   }
-//   res.render('index',hbsObj)
-// })
-
-// no data from backend sent to this route
+// Signup route
 router.get("/signup", (req, res) => {
-  res.render("partials/register");
+  res.render("partials/register")
+})
+
+// Login route
+router.get("/login", (req, res) => {
+  res.render("partials/login")
 })
 
 // list of the upcoming events for user, top Y?
 // TODO: get request to fetch data and render. Reference date(ORDER BY DESC) and userid tied to event 
-
 router.get("/api/allEvents/:id", function (req, res) {
   if (req.session.user) {
   db.Event.findAll({
@@ -50,15 +42,56 @@ router.get("/api/allEvents/:id", function (req, res) {
 });
 
 
-// router.get()
-// toggle to include others events
-// list of X connections
-// chat - when AI is asked for past/future intent of TARGETNAME - query TARGETNAME for event in past/future -
-// maybe a POST request to the AI handler with a GET request to the database nested inside?
+// GET route to fetch associations and events from the database to display on the dashboard
 router.get("/dashboard", (req, res) => {
-  res.render("partials/dashboard");
+  // TODO: Toggle to findAll friends events instead
+  // findOne user and all of their events
+
+  // AI fetches a user and target feeds into this call
+
+  db.User.findOne({
+    attributes: ['username'],
+    where: {
+      id: req.session.user.id //req.session.user.id if they need to be logged in
+    },
+    include: [{
+      model: db.Event,
+      attributes: ['UserId','name'],
+      limit: 10
+    }]
+  }).then(userData => {
+    userData.getAssociate(
+      {
+        attributes: ['username'],
+        limit: 2, // values can be changed
+        include: [{
+          model: db.Event,
+          attributes: ['UserId','name'],
+          limit: 2 // value can be changed
+        }]
+      }
+    ).then(aSockData => {
+      // console.log('-------------------');
+      // console.log(aSockData);
+      // console.log('-------------------');
+      // console.log(userData);
+      // res.json(aSockData)
+      const hbsObj = {
+        user: req.session.user, // include this in EVERY hbars object for every route that renders a page
+        userEvents: userData.Events,
+        friends: aSockData
+      }
+      console.log(hbsObj);
+      // res.json(hbsObj)
+      res.render("partials/dashboard", hbsObj);
+    })
+  }).catch(err => {
+    console.log(err);
+    res.status(500).json(err)
+  })
 })
 
+// takes you to a single event?
 // find one single event and all the associated data
 router.get("/api/events/:id", (req, res) => {
   if (req.session.user) {
@@ -96,15 +129,15 @@ router.get("/api/friendEvents/:id", (req, res) => {
       id: req.params.id
       // swap with req.session.user.id if they need to be logged in
     },
-    include: [{ 
-      model: db.User, 
+    include: [{
+      model: db.User,
       as: 'Associate',
       include: [db.Event]
     }]
     // [{
 
-      // model: db.UserAssociate,
-      // include: [db.Event]
+    // model: db.UserAssociate,
+    // include: [db.Event]
     // }]
 
   }).then(function (dbAssociate) {
@@ -197,8 +230,30 @@ router.put("/event/edit", function (req, res) {
 // Already handled in eventcontroller with put request?
 
 // findAll where you have an assciation with them
-router.get("/friends", (req, res) => {
-  res.render("partials/friends");
+router.get("/friends/:id", (req, res) => { // use friends/:id if they don't need to be logged in
+  // find a single user that is logged in
+  db.User.findOne({
+    where: {
+      id: req.params.id //req.session.user.id if they need to be logged in
+    },
+    include: [{
+      model: db.User,
+      as: 'Associate',
+    }]
+  }).then(userData => {
+    // take data that is an object with all of the users associations, turn it into JSON
+    console.log(userData);
+    const userJson = userData.toJSON();
+    // make an object that is just the usernames of the associations
+    const hbsObj = {
+      username: userJson.username
+    }
+    //pass that object to the frontend
+    // res.json(userData)
+    res.render("partials/friends", hbsObj);
+  }).catch(err => {
+    res.status(500).json(err)
+  })
 })
 
 // findOne user, findAll events for that user
@@ -221,8 +276,24 @@ router.get("/profile", (req, res) => {
 
 
 // query for single user who is logged in
-router.get("/settings", (req, res) => {
-  res.render("partials/settings");
+router.get("/settings/:id", (req, res) => {
+  db.User.findOne({
+    where: {
+      id: req.params.id
+    }
+  }).then(dbUser => {
+    // take data that is an object with all of the users associations, turn it into JSON
+    const userJson = userData.toJSON();
+    // make an object that is just the username and password for editing?
+    const hbsObj = {
+      username: userJson.username,
+      password: userJson.password
+    }
+    //pass that object to the frontend
+    res.render("partials/settings", hbsObj);
+  }).catch(err => {
+    res.status(500).json(err)
+  })
 })
 
 // Export routes for server.js to use.
@@ -256,4 +327,17 @@ module.exports = router;
 //   }).fail(err => {
 //     alert("review failed")
 //   })
+// })
+
+
+// router.get('/login', (req,res) => {
+//   res.render('login')
+// })
+
+// db.Review.findAll().then(data => {
+//   const jsonData = data.map(element => element.toJSON())
+//   const hbsObj = {
+//     reviews:jsonData
+//   }
+//   res.render('index',hbsObj)
 // })
