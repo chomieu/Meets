@@ -58,9 +58,8 @@ router.post("/", function (req, res) {
         // find the total number of events after the current date (future events)
         // loop over the array, count the number of events after the current date\
         const today = new Date();
-        const todaysDate = today.toISOString();
         // filters all events to find only future events
-        const upcomingEvents = eventData.filter(element => (element.dateTime).toISOString() > todaysDate);
+        const upcomingEvents = eventData.filter(element => (element.dateTime) > today);
         db.User.update({
           plans: eventData.length,
           // this will only update when a new event is created...
