@@ -30,7 +30,7 @@ router.get("/signup", (req, res) => {
 // TODO: get request to fetch data and render. Reference date(ORDER BY DESC) and userid tied to event 
 
 router.get("/api/allEvents/:id", function (req, res) {
-  // console.log(req.params);
+  if (req.session.user) {
   db.Event.findAll({
     where: {
       id: req.params.id
@@ -44,6 +44,9 @@ router.get("/api/allEvents/:id", function (req, res) {
     console.log(err.message);
     res.status(500).send(err.message)
   });
+} else {
+  res.send("please sign in")
+}
 });
 
 
@@ -66,7 +69,8 @@ router.get("/api/events/:id", (req, res) => {
     }).then(function (dbEvent) {
       const dbEventsJson = dbEvent.toJSON()
       const hbsobj = {
-        events: dbEventsJson
+        events: dbEventsJson,
+        user: req.session.user
       }
       console.log(dbEventsJson);
       console.log(hbsobj);
@@ -86,6 +90,7 @@ router.get("/api/events/:id", (req, res) => {
 // friends activities - query the user's associations, then query the associations events and return the Z events for them at that time (of the original event)
 
 router.get("/api/friendEvents/:id", (req, res) => {
+  if (req.session.user) {
   db.User.findOne({
     where: {
       id: req.params.id
@@ -105,7 +110,42 @@ router.get("/api/friendEvents/:id", (req, res) => {
   }).then(function (dbAssociate) {
     const dbAssociateJson = dbAssociate.toJSON()
     const hbsobj = {
-      events: dbAssociateJson
+      events: dbAssociateJson,
+      user: req.session.user
+    }
+    // console.log(dbEventsJson);
+    // console.log(hbsobj);
+    res.render('./partials/oneFriend', hbsobj)
+  }).catch(err => {
+    console.log(err.message);
+    res.status(500).send(err.message)
+  })
+} else {
+  res.send("please sign in")
+}
+})
+
+// query for any associate that has an event at the same time
+router.get("/api/sameTime:id", function(req, res){
+  console.log(req.body.dateTime);
+  // if(req.body.dateTime===req.params.id)
+  db.User.findAll({
+    where: {
+      id: req.params.id
+    },
+    include: [{ 
+      model: db.User, 
+      as: 'Associate',
+      include: [db.Event]
+    }],
+      where: {
+        dateTime: req.body.dateTime
+      }
+  }).then(function (dbAssociate) {
+    const dbAssociateJson = dbAssociate.toJSON()
+    const hbsobj = {
+      events: dbAssociateJson,
+      user: req.session.user
     }
     // console.log(dbEventsJson);
     // console.log(hbsobj);
@@ -115,8 +155,6 @@ router.get("/api/friendEvents/:id", (req, res) => {
     res.status(500).send(err.message)
   })
 })
-
-// query for any associate that has an event at the same time
 router.get("/events", (req, res) => {
   res.render("partials/events");
 })
@@ -134,8 +172,27 @@ router.get("/events", (req, res) => {
 // QUERY to findOne event
 
 
-router.get("/event/edit", (req, res) => {
-  res.render("partials/oneEvent");
+router.put("/event/edit", function (req, res) {
+  if (req.session.user) {
+    db.Event.update(req.body,
+      {
+        where: {
+          id: req.params.id
+        }
+      }).then(function (dbEventEdit) {
+        const dbEventsEditJson = dbEventEdit.toJSON()
+        const hbsobj = {
+          events: dbEventsEditJson,
+          user: req.session.user
+        }
+        res.render("partials/oneEvent", hbsobj)
+      }).catch(err => {
+        console.log(err.message);
+        res.status(500).send(err.message)
+      })
+  } else {
+    res.send("please sign in")
+  }
 })
 // Already handled in eventcontroller with put request?
 
@@ -161,6 +218,8 @@ router.get("/profile", (req, res) => {
 })
 
 // update username/password/first name/last name/etc
+
+
 // query for single user who is logged in
 router.get("/settings", (req, res) => {
   res.render("partials/settings");

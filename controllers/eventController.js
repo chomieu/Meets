@@ -86,15 +86,16 @@ router.put("/", function (req, res) {
 // });
 // Delete an event
 router.delete("/:id", function (req, res) {
+  console.log(req.body.UserId);
   if (req.session.user) {
     // Needs to pass user id of the event
     console.log(req.session.user.id);
     console.log(req.params);
-    if (req.session.user.id === parseInt(req.params.id)) {
+    if (req.session.user.id === parseInt(req.body.UserId)) {
       db.Event.destroy({
         where: {
           id: req.params.id
-        }
+        },
       }).then(function (dbEvent) {
         res.json(dbEvent)
       }).catch(err => {
