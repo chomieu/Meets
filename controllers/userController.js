@@ -57,7 +57,7 @@ router.post("/login", (req, res) => {
 router.put("/connect", (req, res) => {
   if (req.session.user) {
     // find the logged in user
-  db.User.findOne({
+    db.User.findOne({
       where: {
         id: req.session.user.id
       }
@@ -78,7 +78,7 @@ router.put("/connect", (req, res) => {
 router.delete("/disconnect", (req, res) => {
   if (req.session.user) {
     // find the logged in user
-  db.User.findOne({
+    db.User.findOne({
       where: {
         id: req.session.user.id
       }
