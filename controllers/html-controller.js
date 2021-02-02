@@ -211,6 +211,7 @@ router.get("/friends/:id", (req, res) => { // use friends/:id if they don't need
       const userJson = userData.toJSON();
       // make an object that is just the usernames of the associations
       const hbsObj = {
+        user:req.session.user,
         username: userJson.username
       }
       //pass that object to the frontend
