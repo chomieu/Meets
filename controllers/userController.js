@@ -58,7 +58,7 @@ router.put("/connect", (req, res) => {
     // find the logged in user
   db.User.findOne({
       where: {
-        id: req.body.id // req.session.user.id for logged in user
+        id: req.session.user.id
       }
     }).then(dbUser => {
       // add the targeted user as an association
@@ -79,7 +79,7 @@ router.delete("/disconnect", (req, res) => {
     // find the logged in user
   db.User.findOne({
       where: {
-        id: req.body.id // req.session.user.id for logged in user
+        id: req.session.user.id
       }
     }).then(dbUser => {
       // add the targeted user as an association
