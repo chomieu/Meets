@@ -49,7 +49,7 @@ router.get("/dashboard", (req, res) => {
   db.User.findOne({
     attributes: ['username'],
     where: {
-      id: req.session.user //req.session.user.id if they need to be logged in
+      id: req.session.user.id //req.session.user.id if they need to be logged in
     },
     include: [{
       model: db.Event,
@@ -74,7 +74,7 @@ router.get("/dashboard", (req, res) => {
       // console.log(userData);
       // res.json(aSockData)
       const hbsObj = {
-        user: req.session.user,
+        user: req.session.user, // include this in EVERY hbars object for every route that renders a page
         userEvents: userData.Events,
         friends: aSockData
       }
