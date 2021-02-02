@@ -54,44 +54,44 @@ router.post("/login", (req, res) => {
 
 // PUT route to add connections, trigger each time a user is followed/friend/etc
 router.put("/connect", (req, res) => {
-  //TODO: if (req.session.user) {
-  // find the logged in user
-  db.User.findOne({
-    where: {
-      id: req.body.id // req.session.user.id for logged in user
-    }
-  }).then(dbUser => {
-    // add the targeted user as an association
-    dbUser.addAssociate(req.body.associateId)
-    res.json(dbUser)
-  }).catch(err => {
-    console.log(err.message);
-    res.status(500).send(err.message)
-  })
-  //TODO: } else {
-  //TODO:   res.status(401).send("Please login to access this page.")
-  //TODO: }
+  if (req.session.user) {
+    // find the logged in user
+    db.User.findOne({
+      where: {
+        id: req.session.user.id
+      }
+    }).then(dbUser => {
+      // add the targeted user as an association
+      dbUser.addAssociate(req.body.associateId)
+      res.json(dbUser)
+    }).catch(err => {
+      console.log(err.message);
+      res.status(500).send(err.message)
+    })
+  } else {
+    res.status(401).send("Please login to access this page.")
+  }
 })
 
 // DELETE route to remove connections between users
 router.delete("/disconnect", (req, res) => {
-  //TODO: if (req.session.user) {
-  // find the logged in user
-  db.User.findOne({
-    where: {
-      id: req.body.id // req.session.user.id for logged in user
-    }
-  }).then(dbUser => {
-    // add the targeted user as an association
-    dbUser.removeAssociate(req.body.associateId)
-    res.json(dbUser)
-  }).catch(err => {
-    console.log(err.message);
-    res.status(500).send(err.message)
-  })
-  //TODO: } else {
-  //TODO:   res.status(401).send("Please login to access this page.")
-  //TODO: }
+  if (req.session.user) {
+    // find the logged in user
+    db.User.findOne({
+      where: {
+        id: req.session.user.id
+      }
+    }).then(dbUser => {
+      // add the targeted user as an association
+      dbUser.removeAssociate(req.body.associateId)
+      res.json(dbUser)
+    }).catch(err => {
+      console.log(err.message);
+      res.status(500).send(err.message)
+    })
+  } else {
+    res.status(401).send("Please login to access this page.")
+  }
 })
 
 // allows user to update their username
