@@ -150,6 +150,7 @@ router.get("/api/friendEvents/:id", (req, res) => {
     }).then(function (dbAssociate) {
       const dbAssociateJson = dbAssociate.toJSON()
       const hbsobj = {
+        user: req.session.user,
         events: dbAssociateJson
       }
       // console.log(dbEventsJson);
