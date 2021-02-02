@@ -16,6 +16,7 @@ $(document).ready(function () {
             data: input
         }).then((resp) => {
             sessionStorage['user'] = JSON.stringify(resp)
+            localStorage['currentPage'] = "dashboardBtn"
             window.location = ("/dashboard")
         }).catch((err) => {
             $(".red-text").text("Login Failed!")
