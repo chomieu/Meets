@@ -15,6 +15,7 @@ router.get("/api/users", (req, res) => {
 
 // allows user to signup for an account
 router.post("/signup", (req, res) => {
+  console.log("inside signup")
   db.User.create({
     username: req.body.username,
     password: req.body.password

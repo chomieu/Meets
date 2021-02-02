@@ -3,54 +3,30 @@
 
     <div class="row container my-dflex my-full-height">
         <div class="col s6">
-            <a href="/event/edit" class="eventBtn my-tc-black">
+            {{#each userEvents}}
+            <a href="/event/{{dataValues.id}}" class="eventBtn my-tc-black">
                 <div class="event-box my-bc2">
-                    <div class="event-title">event1</div>
+                    <div class="event-title">{{dataValues.name}}</div>
                 </div>
             </a>
-            <a href="/event/edit" class="eventBtn my-tc-black">
-                <div class="event-box my-bc2">
-                    <div class="event-title">event2</div>
-                </div>
-            </a>
-            <a href="/event/edit" class="eventBtn my-tc-black">
-                <div class="event-box my-bc2">
-                    <div class="event-title">event3</div>
-                </div>
-            </a>
-            <a href="/event/edit" class="eventBtn my-tc-black">
-                <div class="event-box my-bc2">
-                    <div class="event-title">event4</div>
-                </div>
-            </a>
+           {{/each}}
         </div>
         <div class="col s6 my-dflex-col my-justify-between align-center">
             <div class="row">
                 <div class="friends">
-                    <a href="/friend/one" class="friendsBtn my-tc-black">
+                    {{#if friends}}
+                    {{#each friends}}
+                    <a href="/friend/{{dataValues.id}}" class="friendsBtn my-tc-black">
                         <div class="friend-box">
                             <img class="userIcon" src="/assets/img/userIcon.png" alt="user image">
-                            Daniel
+                            {{dataValues.username}}
                         </div>
                     </a>
-                    <a href="/friend/one" class="friendsBtn my-tc-black">
-                        <div class="friend-box">
-                            <img class="userIcon" src="/assets/img/userIcon.png" alt="user image">
-                            Elias
-                        </div>
-                    </a>
-                    <a href="/friend/one" class="friendsBtn my-tc-black">
-                        <div class="friend-box">
-                            <img class="userIcon" src="/assets/img/userIconGirl.png" alt="user image">
-                            Chomie
-                        </div>
-                    </a>
-                    <a href="/friend/one" class="friendsBtn my-tc-black">
-                        <div class="friend-box">
-                            <img class="userIcon" src="/assets/img/userIcon.png" alt="user image">
-                            Tyler
-                        </div>
-                    </a>
+                    {{/each}}
+                    {{/if}}
+                    {{#unless friends}}
+                    <h1>YOU HAVE NO FRIENDS</h1> <i class="material-icons">sentiment_very_dissatisfied</i>
+                    {{/unless}}
                 </div>
             </div>
             <div class="row my-dflex my-justify-center">
