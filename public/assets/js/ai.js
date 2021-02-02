@@ -1,4 +1,4 @@
-var SpeechSDK
+// var SpeechSDK
 var recognizer
 
 $('document').ready(function () {
@@ -13,8 +13,8 @@ $('document').ready(function () {
       type: "POST",
       data: toAI
     }).then(async (res) => {
-      $("#history").append($("<p>", { class: "col s12 green-text", text: res }))
-      const sX = new Audio("/assets/js/ai-audio.wav")
+      $("#history").append($("<p>", { class: "col s12 green-text", text: res.text }))
+      let sX = new Audio(`/assets/js/ai-audio-${res.random}.wav`)
       await sX.play()
     }
     );

@@ -62,19 +62,15 @@ router.post('/api/input', (request, response) => {
         }
       ],
       order: [['Events', 'dateTime', 'ASC']]
-    }).then(async function (dbUser) {
-      console.log(dbUser)
-      if (dbUser !== null) {
+    }).then(async (dbUser) => {
+      let echo
+      dbUser === null ? echo = `${aiRes.queryResult.fulfillmentText} nothing planned.` :
         echo = `${aiRes.queryResult.fulfillmentText} ${dbUser.Events[0].dataValues.name} on ${dbUser.Events[0].dataValues.dateTime}`
-        executeQueries("echo-fmhq", sessionId, [echo], languageCode);
-      } else {
-        echo = `${aiRes.queryResult.fulfillmentText} nothing planned.`
-        executeQueries("echo-fmhq", sessionId, [echo], languageCode);
-      }
+      executeQueries("echo-fmhq", sessionId, [echo], languageCode);
     })
   }
 
-  async function getPresent(friend) {
+  async function getPresent(friend, aiRes) {
     // grab one from past/future/now depending on time
     db.User.findOne({
       where: {
@@ -90,12 +86,15 @@ router.post('/api/input', (request, response) => {
           }
         }
       ]
-    }).then((dbUser) => {
-      dbUser.Events[0].dataValues
+    }).then(async (dbUser) => {
+      let echo
+      dbUser === null ? echo = `${aiRes.queryResult.fulfillmentText} seems to be available. ${aiRes.queryResult.fulfillmentText} has nothing planned on their schedule for the past hour.` :
+        echo = `${aiRes.queryResult.fulfillmentText} is currently unavailable. ${aiRes.queryResult.fulfillmentText} has ${dbUser.Events[0].dataValues.name} planned for ${dbUser.Events[0].dataValues.dateTime}`
+      executeQueries("echo-fmhq", sessionId, [echo], languageCode);
     })
   }
 
-  async function getFuture(friend) {
+  async function getFuture(friend, aiRes) {
     // grab one from past/future/now depending on time
     db.User.findOne({
       where: {
@@ -112,27 +111,29 @@ router.post('/api/input', (request, response) => {
         }
       ],
       order: [['Events', 'dateTime', 'ASC']]
-    }).then(function (dbUser) {
-      if (dbUser) {
-        return dbUser.Events[0].dataValues
-      } else {
-        return null
-      }
+    }).then(async (dbUser) => {
+      let echo
+      dbUser === null ? echo = `${aiRes.queryResult.fulfillmentText} no future events at this moment.` :
+        echo = `${aiRes.queryResult.fulfillmentText} planned for ${dbUser.Events[0].dataValues.dateTime}`
+      executeQueries("echo-fmhq", sessionId, [echo], languageCode);
     })
   }
 
   async function executeQueries(projectId, sessionId, queries, languageCode) {
+    const writePromise = util.promisify(fs.writeFile)
     // Keeping the context across queries let's us simulate an ongoing conversation with the bot
     let context, aiRes, fromDB, echo, aiName = 'Meets A.I'
     for (const query of queries) {
       try {
         aiRes = await detectIntent(projectId, sessionId, query, context, languageCode);
+        context = aiRes.queryResult.outputContexts;
 
         switch (aiRes.queryResult.intent.displayName) {
           case "Echo":
-            var filepath = path.join(__dirname + "/../public/assets/js/ai-audio.wav")
-            await util.promisify(fs.writeFile)(filepath, aiRes.outputAudio, 'binary');
-            response.send(aiRes.queryResult.fulfillmentText)
+            var random = Date.now()
+            var filepath = path.join(__dirname + `/../public/assets/js/ai-audio-${random}.wav`)
+            await writePromise(filepath, aiRes.outputAudio, 'binary');
+            response.json({text: aiRes.queryResult.fulfillmentText, random: random})
             return
           case "AgentNameGet":
             if (aiName) {
@@ -147,33 +148,17 @@ router.post('/api/input', (request, response) => {
             echo = aiRes.queryResult.fulfillmentText
             break
           case "Past":
-            fromDB = await getPast(aiRes.queryResult.parameters.fields.person.structValue.fields.name.stringValue, aiRes)
-          //   if (fromDB !== null) {
-          //     echo = `${aiRes.queryResult.fulfillmentText} ${fromDB.name} on ${fromDB.dateTime}`
-          //   } else {
-          //     echo = `${aiRes.queryResult.fulfillmentText} nothing planned.`
-          //   }
-          //   break
+            await getPast(aiRes.queryResult.parameters.fields.person.structValue.fields.name.stringValue, aiRes)
+            return
           case "Now":
-            fromDB = await getPresent(aiRes.queryResult.parameters.fields.person.structValue.fields.name.stringValue)
-            if (fromDB !== null) {
-              echo = `${aiRes.queryResult.fulfillmentText} is currently unavailable. ${aiRes.queryResult.fulfillmentText} has ${fromDB.name} planned for ${fromDB.dateTime}`
-            } else {
-              echo = `${aiRes.queryResult.fulfillmentText} seems to be available. ${aiRes.queryResult.fulfillmentText} has nothing planned on their schedule for the past hour.`
-            }
-            break
+            await getPresent(aiRes.queryResult.parameters.fields.person.structValue.fields.name.stringValue, aiRes)
+            return
           case "Future":
-            fromDB = await getFuture(aiRes.queryResult.parameters.fields.person.structValue.fields.name.stringValue)
-            if (fromDB !== null) {
-              echo = `${aiRes.queryResult.fulfillmentText} planned for ${fromDB.dateTime}`
-            } else {
-              echo = `${aiRes.queryResult.fulfillmentText} no future events at this moment.`
-            }
-            break
+            await getFuture(aiRes.queryResult.parameters.fields.person.structValue.fields.name.stringValue, aiRes)
+            return
           default: echo = aiRes.queryResult.fulfillmentText
         }
         // Use the context from this response for next queries
-        context = aiRes.queryResult.outputContexts;
         executeQueries("echo-fmhq", sessionId, [echo], languageCode);
       } catch (error) {
         console.log(error);
