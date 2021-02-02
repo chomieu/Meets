@@ -1,6 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const db = require("../models");
+const user = require("../models/user");
 
 // Routes
 // =============================================================
@@ -20,10 +21,17 @@ router.get("/myevents", (req, res) => {
   if (!req.session.user) {
     res.status(404).send("please sign in")
   } else {
-    db.Event.findAll({
+    db.User.findAll({
       where: {
-        UserId: req.sessions.user.id
-      }
+        id: req.session.user.id
+      },
+      include: [db.Event]
+    }).then(function (dbEvent) {
+      console.log(req.session.user.id);
+      res.json(dbEvent)
+    }).catch(err => {
+      console.log(err.message);
+      res.status(500).send(err.message)
     })
   }
 })
@@ -99,15 +107,16 @@ router.put("/", function (req, res) {
 
 // Delete an event
 router.delete("/:id", function (req, res) {
+  console.log(req.body.UserId);
   if (req.session.user) {
     // Needs to pass user id of the event
     console.log(req.session.user.id);
     console.log(req.params);
-    if (req.session.user.id === parseInt(req.params.id)) {
+    if (req.session.user.id === parseInt(req.body.UserId)) {
       db.Event.destroy({
         where: {
           id: req.params.id
-        }
+        },
       }).then(function (dbEvent) {
         res.json(dbEvent)
       }).catch(err => {

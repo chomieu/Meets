@@ -146,6 +146,42 @@ router.get("/friendEvents", (req, res) => {
 })
 
 // query for any associate that has an event at the same time
+router.get("/html/sameTime/", function (req, res) {
+  // if(req.body.dateTime===req.params.id)
+  db.Event.findAll({
+    where: {
+      dateTime: req.body.dateTime
+    },
+    include: [{
+      model: db.User,
+      include: [{
+        model: db.User,
+      as: 'Associate',
+      // include: [db.Event]
+      }],
+    }],
+    
+  }).then(function (dbAssociateEvents) {
+    const dbAssociateEventsJson = dbAssociateEvents.map(element => element.toJSON())
+    const hbsobj = {
+      events: dbAssociateEventsJson,
+      user: req.session.user
+    }
+    // res.json(dbAssociateEvents)
+    
+    // console.log(dbEventsJson);
+    // console.log(hbsobj);
+    res.render('./partials/events', hbsobj)
+
+  }).catch(err => {
+    console.log(err.message);
+    res.status(500).send(err.message)
+  })
+  
+})
+
+
+// query for any associate that has an event at the same time
 // TODO: ???
 router.get("/events", (req, res) => {
   res.render("partials/events");
@@ -225,6 +261,8 @@ router.get("/ai_chat", (req, res) => {
 // })
 
 // update username/password/first name/last name/etc
+
+
 // query for single user who is logged in
 router.get("/settings", (req, res) => {
   if (req.session.user) {
