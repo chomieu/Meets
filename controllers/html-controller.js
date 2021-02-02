@@ -291,7 +291,7 @@ router.get("/event/new", (req, res) => {
   res.render("partials/oneEvent", { isNewRecord: true });
 })
 
-// TODO: Render the edit event page if you are logged in and you are the owner
+// Render the edit event page if you are logged in and you are the owner
 // pass content of event with ID = X
 // send isEdit boolean --> if TRUE then EDITABLE (on frontend)
 router.get("/event/edit/:event_id", (req, res) => {
@@ -308,7 +308,7 @@ router.get("/event/edit/:event_id", (req, res) => {
       // if true, then the user logged in is the owner of the event
       // so the event should be editable
       if (req.session.user) {
-        dbEventJson.isMine = req.session.user.id === dbEventJson.User.id
+        dbEventJson.isMine = req.session.user.id === dbEventJson.UserId
       } else {
         dbEventJson.isMine = false;
       }
@@ -324,7 +324,7 @@ router.get("/event/edit/:event_id", (req, res) => {
   }
 })
 
-// findAll where you have an assciation with them
+// findAll where you have an association with them
 router.get("/friends", (req, res) => {
   if (req.session.user) {
     // find a single user that is logged in
@@ -346,7 +346,6 @@ router.get("/friends", (req, res) => {
         username: userJson
       }
       //pass that object to the frontend
-      // res.json(userData)
       res.render("partials/friends", hbsObj);
     }).catch(err => {
       res.status(500).json(err)
@@ -357,7 +356,6 @@ router.get("/friends", (req, res) => {
 })
 
 // findOne user, findAll events for that user
-//TODO:
 router.get("/friend/one/:friend_id", (req, res) => {
   if (req.session.user) {
     // find a single user that is logged in
@@ -370,19 +368,18 @@ router.get("/friend/one/:friend_id", (req, res) => {
         as: 'Associate',
         where: {
           id: req.params.friend_id
-        }
+        },
+        include: [db.Event]
       }]
-    }).then(userData => {
+    }).then(friendEvents => {
       // take data that is an object with all of the users associations, turn it into JSON
-      console.log(userData);
-      const userJson = userData.toJSON();
+      const userEventsJson = friendEvents.toJSON();
       // make an object that is just the usernames of the associations
       const hbsObj = {
         user: req.session.user,
-        username: userJson
+        username: userEventsJson
       }
       //pass that object to the frontend
-      // res.json(userData)
       res.render("partials/oneFriend", hbsObj);
     }).catch(err => {
       res.status(500).json(err)
