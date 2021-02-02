@@ -109,6 +109,7 @@ router.get("/api/events/:id", (req, res) => {
     }).then(function (dbEvent) {
       const dbEventsJson = dbEvent.toJSON()
       const hbsobj = {
+        user:req.session.user,
         events: dbEventsJson
       }
       console.log(dbEventsJson);
