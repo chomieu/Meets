@@ -1,12 +1,7 @@
 const express = require("express");
-
 const router = express.Router();
-
 const db = require("../models");
 const user = require("../models/user");
-
-// use router.get router.post router.put router.delete
-
 
 // Routes
 // =============================================================
@@ -52,14 +47,12 @@ router.post("/", function (req, res) {
       dateTime: req.body.dateTime,
       name: req.body.name
     }).then(function (dbEvent) {
-      // res.json(dbEvent)
       // find all events for the signed in user
       db.Event.findAll({
         where: {
           UserId: req.session.user.id
         }
       }).then(eventData => {
-        // res.json(eventData)
         // count the total # of events
         console.log(eventData);
         // update the user with the total # of events
@@ -70,10 +63,7 @@ router.post("/", function (req, res) {
         const upcomingEvents = eventData.filter(element => (element.dateTime) > today);
         db.User.update({
           plans: eventData.length,
-          // this will only update when a new event is created...
-          // could be addressed by putting an ajax call in the front end for when the window reloads
-          // or a time interval to check every hour
-          // or .....
+          // this will be updated on page load as well
           upcoming_plans:upcomingEvents.length
         }, {
           where: {
@@ -143,12 +133,5 @@ router.delete("/:id", function (req, res) {
 
 })
 
-
-
-
-
-
 // Export routes for server.js to use.
-
-// TODO: send event to one of our friends? 
 module.exports = router;
