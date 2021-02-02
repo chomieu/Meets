@@ -146,7 +146,7 @@ router.get("/friendEvents", (req, res) => {
 })
 
 // query for any associate that has an event at the same time
-router.get("/html/sameTime/", function (req, res) {
+router.get("/sameTime/", function (req, res) {
   // if(req.body.dateTime===req.params.id)
   db.Event.findAll({
     where: {
@@ -172,23 +172,37 @@ router.get("/html/sameTime/", function (req, res) {
     // console.log(dbEventsJson);
     // console.log(hbsobj);
     res.render('./partials/events', hbsobj)
-
   }).catch(err => {
     console.log(err.message);
     res.status(500).send(err.message)
   })
-  
 })
 
-
-// query for any associate that has an event at the same time
-// TODO: Query for all user's events
+// render all events for the logged in user
 router.get("/events", (req, res) => {
-  res.render("partials/events");
+  if (!req.session.user) {
+    res.redirect(401,'/login')
+  } else {
+    db.User.findAll({
+      where: {
+        id: req.session.user.id
+      },
+      include: [db.Event]
+    }).then(dbEvent => {
+      const dbEventJson = dbEvent.map(e=>e.toJSON())
+      const hbsObj = {
+        user: req.session.user,
+        events: dbEventJson
+      }
+      res.render("partials/events", hbsObj);
+    }).catch(err => {
+      console.log(err.message);
+      res.status(500).send(err.message)
+    })
+  }
 })
 
-
-// TODO: new event route
+// render the new event route
 router.get("/event/new", (req, res) => {
   res.render("partials/oneEvent");
 })
@@ -196,13 +210,31 @@ router.get("/event/new", (req, res) => {
 // TODO: Render the edit event page if you are logged in and you are the owner
 // pass content of event with ID = X
 // send isEdit boolean --> if TRUE then EDITABLE (on frontend)
-router.get("/event/edit", (req, res) => {
+router.get("/event/edit/:event_id", (req, res) => {
+  if (!req.session.user) {
+    res.redirect(401,'/login')
+  } else {
+    db.Event.findOne({
+      where: {
+        id: req.params.event_id
+      }
+    }).then(dbEvent => {
+      const dbEventJson = dbEvent.toJSON();
+      const hbsObj = {
+        user: req.session.user,
+        events: dbEventJson
+      };
+      res.render("partials/events", hbsObj);
+    }).catch(err => {
+      console.log(err.message);
+      res.status(500).send(err.message)
+    })
+  }
   // findOne for a single event
   // render the data from that event to the page
   // on submit - target the route in the eventController for the edit
   res.render("partials/oneEvent");
 })
-// Already handled in eventcontroller with put request?
 
 // findAll where you have an assciation with them
 router.get("/friends", (req, res) => {
