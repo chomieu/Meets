@@ -45,7 +45,7 @@ router.post('/api/input', (request, response) => {
   }
 
   // Find user's friend in the request and get their events
-  async function getPast(friend) {
+  async function getPast(friend, aiRes) {
     // grab one from past/future/now depending on time
     db.User.findOne({
       where: {
@@ -62,11 +62,14 @@ router.post('/api/input', (request, response) => {
         }
       ],
       order: [['Events', 'dateTime', 'ASC']]
-    }).then(function (dbUser) {
-      if (dbUser) {
-        return dbUser.Events[0]
+    }).then(async function (dbUser) {
+      console.log(dbUser)
+      if (dbUser !== null) {
+        echo = `${aiRes.queryResult.fulfillmentText} ${dbUser.Events[0].dataValues.name} on ${dbUser.Events[0].dataValues.dateTime}`
+        executeQueries("echo-fmhq", sessionId, [echo], languageCode);
       } else {
-        return null
+        echo = `${aiRes.queryResult.fulfillmentText} nothing planned.`
+        executeQueries("echo-fmhq", sessionId, [echo], languageCode);
       }
     })
   }
@@ -87,12 +90,8 @@ router.post('/api/input', (request, response) => {
           }
         }
       ]
-    }).then(function (dbUser) {
-      if (dbUser) {
-        return dbUser.Events[0]
-      } else {
-        return null
-      }
+    }).then((dbUser) => {
+      dbUser.Events[0].dataValues
     })
   }
 
@@ -115,7 +114,7 @@ router.post('/api/input', (request, response) => {
       order: [['Events', 'dateTime', 'ASC']]
     }).then(function (dbUser) {
       if (dbUser) {
-        return dbUser.Events[0]
+        return dbUser.Events[0].dataValues
       } else {
         return null
       }
@@ -131,9 +130,8 @@ router.post('/api/input', (request, response) => {
 
         switch (aiRes.queryResult.intent.displayName) {
           case "Echo":
-            await util.promisify(fs.writeFile)("ai-audio.wav", aiRes.outputAudio, 'binary');
-            var filepath = path.join(__dirname + "/../public/assets/ai-audio.wav")
-            sound.play(filepath)
+            var filepath = path.join(__dirname + "/../public/assets/js/ai-audio.wav")
+            await util.promisify(fs.writeFile)(filepath, aiRes.outputAudio, 'binary');
             response.send(aiRes.queryResult.fulfillmentText)
             return
           case "AgentNameGet":
@@ -149,13 +147,13 @@ router.post('/api/input', (request, response) => {
             echo = aiRes.queryResult.fulfillmentText
             break
           case "Past":
-            fromDB = await getPast(aiRes.queryResult.parameters.fields.person.structValue.fields.name.stringValue)
-            if (fromDB !== null) {
-              echo = `${aiRes.queryResult.fulfillmentText} ${fromDB.name} on ${fromDB.dateTime}`
-            } else {
-              echo = `${aiRes.queryResult.fulfillmentText} nothing planned.`
-            }
-            break
+            fromDB = await getPast(aiRes.queryResult.parameters.fields.person.structValue.fields.name.stringValue, aiRes)
+          //   if (fromDB !== null) {
+          //     echo = `${aiRes.queryResult.fulfillmentText} ${fromDB.name} on ${fromDB.dateTime}`
+          //   } else {
+          //     echo = `${aiRes.queryResult.fulfillmentText} nothing planned.`
+          //   }
+          //   break
           case "Now":
             fromDB = await getPresent(aiRes.queryResult.parameters.fields.person.structValue.fields.name.stringValue)
             if (fromDB !== null) {
