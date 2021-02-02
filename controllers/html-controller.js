@@ -40,7 +40,7 @@ router.get("/api/allEvents/:id", function (req, res) {
 
 
 // GET route to fetch associations and events from the database to display on the dashboard
-router.get("/dashboard/:id", (req, res) => {
+router.get("/dashboard", (req, res) => {
   // TODO: Toggle to findAll friends events instead
   // findOne user and all of their events
 
@@ -49,11 +49,11 @@ router.get("/dashboard/:id", (req, res) => {
   db.User.findOne({
     attributes: ['username'],
     where: {
-      id: req.params.id //req.session.user.id if they need to be logged in
+      id: req.session.user //req.session.user.id if they need to be logged in
     },
     include: [{
       model: db.Event,
-      attributes: ['UserId','name'],
+      attributes: ['UserId', 'name'],
       limit: 10
     }]
   }).then(userData => {
@@ -63,7 +63,7 @@ router.get("/dashboard/:id", (req, res) => {
         limit: 2, // values can be changed
         include: [{
           model: db.Event,
-          attributes: ['UserId','name'],
+          attributes: ['UserId', 'name'],
           limit: 2 // value can be changed
         }]
       }
@@ -74,6 +74,7 @@ router.get("/dashboard/:id", (req, res) => {
       // console.log(userData);
       // res.json(aSockData)
       const hbsObj = {
+        user: req.session.user,
         userEvents: userData.Events,
         friends: aSockData
       }
