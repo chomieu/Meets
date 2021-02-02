@@ -112,7 +112,7 @@ router.get("/events/:id", (req, res) => {
       res.status(500).send(err.message);
     });
   } else {
-    res.send("please sign in")
+    res.redirect("/");
   }
 })
 
@@ -198,7 +198,7 @@ router.get("/events", (req, res) => {
 
 // TODO: new event route
 router.get("/event/new", (req, res) => {
-  res.render("partials/oneEvent");
+  res.render("partials/oneEvent", { isNewRecord: true });
 })
 
 
@@ -209,13 +209,13 @@ router.get("/event/new", (req, res) => {
 
 // QUERY to findOne event
 
-// TODO: ???
-// pass content of event with ID = X
-// send isEdit boolean --> if TRUE then EDITABLE (on frontend)
-router.get("/event/:event_id", (req, res) => {
+// // TODO: ???
+// // pass content of event with ID = X
+// // send isEdit boolean --> if TRUE then EDITABLE (on frontend)
+// router.get("/event/:event_id", (req, res) => {
 
-  res.render("partials/oneEvent");
-})
+//   res.render("partials/oneEvent");
+// })
 
 
 

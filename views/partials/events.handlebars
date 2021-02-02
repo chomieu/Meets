@@ -1,3 +1,4 @@
+<script src="/assets/js/events.js"></script>
 <div class="wrapper">
     {{> navbar }}
     <div class="container my-dflex-col my-align-center">
@@ -14,8 +15,9 @@
                     temporibus ipsam. In, error numquam aliquid iusto dicta vero nemo illum, autem ipsum perspiciatis
                     itaque!</p>
                 <div class="btns my-mt-4">
-                    <a class="btn" href="/event/{{dataValues.id}}"> Edit </a>
-                    <a class="btn" href=""> Delete </a>
+                    <a class="btn" href="/events/{{dataValues.id}}"> Edit </a>
+                    <a class="btn deleteEvent" data-id="{{dataValues.id}}" data-userId="{{dataValues.UserId}}"> Delete
+                    </a>
                     <a class="btn" href=""> Share </a>
                 </div>
             </div>

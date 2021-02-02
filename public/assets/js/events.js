@@ -23,4 +23,28 @@ $(document).ready(function () {
             window.location("/events")
         })
     })
+
+    // delete Event
+    $(".deleteEvent").on("click", function () {
+        let eventId = $(this).data("id")
+        let UserId = $(this).data("userid")
+
+
+        console.log("*****************************");
+        console.log(this);
+        // console.log($(this));
+        console.log(`eventId: ${eventId} UserId: ${UserId}`);
+
+        let input = {
+            UserId: UserId
+        }
+
+
+        $.ajax(`/api/events/${eventId}`, {
+            type: "DELETE",
+            data: input
+        }).then(resp => {
+            window.location("/events")
+        })
+    })
 })
