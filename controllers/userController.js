@@ -94,14 +94,14 @@ router.delete("/disconnect", (req, res) => {
   }
 })
 
-// allows user to update their username
-router.put("/username/change", (req, res) => {
+// allows user to update their username/profile pic/etc
+router.put("/profile/update", (req, res) => {
   if (req.session.user) {
     db.User.update(
       req.body,
       {
         where: {
-          id: req.body.id
+          id: req.sessing.user.id
         }
       }).then(dbUser => {
         res.json(dbUser)
@@ -113,6 +113,8 @@ router.put("/username/change", (req, res) => {
     res.status(401).send("Please login to access this page.")
   }
 });
+
+//TODO: redirect from events/etc to index not just render('index')
 
 // just allows you to fetch the data to see if you are logged in
 router.get("/readsessions", (req, res) => {

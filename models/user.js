@@ -9,14 +9,14 @@ module.exports = function (sequelize, DataTypes) {
       allowNull: false,
       unique: true,
       validate: {
-        len: [6]
+        len: [1]
       }
     },
     password: {
       type: DataTypes.STRING,
       allowNull: false,
       validate: {
-        len: [8]
+        len: [1]
       }
     },
     // email: {
@@ -53,6 +53,11 @@ module.exports = function (sequelize, DataTypes) {
       allowNull: true,
       defaultValue: 0
     },
+    image: {
+      type: DataTypes.STRING,
+      allowNull: true,
+      defaultValue: ''
+    }
   });
 
   User.associate = function (models) {

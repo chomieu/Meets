@@ -182,7 +182,7 @@ router.get("/html/sameTime/", function (req, res) {
 
 
 // query for any associate that has an event at the same time
-// TODO: ???
+// TODO: Query for all user's events
 router.get("/events", (req, res) => {
   res.render("partials/events");
 })
