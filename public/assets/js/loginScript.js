@@ -17,7 +17,7 @@ $(document).ready(function () {
         }).then((resp) => {
             console.log(resp);
             sessionStorage['user'] = JSON.stringify(resp)
-            window.location = (`/dashboard/${resp.id}`)
+            window.location = (`/dashboard`)
         })
 
     })
