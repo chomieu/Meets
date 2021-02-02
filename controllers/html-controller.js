@@ -127,7 +127,7 @@ router.get("/friendEvents/:id", (req, res) => {
     db.User.findOne({
       where: {
         id: req.params.id
-        // swap with req.session.user.id if they need to be logged in
+        //TODO: swap with req.session.user.id if they need to be logged in
       },
       include: [{
         model: db.User,
