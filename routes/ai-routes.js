@@ -122,7 +122,7 @@ router.post('/api/input', (request, response) => {
   async function executeQueries(projectId, sessionId, queries, languageCode) {
     const writePromise = util.promisify(fs.writeFile)
     // Keeping the context across queries let's us simulate an ongoing conversation with the bot
-    let context, aiRes, fromDB, echo, aiName = 'Meets A.I'
+    let context, aiRes, echo, aiName = 'Meets A.I'
     for (const query of queries) {
       try {
         aiRes = await detectIntent(projectId, sessionId, query, context, languageCode);
