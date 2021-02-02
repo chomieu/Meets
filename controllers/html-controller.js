@@ -40,7 +40,7 @@ router.get("/allEvents", function (req, res) {
       res.status(500).send(err.message)
     });
   } else {
-    res.redirect(401,'/login')
+    res.redirect(401, '/login')
   }
 });
 
@@ -87,7 +87,7 @@ router.get("/dashboard", (req, res) => {
       res.status(500).json(err)
     })
   } else {
-    res.redirect(401,'/login')
+    res.redirect(401, '/login')
   }
 })
 
@@ -141,7 +141,7 @@ router.get("/friendEvents", (req, res) => {
       res.status(500).send(err.message)
     })
   } else {
-    res.redirect(401,'/login')
+    res.redirect(401, '/login')
   }
 })
 
@@ -181,7 +181,7 @@ router.get("/sameTime/", function (req, res) {
 // render all events for the logged in user
 router.get("/events", (req, res) => {
   if (!req.session.user) {
-    res.redirect(401,'/login')
+    res.redirect(401, '/login')
   } else {
     db.User.findAll({
       where: {
@@ -189,7 +189,7 @@ router.get("/events", (req, res) => {
       },
       include: [db.Event]
     }).then(dbEvent => {
-      const dbEventJson = dbEvent.map(e=>e.toJSON())
+      const dbEventJson = dbEvent.map(e => e.toJSON())
       const hbsObj = {
         user: req.session.user,
         events: dbEventJson
@@ -212,7 +212,7 @@ router.get("/event/new", (req, res) => {
 // send isEdit boolean --> if TRUE then EDITABLE (on frontend)
 router.get("/event/edit/:event_id", (req, res) => {
   if (!req.session.user) {
-    res.redirect(401,'/login')
+    res.redirect(401, '/login')
   } else {
     db.Event.findOne({
       where: {
@@ -220,40 +220,26 @@ router.get("/event/edit/:event_id", (req, res) => {
       }
     }).then(dbEvent => {
       const dbEventJson = dbEvent.toJSON();
+      // handlebars object should include a isMine key (true/false)
+      // if true, then the user logged in is the owner of the event
+      // so the event should be editable
+      if (req.session.user) {
+        dbEventJson.isMine = req.session.user.id === dbEventJson.User.id
+      } else {
+        dbEventJson.isMine = false;
+      }
       const hbsObj = {
         user: req.session.user,
         events: dbEventJson
       };
-      res.render("partials/events", hbsObj);
+      res.render("partials/oneEvent", hbsObj);
     }).catch(err => {
       console.log(err.message);
       res.status(500).send(err.message)
     })
   }
-  // findOne for a single event
-  // render the data from that event to the page
-  // on submit - target the route in the eventController for the edit
-  res.render("partials/oneEvent");
 })
 
-// findOne for a single event, then check to make sure that you are logged in and that you are the admin
-// TODO: findOne() event while ensuring logged in userID and userID who created event are the same 
-
-// if true, then you can edit and access the POST request
-
-// QUERY to findOne event
-
-// // TODO: ???
-// // pass content of event with ID = X
-// // send isEdit boolean --> if TRUE then EDITABLE (on frontend)
-// router.get("/event/:event_id", (req, res) => {
-
-//   res.render("partials/oneEvent");
-// })
-
-
-
-// Already handled in eventcontroller with put request?
 // findAll where you have an assciation with them
 router.get("/friends", (req, res) => {
   if (req.session.user) {
@@ -273,7 +259,7 @@ router.get("/friends", (req, res) => {
       // make an object that is just the usernames of the associations
       const hbsObj = {
         user: req.session.user,
-        username: userJson.username
+        username: userJson
       }
       //pass that object to the frontend
       // res.json(userData)
@@ -282,14 +268,44 @@ router.get("/friends", (req, res) => {
       res.status(500).json(err)
     })
   } else {
-    res.redirect(401,'/login')
+    res.redirect(401, '/login')
   }
 })
 
 // findOne user, findAll events for that user
 //TODO:
-router.get("/friend/one", (req, res) => {
-  res.render("partials/oneFriend");
+router.get("/friend/one/:friend_id", (req, res) => {
+  if (req.session.user) {
+    // find a single user that is logged in
+    db.User.findOne({
+      where: {
+        id: req.session.user.id
+      },
+      include: [{
+        model: db.User,
+        as: 'Associate',
+        where: {
+          id: req.params.friend_id
+        }
+      }]
+    }).then(userData => {
+      // take data that is an object with all of the users associations, turn it into JSON
+      console.log(userData);
+      const userJson = userData.toJSON();
+      // make an object that is just the usernames of the associations
+      const hbsObj = {
+        user: req.session.user,
+        username: userJson
+      }
+      //pass that object to the frontend
+      // res.json(userData)
+      res.render("partials/oneFriend", hbsObj);
+    }).catch(err => {
+      res.status(500).json(err)
+    })
+  } else {
+    res.redirect(401, '/login')
+  }
 })
 
 // chat - when AI is asked for past/future intent of TARGETNAME - query TARGETNAME for event in past/future -
@@ -311,27 +327,27 @@ router.get("/ai_chat", (req, res) => {
 // query for single user who is logged in
 router.get("/settings", (req, res) => {
   if (req.session.user) {
-  db.User.findOne({
-    where: {
-      id: req.session.user.id
-    }
-  }).then(userData => {
-    // take data that is an object with all of the users associations, turn it into JSON
-    const userJson = userData.toJSON();
-    // make an object that is just the username and password for editing?
-    const hbsObj = {
-      user: req.session.user,
-      username: userJson.username,
-      password: userJson.password
-    }
-    //pass that object to the frontend
-    res.render("partials/settings", hbsObj);
-  }).catch(err => {
-    res.status(500).json(err)
-  })
-} else {
-  res.redirect(401,'/login')
-}
+    db.User.findOne({
+      where: {
+        id: req.session.user.id
+      }
+    }).then(userData => {
+      // take data that is an object with all of the users associations, turn it into JSON
+      const userJson = userData.toJSON();
+      // make an object that is just the username and password for editing?
+      const hbsObj = {
+        user: req.session.user,
+        username: userJson.username,
+        password: userJson.password
+      }
+      //pass that object to the frontend
+      res.render("partials/settings", hbsObj);
+    }).catch(err => {
+      res.status(500).json(err)
+    })
+  } else {
+    res.redirect(401, '/login')
+  }
 })
 
 // Export routes for server.js to use.
