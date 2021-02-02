@@ -114,8 +114,6 @@ router.put("/profile/update", (req, res) => {
   }
 });
 
-//TODO: redirect from events/etc to index not just render('index')
-
 // just allows you to fetch the data to see if you are logged in
 router.get("/readsessions", (req, res) => {
   res.json(req.session)

@@ -47,7 +47,7 @@ router.get("/allEvents", function (req, res) {
 
 // GET route to fetch associations and events from the database to display on the dashboard
 router.get("/dashboard", (req, res) => {
-  // TODO: Toggle to findAll friends events instead
+  // TODO: Future Dev - Toggle to findAll friends events instead
   // findOne user and all of their events
 
   // AI fetches a user and target feeds into this call
