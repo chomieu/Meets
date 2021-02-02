@@ -17,6 +17,7 @@ $(document).ready(function () {
         }).then((resp) => {
             console.log(resp);
             sessionStorage['user'] = JSON.stringify(resp)
+            localStorage['currentPage'] = "dashboardBtn"
             window.location = (`/dashboard`)
         })
 
