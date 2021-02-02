@@ -40,7 +40,7 @@ router.get("/allEvents", function (req, res) {
       res.status(500).send(err.message)
     });
   } else {
-    res.render('index')
+    res.redirect(401,'/login')
   }
 });
 
@@ -87,7 +87,7 @@ router.get("/dashboard", (req, res) => {
       res.status(500).json(err)
     })
   } else {
-    res.render('index')
+    res.redirect(401,'/login')
   }
 })
 
@@ -141,7 +141,7 @@ router.get("/friendEvents", (req, res) => {
       res.status(500).send(err.message)
     })
   } else {
-    res.render('index')
+    res.redirect(401,'/login')
   }
 })
 
@@ -232,7 +232,7 @@ router.get("/friends", (req, res) => {
       res.status(500).json(err)
     })
   } else {
-    res.render('index')
+    res.redirect(401,'/login')
   }
 })
 
@@ -280,7 +280,7 @@ router.get("/settings", (req, res) => {
     res.status(500).json(err)
   })
 } else {
-  res.render('index')
+  res.redirect(401,'/login')
 }
 })
 
