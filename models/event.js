@@ -7,7 +7,6 @@ module.exports = function (sequelize, DataTypes) {
                 len: [1]
             }
         },
-        // ,
         // max_people: {
         //     type: DataTypes.INTEGER,
         //     allowNull: false,
@@ -33,13 +32,13 @@ module.exports = function (sequelize, DataTypes) {
         //     }
         // },
         // isIndoor: DataTypes.BOOLEAN,
-        // dateTime: {
-        //     type: DataTypes.DATE,
-        //     allowNull: false,
-        //     validate: {
-        //         len: [1]
-        //     }
-        // },
+        dateTime: {
+            type: DataTypes.DATE,
+            allowNull: false,
+            validate: {
+                len: [1]
+            }
+        },
         // description: {
         //     type: DataTypes.TEXT,
         //     allowNull: true,
