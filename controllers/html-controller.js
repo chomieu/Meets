@@ -254,6 +254,7 @@ router.get("/settings/:id", (req, res) => {
     const userJson = userData.toJSON();
     // make an object that is just the username and password for editing?
     const hbsObj = {
+      user: req.session.user,
       username: userJson.username,
       password: userJson.password
     }
