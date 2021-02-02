@@ -9,7 +9,6 @@ const Sequelize = require('sequelize');
 const Op = Sequelize.Op
 
 router.post('/api/input', (request, response) => {
-  console.log(now)
   const projectId = 'meets-dnx9';
   const sessionId = '123456';
   const queries = [request.body.input]
@@ -46,7 +45,7 @@ router.post('/api/input', (request, response) => {
   }
 
   // Find user's friend in the request and get their events
-  function getPast(friend) {
+  async function getPast(friend) {
     // grab one from past/future/now depending on time
     db.User.findOne({
       where: {
@@ -67,12 +66,12 @@ router.post('/api/input', (request, response) => {
       if (dbUser) {
         return dbUser.Events[0]
       } else {
-        return 0
+        return null
       }
     })
   }
 
-  function getPresent(friend) {
+  async function getPresent(friend) {
     // grab one from past/future/now depending on time
     db.User.findOne({
       where: {
@@ -92,12 +91,12 @@ router.post('/api/input', (request, response) => {
       if (dbUser) {
         return dbUser.Events[0]
       } else {
-        return 0
+        return null
       }
     })
   }
 
-  function getFuture(friend) {
+  async function getFuture(friend) {
     // grab one from past/future/now depending on time
     db.User.findOne({
       where: {
@@ -118,7 +117,7 @@ router.post('/api/input', (request, response) => {
       if (dbUser) {
         return dbUser.Events[0]
       } else {
-        return 0
+        return null
       }
     })
   }
@@ -150,25 +149,25 @@ router.post('/api/input', (request, response) => {
             echo = aiRes.queryResult.fulfillmentText
             break
           case "Past":
-            fromDB = getPast(aiRes.queryResult.parameters.fields.person.structValue.fields.name.stringValue)
-            if (fromDB) {
-              echo = `${aiRes.queryResult.fulfillmentText} ${fromDB.Event.dataValues.name} on ${fromDB.Event.dataValues.dateTime}`
+            fromDB = await getPast(aiRes.queryResult.parameters.fields.person.structValue.fields.name.stringValue)
+            if (fromDB !== null) {
+              echo = `${aiRes.queryResult.fulfillmentText} ${fromDB.name} on ${fromDB.dateTime}`
             } else {
               echo = `${aiRes.queryResult.fulfillmentText} nothing planned.`
             }
             break
           case "Now":
-            fromDB = getPresent(aiRes.queryResult.parameters.fields.person.structValue.fields.name.stringValue)
-            if (fromDB) {
-              echo = `${aiRes.queryResult.fulfillmentText} is currently unavailable. ${aiRes.queryResult.fulfillmentText} has ${fromDB.Event.dataValues.name} planned for ${fromDB.Event.dataValues.dateTime}`
+            fromDB = await getPresent(aiRes.queryResult.parameters.fields.person.structValue.fields.name.stringValue)
+            if (fromDB !== null) {
+              echo = `${aiRes.queryResult.fulfillmentText} is currently unavailable. ${aiRes.queryResult.fulfillmentText} has ${fromDB.name} planned for ${fromDB.dateTime}`
             } else {
               echo = `${aiRes.queryResult.fulfillmentText} seems to be available. ${aiRes.queryResult.fulfillmentText} has nothing planned on their schedule for the past hour.`
             }
             break
           case "Future":
-            fromDB = getFuture(aiRes.queryResult.parameters.fields.person.structValue.fields.name.stringValue)
-            if (fromDB) {
-              echo = `${aiRes.queryResult.fulfillmentText} planned for ${fromDB.Event.dataValues.dateTime}`
+            fromDB = await getFuture(aiRes.queryResult.parameters.fields.person.structValue.fields.name.stringValue)
+            if (fromDB !== null) {
+              echo = `${aiRes.queryResult.fulfillmentText} planned for ${fromDB.dateTime}`
             } else {
               echo = `${aiRes.queryResult.fulfillmentText} no future events at this moment.`
             }
