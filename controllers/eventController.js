@@ -45,7 +45,13 @@ router.post("/", function (req, res) {
     db.Event.create({
       UserId: req.session.user.id,
       dateTime: req.body.dateTime,
-      name: req.body.name
+      max_people: req.body.max_people,
+      name: req.body.name,
+      isPublic: req.body.isPublic,
+      isIndoor: req.body.isIndoor,
+      category: req.body.category,
+      location: req.body.location,
+      description: req.body.description
     }).then(function (dbEvent) {
       // find all events for the signed in user
       db.Event.findAll({

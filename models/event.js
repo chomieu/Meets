@@ -15,14 +15,13 @@ module.exports = function (sequelize, DataTypes) {
         //     }
         // },
         // isPublic: DataTypes.BOOLEAN,
-        // location: {
-        //     type: DataTypes.STRING,
-        //     allowNull: false,
-        //
-        //     validate: {
-        //         len: [1]
-        //     }
-        // },
+        location: {
+            type: DataTypes.STRING,
+            allowNull: false,
+            validate: {
+                len: [1]
+            }
+        },
         // category: {
         //     type: DataTypes.STRING,
         //     allowNull: false,
@@ -32,13 +31,13 @@ module.exports = function (sequelize, DataTypes) {
         //     }
         // },
         // isIndoor: DataTypes.BOOLEAN,
-        dateTime: {
-            type: DataTypes.DATE,
-            allowNull: false,
-            validate: {
-                len: [1]
-            }
-        },
+        // dateTime: {
+        //     type: DataTypes.DATE,
+        //     allowNull: false,
+        //     validate: {
+        //         len: [1]
+        //     }
+        // },
         // description: {
         //     type: DataTypes.TEXT,
         //     allowNull: true,
