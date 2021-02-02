@@ -20,11 +20,11 @@ router.get("/login", (req, res) => {
 })
 
 // list of the upcoming events for user
-router.get("/allEvents/:id", function (req, res) {
+router.get("/allEvents", function (req, res) {
   if (req.session.user) {
     db.Event.findAll({
       where: {
-        id: req.params.id // req.session.user.id
+        id: req.session.user.id
       },
       order: [
         ['dateTime', "DESC"]
@@ -91,7 +91,6 @@ router.get("/dashboard", (req, res) => {
   }
 })
 
-// takes you to a single event?
 // find one single event and all the associated data
 router.get("/events/:id", (req, res) => {
   if (req.session.user) {
@@ -108,9 +107,6 @@ router.get("/events/:id", (req, res) => {
       console.log(dbEventsJson);
       console.log(hbsobj);
       res.render('./partials/oneEvent', hbsobj)
-      // console.log(req.params.id);
-      // res.json(data);
-
     }).catch(err => {
       console.log((err.message));
       res.status(500).send(err.message);
@@ -122,12 +118,11 @@ router.get("/events/:id", (req, res) => {
 
 // friends activities - query the user's associations, then query the associations events and return the Z events for them at that time (of the original event)
 
-router.get("/friendEvents/:id", (req, res) => {
+router.get("/friendEvents", (req, res) => {
   if (req.session.user) {
     db.User.findOne({
       where: {
-        id: req.params.id
-        //TODO: swap with req.session.user.id if they need to be logged in
+        id: req.session.user.id
       },
       include: [{
         model: db.User,
@@ -179,12 +174,12 @@ router.get("/event/edit", (req, res) => {
 // Already handled in eventcontroller with put request?
 
 // findAll where you have an assciation with them
-router.get("/friends/:id", (req, res) => { // use friends/:id if they don't need to be logged in
+router.get("/friends", (req, res) => {
   if (req.session.user) {
     // find a single user that is logged in
     db.User.findOne({
       where: {
-        id: req.params.id //req.session.user.id if they need to be logged in
+        id: req.session.user.id
       },
       include: [{
         model: db.User,
@@ -231,11 +226,11 @@ router.get("/ai_chat", (req, res) => {
 
 // update username/password/first name/last name/etc
 // query for single user who is logged in
-router.get("/settings/:id", (req, res) => {
+router.get("/settings", (req, res) => {
   if (req.session.user) {
   db.User.findOne({
     where: {
-      id: req.params.id
+      id: req.session.user.id
     }
   }).then(userData => {
     // take data that is an object with all of the users associations, turn it into JSON
