@@ -5,9 +5,11 @@ const dialogflow = require("@google-cloud/dialogflow").v2;
 const path = require('path')
 const sound = require("sound-play")
 const now = new Date()
+const Sequelize = require('sequelize');
+const Op = Sequelize.Op
 
 router.post('/api/input', (request, response) => {
-  console.log("hello")
+  console.log(now)
   const projectId = 'meets-dnx9';
   const sessionId = '123456';
   const queries = [request.body.input]
@@ -44,7 +46,7 @@ router.post('/api/input', (request, response) => {
   }
 
   // Find user's friend in the request and get their events
-  async function getData(friend, intent) {
+  function getPast(friend) {
     // grab one from past/future/now depending on time
     db.User.findOne({
       where: {
@@ -55,14 +57,61 @@ router.post('/api/input', (request, response) => {
           model: db.Event,
           where: {
             dateTime: {
-              $lt: now
+              [Op.lt]: now
             }
           }
         }
       ],
+      order: [['Events', 'dateTime', 'ASC']]
     }).then(function (dbUser) {
-      console.log(dbUser)
-      console.log("yeah")
+      return dbUser.Events[0]
+    })
+  }
+
+  function getPresent(friend) {
+    // grab one from past/future/now depending on time
+    db.User.findOne({
+      where: {
+        username: friend
+      },
+      include: [
+        {
+          model: db.Event,
+          where: {
+            dateTime: {
+              [Op.between]: [now.setHours(now.getHours() - 1), now.setHours(now.getHours() + 1)]
+            }
+          }
+        }
+      ]
+    }).then(function (dbUser) {
+      if (dbUser) {
+        return dbUser.Events[0]
+      } else {
+        return 0
+      }
+    })
+  }
+
+  function getFuture(friend) {
+    // grab one from past/future/now depending on time
+    db.User.findOne({
+      where: {
+        username: friend
+      },
+      include: [
+        {
+          model: db.Event,
+          where: {
+            dateTime: {
+              [Op.gt]: now
+            }
+          }
+        }
+      ],
+      order: [['Events', 'dateTime', 'ASC']]
+    }).then(function (dbUser) {
+      return dbUser.Events[0]
     })
   }
 
@@ -72,18 +121,11 @@ router.post('/api/input', (request, response) => {
     for (const query of queries) {
       try {
         aiRes = await detectIntent(projectId, sessionId, query, context, languageCode);
-        if (aiRes.queryResult.intent.displayName === "Past") {
-          fromDB = await getData(aiRes.queryResult.parameters.fields.person.structValue.fields.name.stringValue, aiRes.queryResult.intent.displayName)
-        }
-        // write a function to choose 1 (past/future/now) event from DB or respond that there's no plan
-        // function matchIntent(fromDB) {
-        //   var eventJSON = fromDB.Event[0]
-        // }
 
         switch (aiRes.queryResult.intent.displayName) {
           case "Echo":
             await util.promisify(fs.writeFile)("ai-audio.wav", aiRes.outputAudio, 'binary');
-            var filepath = path.join(__dirname + "/../ai-audio.wav")
+            var filepath = path.join(__dirname + "/../public/assets/ai-audio.wav")
             sound.play(filepath)
             response.send(aiRes.queryResult.fulfillmentText)
             return
@@ -103,13 +145,16 @@ router.post('/api/input', (request, response) => {
             echo = `${aiRes.queryResult.fulfillmentText} Chomie.` // pass userID (should be same as sessionID) here
             break
           case "Past":
-            echo = `${aiRes.queryResult.fulfillmentText} at 10PM $wag.` // + 1 past event
+            fromDB = await getPast(aiRes.queryResult.parameters.fields.person.structValue.fields.name.stringValue)
+            echo = `${aiRes.queryResult.fulfillmentText} at 10PM $wag.`
             break
           case "Now":
-            echo = `${aiRes.queryResult.fulfillmentText}, would you like to know what's on their schedule?` // either available or busy
+            fromDB = await getPresent(aiRes.queryResult.parameters.fields.person.structValue.fields.name.stringValue)
+            echo = `${aiRes.queryResult.fulfillmentText}, would you like to know what's on their schedule?`
             break
           case "Future":
-            echo = `${aiRes.queryResult.fulfillmentText}, would you like to join them?` // 
+            fromDB = await getFuture(aiRes.queryResult.parameters.fields.person.structValue.fields.name.stringValue)
+            echo = `${aiRes.queryResult.fulfillmentText}, would you like to join them?`
             break
           default: echo = aiRes.queryResult.fulfillmentText
         }

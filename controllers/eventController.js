@@ -66,7 +66,7 @@ router.post("/", function (req, res) {
           // could be addressed by putting an ajax call in the front end for when the window reloads
           // or a time interval to check every hour
           // or .....
-          upcoming_plans:upcomingEvents.length
+          upcoming_plans: upcomingEvents.length
         }, {
           where: {
             id: req.session.user.id

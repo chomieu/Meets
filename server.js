@@ -52,6 +52,10 @@ app.use(userRoutes)
 const eventRoutes = require("./controllers/eventController.js");
 app.use("/api/events", eventRoutes)
 
+// HTML routes
+const htmlRoutes = require("./controllers/html-controller.js");
+app.use(htmlRoutes)
+
 // AI route
 const aiRoutes = require("./routes/ai-routes.js");
 app.use(aiRoutes)
