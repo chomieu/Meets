@@ -6,11 +6,10 @@
         <div class="all-events-box my-full-width">
             this is outside
             {{#each events}}
-            this is inside
             <div class="event-box my-full-width">
                 <div class="event-header">
-                    <span class="event-title">Title</span>
-                    <span class="event-date">11/11/2020</span>
+                    <span class="event-title">{{dataValues.name}}</span>
+                    <span class="event-date">{{dataValues.dateTime}}</span>
                 </div>
                 <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Autem aspernatur deleniti modi quo rem eos,
                     temporibus ipsam. In, error numquam aliquid iusto dicta vero nemo illum, autem ipsum perspiciatis
