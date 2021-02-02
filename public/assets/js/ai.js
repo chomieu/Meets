@@ -2,7 +2,7 @@ var SpeechSDK
 var recognizer
 
 $('document').ready(function () {
-  $(".aiForm").on("click", function (event) {
+  $(".aiForm").on("submit", function (event) {
     // Make sure to preventDefault on a submit event
     event.preventDefault()
     var toAI = { input: $("#input").val() }

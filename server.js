@@ -54,15 +54,13 @@ app.use(htmlRoutes);
 const eventRoutes = require("./controllers/eventController.js");
 app.use("/api/events", eventRoutes)
 
-// HTML routes
-const html_routes = require("./controllers/html-controller.js");
-app.use(html_routes)
+// AI route
+const aiRoutes = require("./routes/ai-routes.js");
+app.use(aiRoutes)
 
 app.get('/img', (req, res) => {
   res.json(req.body)
 })
-
-require("./routes/ai-routes.js")(app);
 
 // Syncing our sequelize models and then starting our express app
 db.sequelize.sync({ force: false }).then(function () {
