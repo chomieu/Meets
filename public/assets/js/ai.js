@@ -1,9 +1,8 @@
 var SpeechSDK
 var recognizer
-var now = new Date()
 
 $('document').ready(function () {
-  $("submitBtn").on("click", function (event) {
+  $(".aiForm").on("submit", function (event) {
     // Make sure to preventDefault on a submit event
     event.preventDefault()
     var toAI = { input: $("#input").val() }
@@ -13,8 +12,10 @@ $('document').ready(function () {
     $.ajax("/api/input", {
       type: "POST",
       data: toAI
-    }).then((res) => {
-      $("#history").append($("<p>", { class: "col s12 green-text", text: res, id: now }))
+    }).then(async (res) => {
+      $("#history").append($("<p>", { class: "col s12 green-text", text: res }))
+      const sX = new Audio("/assets/js/ai-audio.wav")
+      await sX.play()
     }
     );
   });
