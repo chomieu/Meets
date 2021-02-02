@@ -27,7 +27,7 @@ app.use(express.static("public"));
 app.use(session({
   secret: 'keyboard cat',
   resave: false,
-  saveUninitialize: false,
+  saveUninitialized: false,
   cookie: {
     maxAge: 1000 * 60 * 60 * 2
   }
@@ -39,18 +39,16 @@ const exphbs = require("express-handlebars");
 app.engine("handlebars", exphbs({ defaultLayout: "main" }));
 app.set("view engine", "handlebars");
 
-// Requiring our routes for user dialogue
+// User dialogue routes
 const userDialogueRoutes = require("./controllers/userDialogueController.js");
 app.use("/api", userDialogueRoutes)
 
-// Requiring our routes for the user
+// User routes
 const userRoutes = require("./controllers/userController.js");
 app.use(userRoutes)
 
-const htmlRoutes = require("./controllers/html-controller.js");
-app.use(htmlRoutes);
 
-// Review routes from joe's demo
+// Event routes
 const eventRoutes = require("./controllers/eventController.js");
 app.use("/api/events", eventRoutes)
 

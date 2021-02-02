@@ -39,14 +39,54 @@ router.post("/", function (req, res) {
     res.status(401).send("You have to login first!")
   } else {
     console.log(req.body)
-    db.Event.create(req.body).then(function (dbEvent) {
-      res.json(dbEvent)
+    db.Event.create({
+      UserId: req.session.user.id,
+      dateTime: req.body.dateTime,
+      name: req.body.name
+    }).then(function (dbEvent) {
+      // res.json(dbEvent)
+      // find all events for the signed in user
+      db.Event.findAll({
+        where: {
+          UserId: req.session.user.id
+        }
+      }).then(eventData => {
+        // res.json(eventData)
+        // count the total # of events
+        console.log(eventData);
+        // update the user with the total # of events
+        // find the total number of events after the current date (future events)
+        // loop over the array, count the number of events after the current date\
+        const today = new Date();
+        // filters all events to find only future events
+        const upcomingEvents = eventData.filter(element => (element.dateTime) > today);
+        db.User.update({
+          plans: eventData.length,
+          // this will only update when a new event is created...
+          // could be addressed by putting an ajax call in the front end for when the window reloads
+          // or a time interval to check every hour
+          // or .....
+          upcoming_plans:upcomingEvents.length
+        }, {
+          where: {
+            id: req.session.user.id
+          }
+        }).then(userData => {
+          res.json(userData)
+        }).catch(err => {
+          console.log(err.message);
+          res.status(500).send(err.message)
+        });
+      }).catch(err => {
+        console.log(err.message);
+        res.status(500).send(err.message)
+      });
     }).catch(err => {
       console.log(err.message);
       res.status(500).send(err.message)
-    })
+    });
   }
-});
+})
 
 // PUT route to UPDATE events
 router.put("/", function (req, res) {

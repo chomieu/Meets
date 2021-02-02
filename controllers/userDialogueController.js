@@ -6,14 +6,12 @@ var router = express.Router();
 // use router.get router.post router.put router.delete
 
 // GET route for retrieving all dialogue from a single user
-router.get("/userdialogue", (req, res) => {
-  let query = {};
-  if (req.query.user_id) {
-    query.UserId = req.query.user_id;
-  }
+router.get("/userdialogue/:id", (req, res) => {
   db.UserDialogue.findAll(
     {
-    where: query
+    where: {
+      id:req.params.id
+    }
   }
   ).then(dbUserDialogue => {
     res.json(dbUserDialogue);
