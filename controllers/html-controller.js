@@ -157,18 +157,13 @@ router.get("/event/new", (req, res) => {
   res.render("partials/oneEvent");
 })
 
-
-// findOne for a single event, then check to make sure that you are logged in and that you are the admin
-// TODO: findOne() event while ensuring logged in userID and userID who created event are the same 
-
-// if true, then you can edit and access the POST request
-
-// QUERY to findOne event
-
-// TODO: ???
+// TODO: Render the edit event page if you are logged in and you are the owner
 // pass content of event with ID = X
 // send isEdit boolean --> if TRUE then EDITABLE (on frontend)
 router.get("/event/edit", (req, res) => {
+  // findOne for a single event
+  // render the data from that event to the page
+  // on submit - target the route in the eventController for the edit
   res.render("partials/oneEvent");
 })
 // Already handled in eventcontroller with put request?
