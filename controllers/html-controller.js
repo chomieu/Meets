@@ -222,11 +222,10 @@ router.get("/friends", (req, res) => {
       const userJson = userData.toJSON();
       // make an object that is just the usernames of the associations
       const hbsObj = {
-        user:req.session.user,
-        username: userJson.username
+        user: req.session.user,
+        username: userJson
       }
       //pass that object to the frontend
-      // res.json(userData)
       res.render("partials/friends", hbsObj);
     }).catch(err => {
       res.status(500).json(err)
@@ -272,7 +271,8 @@ router.get("/settings", (req, res) => {
     const hbsObj = {
       user: req.session.user,
       username: userJson.username,
-      password: userJson.password
+      password: userJson.password,
+      image: userJson.image // Added image to return to the setting page for preview
     }
     //pass that object to the frontend
     res.render("partials/settings", hbsObj);

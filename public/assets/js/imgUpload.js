@@ -27,9 +27,35 @@ $('document').ready(function () {
           "Authorization": "Client-ID 08bc9cecc19e296",
         }
       }).done(function (response) {
-        console.log(response);
-        $("#pfp").attr("src", response.data.link)
+        $.ajax("/profile/update", {
+          type: "PUT",
+          data: {
+            image: response.data.link
+          }
+        }).then((res) => {
+          $("#pfp").attr("src", response.data.link)
+        }).catch((err) => {
+          $(".red-text").text("Picture is too large!")
+        })
       });
     }
   });
+
+  $('#updateBtn').on('click', function (e) {
+    e.preventDefault()
+    let newUsername = $("#username").val()
+    let newPassword = $("#password").val()
+    $.ajax("/profile/update", {
+      type: "PUT",
+      data: {
+        username: newUsername,
+        password: newPassword
+      }
+    }).then((res) => {
+      $("#username").val("")
+      $("#password").val("")
+    }).catch((err) => {
+      $(".red-text").text("Picture is too large!")
+    })
+  })
 });

@@ -102,7 +102,7 @@ router.put("/profile/update", (req, res) => {
       req.body,
       {
         where: {
-          id: req.sessing.user.id
+          id: req.session.user.id
         }
       }).then(dbUser => {
         res.json(dbUser)
