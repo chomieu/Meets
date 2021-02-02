@@ -146,8 +146,7 @@ router.get("/friendEvents", (req, res) => {
 })
 
 // query for any associate that has an event at the same time
-router.get("/html/sameTime/", function (req, res) {
-  // if(req.body.dateTime===req.params.id)
+router.get("/sameTime/", function (req, res) {
   db.Event.findAll({
     where: {
       dateTime: req.body.dateTime
@@ -156,7 +155,7 @@ router.get("/html/sameTime/", function (req, res) {
       model: db.User,
       include: [{
         model: db.User,
-        as: 'Associate',
+      as: 'Associate',
         // include: [db.Event]
       }],
     }],
@@ -167,10 +166,94 @@ router.get("/html/sameTime/", function (req, res) {
       events: dbAssociateEventsJson,
       user: req.session.user
     }
-    // res.json(dbAssociateEvents)
+    res.render('./partials/events', hbsobj)
+  }).catch(err => {
+    console.log(err.message);
+    res.status(500).send(err.message)
+  })
+})
 
-    // console.log(dbEventsJson);
-    // console.log(hbsobj);
+// Find all events by category
+
+router.get("/eventCategory/", function (req, res) {
+  db.Event.findAll({
+    where: {
+      category: req.body.category
+    },
+  }).then(function (dbEventCategory) {
+    const dbEventCategoryJson = dbEventCategory.map(element => element.toJSON())
+    const hbsobj = {
+      events: dbEventCategoryJson,
+      user: req.session.user
+    }
+    res.render('./partials/events', hbsobj)
+
+  }).catch(err => {
+    console.log(err.message);
+    res.status(500).send(err.message)
+  })
+  
+})
+
+// Find all events by whether or not it's indoor
+
+router.get("/eventIndoor/", function (req, res) {
+  db.Event.findAll({
+    where: {
+      isIndoor: req.body.isIndoor
+    },
+  }).then(function (dbEventIndoor) {
+    const dbEventIndoorJson = dbEventIndoor.map(element => element.toJSON())
+    const hbsobj = {
+      events: dbEventIndoorJson,
+      user: req.session.user
+    }
+    res.render('./partials/events', hbsobj)
+
+  }).catch(err => {
+    console.log(err.message);
+    res.status(500).send(err.message)
+  })
+  
+})
+
+// Find all events by whether or not it's public
+
+router.get("/eventPublic/", function (req, res) {
+  db.Event.findAll({
+    where: {
+      isPublic: req.body.isPublic
+    },
+  }).then(function (dbEventPublic) {
+    const dbEventPublicJson = dbEventPublic.map(element => element.toJSON())
+    const hbsobj = {
+      events: dbEventPublicJson,
+      user: req.session.user
+    }
+    res.json(dbEventPublic)
+    res.render('./partials/events', hbsobj)
+
+  }).catch(err => {
+    console.log(err.message);
+    res.status(500).send(err.message)
+  })
+  
+})
+
+// Find all events by location
+
+router.get("/eventLocation/", function (req, res) {
+  db.Event.findAll({
+    where: {
+      location: req.body.location
+    },
+  }).then(function (dbEventLocation) {
+    const dbEventLocationJson = dbEventLocation.map(element => element.toJSON())
+    const hbsobj = {
+      events: dbEventLocationJson,
+      user: req.session.user
+    }
+    res.json(dbEventLocation)
     res.render('./partials/events', hbsobj)
 
   }).catch(err => {
