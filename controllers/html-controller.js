@@ -1,5 +1,7 @@
 var express = require("express");
 const { Session } = require("express-session");
+const Sequelize = require("sequelize")
+const Op = Sequelize.Op;
 
 var router = express.Router();
 const db = require('../models')
@@ -24,16 +26,20 @@ router.get("/allEvents", function (req, res) {
   if (req.session.user) {
     db.Event.findAll({
       where: {
-        id: req.session.user.id
+        UserId: req.session.user.id,
+        dateTime: {
+          [Op.gte]: new Date()
+        }
       },
       order: [
-        ['dateTime', "DESC"]
-      ]
+        ['dateTime', "ASC"]
+      ],
     }).then(function (dbEvent) {
       const hbsObj = {
         user: req.session.user,
         eventData: dbEvent
       }
+      res.json(dbEvent)
       res.render('./partials/events', hbsObj)
     }).catch(err => {
       console.log(err.message);
@@ -147,6 +153,7 @@ router.get("/friendEvents", (req, res) => {
 
 // query for any associate that has an event at the same time
 router.get("/sameTime/", function (req, res) {
+  if (req.session.user) {
   db.Event.findAll({
     where: {
       dateTime: req.body.dateTime
@@ -166,16 +173,21 @@ router.get("/sameTime/", function (req, res) {
       events: dbAssociateEventsJson,
       user: req.session.user
     }
+    res.json(dbAssociateEvents)
     res.render('./partials/events', hbsobj)
   }).catch(err => {
     console.log(err.message);
     res.status(500).send(err.message)
   })
+} else {
+  res.render('index')
+}
 })
 
 // Find all events by category
 
 router.get("/eventCategory/", function (req, res) {
+  if (req.session.user) {
   db.Event.findAll({
     where: {
       category: req.body.category
@@ -186,18 +198,22 @@ router.get("/eventCategory/", function (req, res) {
       events: dbEventCategoryJson,
       user: req.session.user
     }
+    res.json(dbEventCategory)
     res.render('./partials/events', hbsobj)
 
   }).catch(err => {
     console.log(err.message);
     res.status(500).send(err.message)
   })
-  
+} else {
+  res.render('index')
+}
 })
 
 // Find all events by whether or not it's indoor
 
 router.get("/eventIndoor/", function (req, res) {
+  if (req.session.user) {
   db.Event.findAll({
     where: {
       isIndoor: req.body.isIndoor
@@ -208,18 +224,22 @@ router.get("/eventIndoor/", function (req, res) {
       events: dbEventIndoorJson,
       user: req.session.user
     }
+    res.json(dbEventIndoor)
     res.render('./partials/events', hbsobj)
 
   }).catch(err => {
     console.log(err.message);
     res.status(500).send(err.message)
   })
-  
+} else {
+  res.render('index')
+}
 })
 
 // Find all events by whether or not it's public
 
 router.get("/eventPublic/", function (req, res) {
+  if (req.session.user) {
   db.Event.findAll({
     where: {
       isPublic: req.body.isPublic
@@ -237,12 +257,15 @@ router.get("/eventPublic/", function (req, res) {
     console.log(err.message);
     res.status(500).send(err.message)
   })
-  
+} else {
+  res.render('index')
+}
 })
 
 // Find all events by location
 
 router.get("/eventLocation/", function (req, res) {
+  if (req.session.user) {
   db.Event.findAll({
     where: {
       location: req.body.location
@@ -260,22 +283,31 @@ router.get("/eventLocation/", function (req, res) {
     console.log(err.message);
     res.status(500).send(err.message)
   })
-
+} else {
+  res.render('index')
+}
 })
 
 
-// query for any associate that has an event at the same time
+
 // TODO: Query for all user's events
 router.get("/events", (req, res) => {
+  if (req.session.user) {
   console.log(req.session.user);
   db.Event.findAll({
     where: {
       UserId: req.session.user.id
-    }
+    },
+    order: [
+      ['dateTime', "DESC"]
+    ]
   }).then(resp => {
     console.log({ events: resp });
     res.render("partials/events", { events: resp });
   })
+} else {
+  res.render('index')
+}
 })
 
 
