@@ -24,12 +24,15 @@ router.get("/allEvents", function (req, res) {
   if (req.session.user) {
     db.Event.findAll({
       where: {
-        id: req.session.user.id
+        UserId: req.session.user.id
       },
       order: [
         ['dateTime', "DESC"]
       ]
     }).then(function (dbEvent) {
+      console.log("*************************");
+      console.log(dbEvent);
+      console.log("*************************");
       const hbsObj = {
         user: req.session.user,
         eventData: dbEvent
@@ -155,7 +158,7 @@ router.get("/sameTime/", function (req, res) {
       model: db.User,
       include: [{
         model: db.User,
-      as: 'Associate',
+        as: 'Associate',
         // include: [db.Event]
       }],
     }],
@@ -192,7 +195,7 @@ router.get("/eventCategory/", function (req, res) {
     console.log(err.message);
     res.status(500).send(err.message)
   })
-  
+
 })
 
 // Find all events by whether or not it's indoor
@@ -214,7 +217,7 @@ router.get("/eventIndoor/", function (req, res) {
     console.log(err.message);
     res.status(500).send(err.message)
   })
-  
+
 })
 
 // Find all events by whether or not it's public
@@ -237,7 +240,7 @@ router.get("/eventPublic/", function (req, res) {
     console.log(err.message);
     res.status(500).send(err.message)
   })
-  
+
 })
 
 // Find all events by location
@@ -359,28 +362,28 @@ router.get("/ai_chat", (req, res) => {
 // query for single user who is logged in
 router.get("/settings", (req, res) => {
   if (req.session.user) {
-  db.User.findOne({
-    where: {
-      id: req.session.user.id
-    }
-  }).then(userData => {
-    // take data that is an object with all of the users associations, turn it into JSON
-    const userJson = userData.toJSON();
-    // make an object that is just the username and password for editing?
-    const hbsObj = {
-      user: req.session.user,
-      username: userJson.username,
-      password: userJson.password,
-      image: userJson.image // Added image to return to the setting page for preview
-    }
-    //pass that object to the frontend
-    res.render("partials/settings", hbsObj);
-  }).catch(err => {
-    res.status(500).json(err)
-  })
-} else {
-  res.render('index')
-}
+    db.User.findOne({
+      where: {
+        id: req.session.user.id
+      }
+    }).then(userData => {
+      // take data that is an object with all of the users associations, turn it into JSON
+      const userJson = userData.toJSON();
+      // make an object that is just the username and password for editing?
+      const hbsObj = {
+        user: req.session.user,
+        username: userJson.username,
+        password: userJson.password,
+        image: userJson.image // Added image to return to the setting page for preview
+      }
+      //pass that object to the frontend
+      res.render("partials/settings", hbsObj);
+    }).catch(err => {
+      res.status(500).json(err)
+    })
+  } else {
+    res.render('index')
+  }
 })
 
 // Export routes for server.js to use.
