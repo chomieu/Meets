@@ -347,7 +347,23 @@ router.get("/friend/one", (req, res) => {
 // maybe a POST request to the AI handler with a GET request to the database nested inside?
 //TODO:
 router.get("/ai_chat", (req, res) => {
-  res.render("partials/aiChat");
+  if (req.session.user) {
+    db.Event.findOne({
+      where: {
+        id: req.session.user.id
+      }
+    }).then(function (dbEvent) {
+      const hbsObj = {
+        user: req.session.user,
+      }
+      res.render("partials/aiChat", hbsObj);
+    }).catch(err => {
+      console.log((err.message));
+      res.status(500).send(err.message);
+    });
+  } else {
+    res.redirect("/");
+  }
 })
 
 // TODO: Bonus if needed
