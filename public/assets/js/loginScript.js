@@ -33,7 +33,10 @@ $(document).ready(function () {
 
         let input = {
             username: $('#username').val(),
-            password: $('#pass').val()
+            password: $('#pass').val(),
+            email: $('#email').val(),
+            first_name: $('#first-name').val(),
+            last_name: $('#last-name').val()
         }
 
         $.ajax("/signup", {
@@ -42,7 +45,7 @@ $(document).ready(function () {
         }).then((resp) => {
             sessionStorage['user'] = JSON.stringify(resp)
             localStorage['currentPage'] = "dashboardBtn"
-            window.location = ("/dashboard")
+            window.location = ("/login") // daniel -- replace dashboard with login, signup does not automatically log you in
         }).catch((err) => {
             $(".red-text").text("This username is already taken!")
         })
