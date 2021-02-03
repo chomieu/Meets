@@ -4,9 +4,21 @@ $(document).ready(function () {
     setColors(color);
 
     $(".colorMode").on("click", (e) => {
+        console.log("color mode change");
         color = switchColor(color);
         setColors(color);
     });
+
+    $(".search").keyup(function () {
+        var filter = $(".search").val().toLowerCase();
+        $(".searchObj").each(function () {
+          if ($(this).text().toLowerCase().indexOf(filter) > -1) {
+            $(this).parent().show()
+          } else {
+            $(this).parent().hide()
+          }
+        })
+    })
 })
 
 function getColor() {
@@ -32,18 +44,26 @@ function switchColor(color) {
 function setColors(color) {
     var r = document.querySelector(":root");
     if (color === "dark") {
-        $(".colorMode").text("Dark Mode");
-        r.style.setProperty("--color-1", "#d8f3dc");
-        r.style.setProperty("--color-2", "#b7e4c7");
-        r.style.setProperty("--color-3", "#40916c");
-        r.style.setProperty("--color-4", "#74c69d");
-        r.style.setProperty("--color-5", "#52b788");
-    } else {
+        //  DARK MODE
         $(".colorMode").text("Light Mode");
-        r.style.setProperty("--color-1", "#264653");
-        r.style.setProperty("--color-2", "#2a9d8f");
-        r.style.setProperty("--color-3", "#e9c46a");
-        r.style.setProperty("--color-4", "#f4a261");
-        r.style.setProperty("--color-5", "#e76f51");
+        r.style.setProperty("--main-2", "#353535");
+        r.style.setProperty("--main-1", "#3c6e71");
+        r.style.setProperty("--accent-1", "#284b63");
+        r.style.setProperty("--accent-2", "#d9d9d9");
+        r.style.setProperty("--accent-3", "#ffffff");
+        r.style.setProperty("--accent-4", "#ffab40");
+        r.style.setProperty("--text", "white");
+        r.style.setProperty("--text-opposite", "black");
+    } else {
+        // LIGHT MODE
+        $(".colorMode").text("Dark Mode");
+        r.style.setProperty("--main-1", "#e65100");
+        r.style.setProperty("--main-2", "#ffffff");
+        r.style.setProperty("--accent-1", "#ff8f00");
+        r.style.setProperty("--accent-2", "#ff4e4e");
+        r.style.setProperty("--accent-3", "#ffe57f");
+        r.style.setProperty("--accent-4", "#757575;");
+        r.style.setProperty("--text", "black");
+        r.style.setProperty("--text-opposite", "white");
     }
 }

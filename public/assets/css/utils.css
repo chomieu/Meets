@@ -1,4 +1,3 @@
-
 /* utils */
 /* flex */
 .my-dflex {
@@ -25,32 +24,36 @@
 }
 /* sizing */
 
-.my-width-full{
+.my-width-full {
     width: 100%;
 }
 
-.my-width-50{
+.my-width-50 {
     width: 50%;
 }
 
-.my-width-25{
+.my-width-25 {
     width: 25%;
 }
 
-.my-height-full{
+.my-height-full {
     height: 100%;
 }
 
-.my-height-50{
+.my-height-50 {
     height: 50%;
 }
 
-.my-height-25{
+.my-height-25 {
     height: 25%;
 }
 
 
 /* margins */
+
+.my-m-0a {
+    margin: 0 auto;
+}
 
 .my-m-0 {
     margin: 0;
@@ -161,8 +164,8 @@
     margin: 0.my-75em 0;
 }
 .my-mtb-4 {
-    margin: 1em 0 ;
-} 
+    margin: 1em 0;
+}
 
 /* padding */
 
@@ -280,41 +283,42 @@
 
 /* background color */
 .my-bc1 {
-    background: var(--color-1);
+    background: var(--main-1);
 }
 .my-bc2 {
-    background: var(--color-2);
+    background: var(--main-2);
 }
 .my-bc3 {
-    background: var(--color-3);
+    background: var(--accent-1);
 }
 .my-bc4 {
-    background: var(--color-4);
+    background: var(--accent-2);
 }
 .my-bc5 {
-    background: var(--color-5);
+    background: var(--accent-3);
 }
 /* text color */
 .my-tc1 {
-    color: var(--color-1);
+    color: var(--main-1);
 }
 .my-tc2 {
-    color: var(--color-2);
+    color: var(--main-2);
 }
 .my-tc3 {
-    color: var(--color-3);
+    color: var(--accent-1);
 }
 .my-tc4 {
-    color: var(--color-4);
+    color: var(--accent-2);
 }
 .my-tc5 {
-    color: var(--color-5);
+    color: var(--accent-3);
 }
-.my-tc-white{
+.my-tc-white {
     color: white;
 }
-.my-tc-black{
+.my-tc-black {
     color: black;
 }
-
-
+.my-tc-default {
+    color: var(--text);
+}

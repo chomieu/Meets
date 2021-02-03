@@ -13,7 +13,7 @@ $('document').ready(function () {
       type: "POST",
       data: toAI
     }).then(async (res) => {
-      $("#history").append($("<p>", { class: "col s12 green-text", text: res.text }))
+      $("#history").append($("<p>", { class: "col s12 deep-orange-text", text: res.text }))
       let sX = new Audio(`/assets/js/ai-audio-${res.random}.wav`)
       await sX.play()
     }
@@ -46,7 +46,7 @@ $('document').ready(function () {
           type: "POST",
           data: toAI
         }).then((res) => {
-            $("#history").append($("<p>", { class: "col s12 green-text", text: res }))
+            $("#history").append($("<p>", { class: "col s12 deep-orange-text", text: res }))
           }
         );
         // Log the result.
