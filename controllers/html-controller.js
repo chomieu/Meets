@@ -42,7 +42,6 @@ router.get("/upcomingEvents", function (req, res) {
         user: req.session.user,
         eventData: dbEvent
       }
-      res.json(dbEvent)
       res.render('./partials/events', hbsObj)
     }).catch(err => {
       console.log(err.message);
@@ -91,8 +90,7 @@ router.get('/friends', (req, res) => {
           friends: friendsArr,
           nonfriends: nonFriendsArr
         }
-        res.json(hbsObj)
-        // res.render('./partials/friends', hbsObj)
+        res.render('./partials/friends', hbsObj)
       })
     }).catch(err => {
       console.log(err.message);
