@@ -49,7 +49,7 @@ router.get("/allEvents", function (req, res) {
   }
 });
 
-router.get('/friends', (req,res) => {
+router.get('/friends', (req, res) => {
   if (req.session.user) {
     db.User.findOne({
       where: {
@@ -60,34 +60,28 @@ router.get('/friends', (req,res) => {
         as: 'Associate'
       }]
     }).then(userFriends => {
-      // findAll users via the UserAssociate table
-      // the UserId in that table != req.session.user.id
+      const userFriendsArr = userFriends.Associate.map(obj => obj.id);
       db.User.findAll({
-        include: [{
-          model: db.User,
-          as: 'Associate',
-          where: {
-            id: {
-              [Op.ne]: req.session.user.id
-            }
-          }
-        }]
-      }).then(userNonFriends => {
-        const userFriendsArr = userFriends.Associate.map(obj => {
+        where: {
+          id: { [Op.notIn]: userFriendsArr }
+        }
+      }).then(nonFriends => {
+        const friendsArr = userFriends.Associate.map(obj => {
           const friendObj = obj.toJSON()
           friendObj.isConnected = true;
           return friendObj;
         });
 
-        const userNonFriendsArr = userNonFriends.map(obj => {
+        const nonFriendsArr = nonFriends.map(obj => {
           const nonfriendObj = obj.toJSON()
           nonfriendObj.isConnected = false;
           return nonfriendObj;
         });
+
         const hbsObj = {
           user: req.session.user,
-          friends : userFriendsArr,
-          nonfriends: userNonFriendsArr
+          friends: friendsArr,
+          nonfriends: nonFriendsArr
         }
         res.render('./partials/friends', hbsObj)
       })
@@ -121,7 +115,6 @@ router.get("/dashboard", (req, res) => {
     }).then(userData => {
       userData.getAssociate(
         {
-          // attributes: ['username'], <--------------- NOTE TO BACKEND: commented out because we need associate's image not just their username
           limit: 2, // values can be changed
           include: [{
             model: db.Event,
