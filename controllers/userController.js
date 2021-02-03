@@ -166,7 +166,8 @@ router.get("/secretclub", (req, res) => {
 // allows user to logout
 router.get("/logout", (req, res) => {
   req.session.destroy()
-  res.send('Logged out')
+  res.redirect("/login")
+  // res.send('Logged out')
 });
 
 // DELETE route for deleting user with a specific id, to terminate an account

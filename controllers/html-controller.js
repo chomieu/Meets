@@ -83,6 +83,7 @@ router.get('/friends', (req, res) => {
           friends: friendsArr,
           nonfriends: nonFriendsArr
         }
+        console.log(hbsObj)
         res.render('./partials/friends', hbsObj)
       })
     }).catch(err => {
