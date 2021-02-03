@@ -66,7 +66,8 @@ router.post("/login", (req, res) => {
       if (bcrypt.compareSync(req.body.password, userData.password)) {
         req.session.user = {
           id: userData.id,
-          username: userData.username
+          username: userData.username,
+          image: userData.image // Added to include image on the navbar on all pages
         }
         res.json(userData)
       } else {
@@ -124,6 +125,7 @@ router.delete("/disconnect", (req, res) => {
 // allows user to update their username/profile pic/etc
 router.put("/profile/update", (req, res) => {
   if (req.session.user) {
+    console.log(req.body)
     db.User.update(
       req.body,
       {
@@ -131,6 +133,12 @@ router.put("/profile/update", (req, res) => {
           id: req.session.user.id
         }
       }).then(dbUser => {
+        req.session.user = {
+          id: req.session.user.id,
+          username: req.body.username,
+          image: req.body.image 
+        }
+        console.log('req.session.user:', req.session.user)
         res.json(dbUser)
       }).catch(err => {
         console.log(err.message);

@@ -1,4 +1,6 @@
 $(document).ready(function () {
+    $('select').formSelect();
+
     $('.newEvent').on("submit", (e) => {
         e.preventDefault()
         let dateTime = $('#dateTime').val()
@@ -10,9 +12,9 @@ $(document).ready(function () {
         let input = {
             dateTime: dateTime,
             name: name,
-            // numOfPeople: numOfPeople,
-            // location: location,
-            // category: category
+            max_people: numOfPeople,
+            location: location,
+            category: category
         }
 
         $.ajax("/api/events", {
@@ -20,7 +22,7 @@ $(document).ready(function () {
             data: input
         }).then(resp => {
             console.log(resp);
-            window.location("/events")
+            window.location = ("/allevents")
         })
     })
 
@@ -44,7 +46,7 @@ $(document).ready(function () {
             type: "DELETE",
             data: input
         }).then(resp => {
-            window.location("/events")
+            window.location = ("/events")
         })
     })
 })

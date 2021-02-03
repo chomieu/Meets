@@ -26,12 +26,15 @@ router.get("/allEvents", function (req, res) {
   if (req.session.user) {
     db.Event.findAll({
       where: {
-        id: req.session.user.id
+        UserId: req.session.user.id
       },
       order: [
         ['dateTime', "DESC"]
       ]
     }).then(function (dbEvent) {
+      console.log("*************************");
+      console.log(dbEvent);
+      console.log("*************************");
       const hbsObj = {
         user: req.session.user,
         eventData: dbEvent
@@ -118,7 +121,7 @@ router.get("/dashboard", (req, res) => {
     }).then(userData => {
       userData.getAssociate(
         {
-          attributes: ['username'],
+          // attributes: ['username'], <--------------- NOTE TO BACKEND: commented out because we need associate's image not just their username
           limit: 2, // values can be changed
           include: [{
             model: db.Event,
@@ -209,7 +212,7 @@ router.get("/sameTime/", function (req, res) {
       model: db.User,
       include: [{
         model: db.User,
-      as: 'Associate',
+        as: 'Associate',
         // include: [db.Event]
       }],
     }],
@@ -246,7 +249,7 @@ router.get("/eventCategory/", function (req, res) {
     console.log(err.message);
     res.status(500).send(err.message)
   })
-  
+
 })
 
 // Find all events by whether or not it's indoor
@@ -268,7 +271,7 @@ router.get("/eventIndoor/", function (req, res) {
     console.log(err.message);
     res.status(500).send(err.message)
   })
-  
+
 })
 
 // Find all events by whether or not it's public
@@ -291,7 +294,7 @@ router.get("/eventPublic/", function (req, res) {
     console.log(err.message);
     res.status(500).send(err.message)
   })
-  
+
 })
 
 // Find all events by location
@@ -339,11 +342,6 @@ router.get("/events", (req, res) => {
   }
 })
 
-// render the new event route
-router.get("/event/new", (req, res) => {
-  res.render("partials/oneEvent", { isNewRecord: true });
-})
-
 // Render the edit event page if you are logged in and you are the owner
 // pass content of event with ID = X
 // send isEdit boolean --> if TRUE then EDITABLE (on frontend)
@@ -377,37 +375,21 @@ router.get("/event/edit/:event_id", (req, res) => {
   }
 })
 
-// findAll where you have an association with them
-// redundant
-// router.get("/friends", (req, res) => {
-//   if (req.session.user) {
-//     // find a single user that is logged in
-//     db.User.findOne({
-//       where: {
-//         id: req.session.user.id
-//       },
-//       include: [{
-//         model: db.User,
-//         as: 'Associate',
-//       }]
-//     }).then(userData => {
-//       // take data that is an object with all of the users associations, turn it into JSON
-//       console.log(userData);
-//       const userJson = userData.toJSON();
-//       // make an object that is just the usernames of the associations
-//       const hbsObj = {
-//         user: req.session.user,
-//         username: userJson
-//       }
-//       //pass that object to the frontend
-//       res.render("partials/friends", hbsObj);
-//     }).catch(err => {
-//       res.status(500).json(err)
-//     })
-//   } else {
-//     res.redirect(401, '/login')
-//   }
-// })
+// new event route <-------------- NOTE TO BACKEND: needed hbsObj to render username and image in navbar
+router.get("/event/new", (req, res) => {
+  db.Event.findAll({
+    where: {
+      UserId: req.session.user.id
+    }
+  }).then(response => {
+    const hbsObj = {
+      user: req.session.user,
+      isNewRecord: true
+    }
+    console.log(hbsObj)
+    res.render("partials/oneEvent", hbsObj);
+  })
+})
 
 // findOne user, findAll events for that user
 router.get("/friend/one/:friend_id", (req, res) => {
@@ -447,7 +429,23 @@ router.get("/friend/one/:friend_id", (req, res) => {
 // maybe a POST request to the AI handler with a GET request to the database nested inside?
 //TODO:
 router.get("/ai_chat", (req, res) => {
-  res.render("partials/aiChat");
+  if (req.session.user) {
+    db.Event.findOne({
+      where: {
+        id: req.session.user.id
+      }
+    }).then(function (dbEvent) {
+      const hbsObj = {
+        user: req.session.user,
+      }
+      res.render("partials/aiChat", hbsObj);
+    }).catch(err => {
+      console.log((err.message));
+      res.status(500).send(err.message);
+    });
+  } else {
+    res.redirect("/");
+  }
 })
 
 // TODO: Bonus if needed

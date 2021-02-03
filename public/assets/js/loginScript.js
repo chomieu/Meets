@@ -41,6 +41,8 @@ $(document).ready(function () {
             data: input
         }).then((resp) => {
             console.log(resp);
+        }).catch((err) => {
+            $(".red-text").text("This username is already taken!")
         })
     })
 
