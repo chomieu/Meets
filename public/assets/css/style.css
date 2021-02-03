@@ -11,6 +11,7 @@
     --accent-1: #ff8f00;
     --accent-2: #ff4e4e;
     --accent-3: #ffe57f;
+    --accent-4: #ffe0b2;
 
     --text: black;
     --text-opposite: white;
@@ -151,7 +152,7 @@ nav {
     padding: 1em;
     border: 1px solid black;
     border-radius: 10px;
-    background: var(--accent-1);
+    background: var(--accent-4);
 }
 
 .event-header {
@@ -161,7 +162,7 @@ nav {
 }
 
 .event-title {
-    font-size: 2vw;
+    font-size: 2em;
     font-weight: bold;
     text-transform: uppercase;
 }
@@ -222,14 +223,14 @@ nav {
     flex-direction: row;
     align-items: flex-end;
     height: 80vh;
-    background: var(--accent-1);
+    background: var(--main-2);
     overflow: auto;
 }
 
 .btn {
     margin-top: 0.5em;
     margin-right: 0.25em;
-    background-color: var(--color-2) !important;
+    background-color: var(--accent-1) !important;
     font-family: "Titillium Web";
 }
 
