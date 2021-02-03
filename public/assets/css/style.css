@@ -6,14 +6,10 @@
 
 :root {
     --color-1: #e65100;
-    --color-2: #ff6d00;
-    --color-3: #f7fff7;
-    --color-4: #ff6b6b;
-    --color-5: #ffe66d;
-}
-
-body, html, .wrapper {
-    height: 100%;
+    --color-2: #ff8f00;
+    --color-3: #ffffff;
+    --color-4: #ff4e4e;
+    --color-5: #ffe57f;
 }
 
 main {
@@ -79,6 +75,8 @@ nav {
     padding: 1em;
     border: 1px solid black;
     border-radius: 10px;
+    background-color: var(--color-5);
+    color: --;
 }
 
 .event-header {
@@ -88,7 +86,7 @@ nav {
 }
 
 .event-title {
-    font-size: x-large;
+    font-size: 2vw;
     font-weight: bold;
     text-transform: uppercase;
 }
@@ -147,13 +145,17 @@ nav {
 .btn {
     margin-top: 0.5em;
     margin-right: 0.25em;
-    background-color: #ff8f00 !important;
+    background-color: var(--color-2) !important;
     font-family: "Titillium Web";
 }
 
 .btn-w {
-    width: clamp(90px, 2vw, 100px);
-    margin-left: 0.5em;
+    width: 120px;
+    margin-right: 0 !important;
+}
+
+#logOutBtn {
+    background-color: var(--color-4) !important;
 }
 
 p {
@@ -172,18 +174,6 @@ p {
     height: 200px;
     width: 200px;
     border: 1px solid black;
-}
-
-.bg-texture {
-    background:
-        linear-gradient(27deg, #151515 5px, transparent 5px) 0 5px,
-        linear-gradient(207deg, #151515 5px, transparent 5px) 10px 0px,
-        linear-gradient(27deg, #222 5px, transparent 5px) 0px 10px,
-        linear-gradient(207deg, #222 5px, transparent 5px) 10px 5px,
-        linear-gradient(90deg, #1b1b1b 10px, transparent 10px),
-        linear-gradient(#1d1d1d 25%, #1a1a1a 25%, #1a1a1a 50%, transparent 50%, transparent 75%, #242424 75%, #242424);
-    background-color: #131313;
-    background-size: 20px 20px;
 }
 
 .meets-font {
@@ -209,21 +199,23 @@ p {
       bottom: 0;
     }
     50% {
-      bottom: -20px;
+      bottom: 2vh;
     }
 }
 
 @keyframes shrinkAndGrow {
-    0%, 100% {
+    50% {
         transform: scale(0.3);
     }
-    50% {
+    0%, 100% {
         transform: scale(0.5);
     }
 }
 
-.d-box {
-    width: 100%;
+@media (max-width: 640px) {
+    .d-box {
+        width: 100%;
+    }
 }
 
 @media (min-width: 640px) {
@@ -239,10 +231,19 @@ p {
 }
 
 input:focus {
-    border-bottom: 1px solid #e65100 !important;
-    box-shadow: 0 1px 0 0 #e65100 !important;
+    border-bottom: 1px solid var(--color-1) !important;
+    box-shadow: 0 1px 0 0 var(--color-1) !important;
   }
 
 a {
-    color: #ff7707;
+    color: var(--color-2);
+}
+
+.v-center {
+	position: absolute;
+	top:0;
+	bottom: 0;
+	left: 0;
+	right: 0;
+	margin: auto;
 }

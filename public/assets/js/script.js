@@ -36,15 +36,15 @@ function setColors(color) {
         r.style.setProperty("--color-1", "#212121");
         r.style.setProperty("--color-2", "#424242");
         r.style.setProperty("--color-3", "#bdbdbd");
-        r.style.setProperty("--color-4", "#37474f");
-        r.style.setProperty("--color-5", "#ff6f00");
+        r.style.setProperty("--color-4", "#78909c");
+        r.style.setProperty("--color-5", "#e0e0e0");
     } else {
         $(".colorMode").text("Light Mode");
         r.style.setProperty("--color-1", "#e65100");
-        r.style.setProperty("--color-2", "#ff6d00");
-        r.style.setProperty("--color-3", "#f7fff7");
-        r.style.setProperty("--color-4", "#ffb74d");
-        r.style.setProperty("--color-5", "#ffe66d");
+        r.style.setProperty("--color-2", "#ff8f00");
+        r.style.setProperty("--color-3", "#ffffff");
+        r.style.setProperty("--color-4", "#ff4e4e");
+        r.style.setProperty("--color-5", "#ffe57f");
     }
 }
 
