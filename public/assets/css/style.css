@@ -2,19 +2,30 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
+    /* outline: 1px dotted green; */
 }
 
 :root {
-    --color-1: #1a535c;
-    --color-2: #4ecdc4;
-    --color-3: #f7fff7;
-    --color-4: #ff6b6b;
-    --color-5: #ffe66d;
+    --main-1: #e65100;
+    --main-2: #ffffff;
+    --accent-1: #ff8f00;
+    --accent-2: #ff4e4e;
+    --accent-3: #ffe57f;
+
+    --text: black;
+    --text-opposite: white;
 }
-/* 
-.btn {
-    background-color: var(--color-5);
-} */
+
+* {
+    color: var(--text);
+}
+
+body {
+    background: var(--main-2);
+    color: var(--text);
+}
+
+
 
 main {
     display: flex;
@@ -22,9 +33,73 @@ main {
     align-items: center;
 }
 
+.wrapper {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
 nav {
     position: sticky;
     top: 0;
+    background: var(--main-1);
+    z-index: 1;
+}
+
+.side_nav {
+    background: var(--main-2);
+    color: var(--text);
+}
+
+.side_menu {
+    position: relative;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    width: 10em;
+    height: 91vh;
+
+}
+
+.side_menu li {
+    position: relative;
+    width: 10em;
+}
+
+.side_menu_button {
+    margin: 1em;
+    position: absolute;
+    color: var(--text-opposite);
+    background: var(--accent-1);
+    left: -8em;
+    /* border: 1px solid var(--text-opposite); */
+    font-weight: bold;
+    border-radius: 10px;
+}
+
+.side_menu_button:hover {
+    position: relative;
+    animation: slideOut 0.25s linear forwards;
+    background: var(--accent-2);
+    box-shadow: 2px 2px 4px var(--text);
+}
+
+@media(min-width:1000px) {
+    .drag-target {
+        display: none;
+    }
+}
+
+@keyframes slideOut {
+    0% {
+        left: -8em;
+    }
+    50% {
+        left: -5em;
+    }
+    100% {
+        left: -1.5em;
+    }
 }
 
 .col {
@@ -44,18 +119,27 @@ nav {
     width: 30%;
     border: 1px solid black;
     border-radius: 100px;
-    background: var(--color-1);
+    background: var(--main-1);
 }
 
 .friend-box {
-    display: flex;
     justify-content: space-between;
     align-items: center;
     padding: 0.5em 1em 0.5em 0.5em;
-
     margin: 1em 0;
     border-radius: 5px;
     background: var(--color-4);
+}
+
+.user-box {
+    width: 200px;
+    height: 200px;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.5em 1em 0.5em 0.5em;
+    margin: 1em 0;
+    border-radius: 5px;
+    background: var(--accent-2);
 }
 
 .event-box {
@@ -63,6 +147,7 @@ nav {
     padding: 1em;
     border: 1px solid black;
     border-radius: 10px;
+    background: var(--accent-1);
 }
 
 .event-header {
@@ -72,7 +157,7 @@ nav {
 }
 
 .event-title {
-    font-size: x-large;
+    font-size: 2vw;
     font-weight: bold;
     text-transform: uppercase;
 }
@@ -88,8 +173,8 @@ nav {
 }
 
 .activePage {
-    background: var(--color-2);
-    color: var(--color-1);
+    background: var(--main-1);
+    color: var(--text);
 }
 
 .disable {
@@ -97,17 +182,17 @@ nav {
 }
 
 .ai-interaction-box {
-    width: 10em;
-    height: 10em;
-    border: 1px solid black;
-    border-radius: 10px;
-    background: var(--color-5);
-    box-shadow: 2px 2px 6px black;
+    max-width: 200px;
+    width: 25%;
+    bottom: 0;
+    right: 0;
+    z-index: 2;
+    position: absolute;
 }
 
 .ai-icon {
-    padding: 1em;
-    width: 80%;
+    width: 90%;
+    height: auto;
 }
 
 .chatbox {
@@ -128,13 +213,118 @@ nav {
     border-radius: 10px;
 }
 
+.chatbox-content {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-end;
+    height: 80vh;
+    background: var(--accent-1);
+    overflow: auto;
+}
+
 .btn {
     margin-top: 0.5em;
-    margin-left: 0.25em;
+    margin-right: 0.25em;
+    background-color: var(--color-2) !important;
+    font-family: "Titillium Web";
+}
+
+.btn-w {
+    width: 120px;
+    margin-right: 0 !important;
+}
+
+#logOutBtn {
+    background-color: var(--color-4) !important;
 }
 
 p {
     font-family: "Titillium Web";
     font-size: 20px;
-    overflow-wrap: break-word;
+    font-weight: bold;
+}
+
+.font-scale {
+    font-size: clamp(20px, 4vw, 30px);
+    font-weight: bold;
+}
+
+#pfp {
+    margin: 0 auto;
+    height: 200px;
+    width: 200px;
+    border: 1px solid black;
+}
+
+.meets-font {
+    font-family: 'Pacifico', cursive;
+}
+
+.tw-font,
+h1 {
+    font-family: "Titillium Web";
+}
+
+.up-and-down {
+    animation: MoveUpDown 3s linear infinite;
+    position: relative;
+}
+
+.shrink-and-grow {
+    animation: shrinkAndGrow 3s linear infinite;
+    position: relative;
+}
+
+@keyframes MoveUpDown {
+    0%, 100% {
+        bottom: 0;
+    }
+    50% {
+        bottom: 2vh;
+    }
+}
+
+@keyframes shrinkAndGrow {
+    50% {
+        transform: scale(0.3);
+    }
+    0%, 100% {
+        transform: scale(0.5);
+    }
+}
+
+@media(max-width: 640px) {
+    .d-box {
+        width: 100%;
+    }
+}
+
+@media(min-width: 640px) {
+    .d-box {
+        width: 75%;
+    }
+}
+
+@media(min-width: 1280px) {
+    .d-box {
+        width: 50%;
+    }
+}
+
+input:focus {
+    border-bottom: 1px solid var(--color-1) !important;
+    box-shadow: 0 1px 0 0 var(--color-1) !important;
+}
+
+a {
+    color: var(--color-2);
+}
+
+.v-center {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    margin: auto;
 }

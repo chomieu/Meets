@@ -35,6 +35,9 @@ router.get("/upcomingEvents", function (req, res) {
         ['dateTime', "ASC"]
       ],
     }).then(function (dbEvent) {
+      console.log("*************************");
+      console.log(dbEvent);
+      console.log("*************************");
       const hbsObj = {
         user: req.session.user,
         eventData: dbEvent
@@ -46,14 +49,64 @@ router.get("/upcomingEvents", function (req, res) {
       res.status(500).send(err.message)
     });
   } else {
-    res.render('index')
+    res.redirect(401, '/login')
   }
 });
+
+router.get('/friends', (req, res) => {
+  if (req.session.user) {
+    db.User.findOne({
+      where: {
+        id: req.session.user.id
+      },
+      include: [{
+        model: db.User,
+        as: 'Associate'
+      }]
+    }).then(userFriends => {
+      const userFriendsArr = userFriends.Associate.map(obj => obj.id);
+      db.User.findAll({
+        where: {
+          id: { 
+            [Op.and]: {
+              [Op.notIn]: userFriendsArr,
+              [Op.ne]: req.session.user.id}
+            }
+        }
+      }).then(nonFriends => {
+        const friendsArr = userFriends.Associate.map(obj => {
+          const friendObj = obj.toJSON()
+          friendObj.isConnected = true;
+          return friendObj;
+        });
+
+        const nonFriendsArr = nonFriends.map(obj => {
+          const nonfriendObj = obj.toJSON()
+          nonfriendObj.isConnected = false;
+          return nonfriendObj;
+        });
+
+        const hbsObj = {
+          user: req.session.user,
+          friends: friendsArr,
+          nonfriends: nonFriendsArr
+        }
+        res.json(hbsObj)
+        // res.render('./partials/friends', hbsObj)
+      })
+    }).catch(err => {
+      console.log(err.message);
+      res.status(500).send(err.message)
+    });
+  } else {
+    res.redirect(401, '/login')
+  }
+})
 
 
 // GET route to fetch associations and events from the database to display on the dashboard
 router.get("/dashboard", (req, res) => {
-  // TODO: Toggle to findAll friends events instead
+  // TODO: Future Dev - Toggle to findAll friends events instead
   // findOne user and all of their events
 
   // AI fetches a user and target feeds into this call
@@ -71,7 +124,6 @@ router.get("/dashboard", (req, res) => {
     }).then(userData => {
       userData.getAssociate(
         {
-          attributes: ['username'],
           limit: 2, // values can be changed
           include: [{
             model: db.Event,
@@ -93,7 +145,7 @@ router.get("/dashboard", (req, res) => {
       res.status(500).json(err)
     })
   } else {
-    res.render('index')
+    res.redirect(401, '/login')
   }
 })
 
@@ -147,7 +199,7 @@ router.get("/friendEvents", (req, res) => {
       res.status(500).send(err.message)
     })
   } else {
-    res.render('index')
+    res.redirect(401, '/login')
   }
 })
 
@@ -162,7 +214,7 @@ router.get("/sameTime/", function (req, res) {
       model: db.User,
       include: [{
         model: db.User,
-      as: 'Associate',
+        as: 'Associate',
         // include: [db.Event]
       }],
     }],
@@ -278,7 +330,6 @@ router.get("/eventLocation/", function (req, res) {
     }
     res.json(dbEventLocation)
     res.render('./partials/events', hbsobj)
-
   }).catch(err => {
     console.log(err.message);
     res.status(500).send(err.message)
@@ -288,6 +339,38 @@ router.get("/eventLocation/", function (req, res) {
 }
 })
 
+// Render the edit event page if you are logged in and you are the owner
+// pass content of event with ID = X
+// send isEdit boolean --> if TRUE then EDITABLE (on frontend)
+router.get("/event/edit/:event_id", (req, res) => {
+  if (!req.session.user) {
+    res.redirect(401, '/login')
+  } else {
+    db.Event.findOne({
+      where: {
+        id: req.params.event_id
+      }
+    }).then(dbEvent => {
+      const dbEventJson = dbEvent.toJSON();
+      // handlebars object should include a isMine key (true/false)
+      // if true, then the user logged in is the owner of the event
+      // so the event should be editable
+      if (req.session.user) {
+        dbEventJson.isMine = req.session.user.id === dbEventJson.UserId
+      } else {
+        dbEventJson.isMine = false;
+      }
+      const hbsObj = {
+        user: req.session.user,
+        events: dbEventJson
+      };
+      res.render("partials/oneEvent", hbsObj);
+    }).catch(err => {
+      console.log(err.message);
+      res.status(500).send(err.message)
+    })
+  }
+})
 
 
 // TODO: Query for all user's events
@@ -304,39 +387,39 @@ router.get("/events", (req, res) => {
   }).then(resp => {
     console.log({ events: resp });
     res.render("partials/events", { events: resp });
-  })
+  }).catch(err => {
+    console.log(err.message);
+    res.status(500).send(err.message)
+  });
+  } else {
+    res.render('index')
+  }
+})
+// new event route <-------------- NOTE TO BACKEND: needed hbsObj to render username and image in navbar
+router.get("/event/new", (req, res) => {
+  if(req.session.user){
+  db.Event.findAll({
+    where: {
+      UserId: req.session.user.id
+    }
+  }).then(response => {
+    const hbsObj = {
+      user: req.session.user,
+      isNewRecord: true
+    }
+    console.log(hbsObj)
+    res.render("partials/oneEvent", hbsObj);
+  }).catch(err => {
+    console.log(err.message);
+    res.status(500).send(err.message)
+  });
 } else {
   res.render('index')
 }
 })
 
-
-// TODO: new event route
-router.get("/event/new", (req, res) => {
-  res.render("partials/oneEvent", { isNewRecord: true });
-})
-
-
-// findOne for a single event, then check to make sure that you are logged in and that you are the admin
-// TODO: findOne() event while ensuring logged in userID and userID who created event are the same 
-
-// if true, then you can edit and access the POST request
-
-// QUERY to findOne event
-
-// // TODO: ???
-// // pass content of event with ID = X
-// // send isEdit boolean --> if TRUE then EDITABLE (on frontend)
-// router.get("/event/:event_id", (req, res) => {
-
-//   res.render("partials/oneEvent");
-// })
-
-
-
-// Already handled in eventcontroller with put request?
-// findAll where you have an assciation with them
-router.get("/friends", (req, res) => {
+// findOne user, findAll events for that user
+router.get("/friend/one/:friend_id", (req, res) => {
   if (req.session.user) {
     // find a single user that is logged in
     db.User.findOne({
@@ -346,38 +429,50 @@ router.get("/friends", (req, res) => {
       include: [{
         model: db.User,
         as: 'Associate',
+        where: {
+          id: req.params.friend_id
+        },
+        include: [db.Event]
       }]
-    }).then(userData => {
+    }).then(friendEvents => {
       // take data that is an object with all of the users associations, turn it into JSON
-      console.log(userData);
-      const userJson = userData.toJSON();
+      const userEventsJson = friendEvents.toJSON();
       // make an object that is just the usernames of the associations
       const hbsObj = {
         user: req.session.user,
-        username: userJson.username
+        username: userEventsJson
       }
       //pass that object to the frontend
-      // res.json(userData)
-      res.render("partials/friends", hbsObj);
+      res.render("partials/oneFriend", hbsObj);
     }).catch(err => {
       res.status(500).json(err)
     })
   } else {
-    res.render('index')
+    res.redirect(401, '/login')
   }
-})
-
-// findOne user, findAll events for that user
-//TODO:
-router.get("/friend/one", (req, res) => {
-  res.render("partials/oneFriend");
 })
 
 // chat - when AI is asked for past/future intent of TARGETNAME - query TARGETNAME for event in past/future -
 // maybe a POST request to the AI handler with a GET request to the database nested inside?
 //TODO:
 router.get("/ai_chat", (req, res) => {
-  res.render("partials/aiChat");
+  if (req.session.user) {
+    db.Event.findOne({
+      where: {
+        id: req.session.user.id
+      }
+    }).then(function (dbEvent) {
+      const hbsObj = {
+        user: req.session.user,
+      }
+      res.render("partials/aiChat", hbsObj);
+    }).catch(err => {
+      console.log((err.message));
+      res.status(500).send(err.message);
+    });
+  } else {
+    res.redirect("/");
+  }
 })
 
 // TODO: Bonus if needed
@@ -411,7 +506,7 @@ router.get("/settings", (req, res) => {
       res.status(500).json(err)
     })
   } else {
-    res.render('index')
+    res.redirect(401, '/login')
   }
 })
 

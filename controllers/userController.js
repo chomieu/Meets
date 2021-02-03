@@ -5,8 +5,34 @@ const bcrypt = require('bcrypt')
 
 // GET route for retrieving all users from USER table
 router.get("/api/users", (req, res) => {
-  db.User.findAll().then(dbUser => {
-    res.json(dbUser);
+  db.User.findAll({
+    include: [{
+      model: db.User,
+      as: 'Associate'
+    }]
+  }).then(dbUser => {
+    if (req.session.user) {
+      // find the current logged in user
+      const foundUser = dbUser.find(user => user.id === req.session.user.id);
+      // searches the found user and builds an array from their associations
+      const assocArr = foundUser.Associate.map(e => e.UserAssociate.AssociateId)
+      // maps across all users to add the isConnected boolean
+      const usersAssocData = dbUser.map(obj => {
+        const usersAssocObj = obj.toJSON();
+        // if the user id is inside the array, then add true/false to the object
+        if (assocArr.includes(usersAssocObj.id)) {
+          usersAssocObj.isConnected = true;
+        } else {
+          usersAssocObj.isConnected = false;
+        }
+        return usersAssocObj
+      })
+      res.json(usersAssocData);
+    } else {
+      // if there is no logged in user, return all data with no connected info
+      // should not display a button to connect/disconnect unless logged in
+      res.json(dbUser)
+    }
   }).catch(err => {
     console.log(err.message);
     res.status(500).send(err.message);
@@ -40,7 +66,8 @@ router.post("/login", (req, res) => {
       if (bcrypt.compareSync(req.body.password, userData.password)) {
         req.session.user = {
           id: userData.id,
-          username: userData.username
+          username: userData.username,
+          image: userData.image // Added to include image on the navbar on all pages
         }
         res.json(userData)
       } else {
@@ -98,13 +125,20 @@ router.delete("/disconnect", (req, res) => {
 // allows user to update their username/profile pic/etc
 router.put("/profile/update", (req, res) => {
   if (req.session.user) {
+    console.log(req.body)
     db.User.update(
       req.body,
       {
         where: {
-          id: req.sessing.user.id
+          id: req.session.user.id
         }
       }).then(dbUser => {
+        req.session.user = {
+          id: req.session.user.id,
+          username: req.body.username,
+          image: req.body.image 
+        }
+        console.log('req.session.user:', req.session.user)
         res.json(dbUser)
       }).catch(err => {
         console.log(err.message);
@@ -114,8 +148,6 @@ router.put("/profile/update", (req, res) => {
     res.status(401).send("Please login to access this page.")
   }
 });
-
-//TODO: redirect from events/etc to index not just render('index')
 
 // just allows you to fetch the data to see if you are logged in
 router.get("/readsessions", (req, res) => {
@@ -134,7 +166,8 @@ router.get("/secretclub", (req, res) => {
 // allows user to logout
 router.get("/logout", (req, res) => {
   req.session.destroy()
-  res.send('Logged out')
+  res.redirect("/login")
+  // res.send('Logged out')
 });
 
 // DELETE route for deleting user with a specific id, to terminate an account
