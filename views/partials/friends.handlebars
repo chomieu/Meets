@@ -1,16 +1,20 @@
 <div class="wrapper">
     {{> navbar }}
+    <h1>Friends</h1>
     <div class="container">
-        <h1>Friends</h1>
         <div class="friend-box-all">
-            {{#each username.Associate}}
-            <a href="/friends" class="my-tc-black">
-                <div class="friend-box">
-                    <img class="userIcon" src={{image}} alt="user image">
-                    {{username}}
-                </div>
-            </a>
-            {{/each}}
+            {{!-- {{#each username.Associate}}
+            {{#unless connected}} --}}
+            {{> connections connected=true}}
+            {{!-- {{/unless}}
+            {{/each}} --}}
+        </div>
+        <div class="people-box-all">
+            {{!-- {{#each username.Associate}}
+            {{#if connected}} --}}
+            {{> connections connected=false}}
+            {{!-- {{/if}}
+            {{/each}} --}}
         </div>
     </div>
 </div>
