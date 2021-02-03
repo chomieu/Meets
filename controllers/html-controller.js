@@ -270,7 +270,15 @@ router.get("/eventLocation/", function (req, res) {
 // query for any associate that has an event at the same time
 // TODO: Query for all user's events
 // router.get("/events", (req, res) => {
-//   res.render("partials/events");
+//   console.log(req.session.user);
+//   db.Event.findAll({
+//     where: {
+//       UserId: req.session.user.id
+//     }
+//   }).then(resp => {
+//     console.log({ events: resp });
+//     res.render("partials/events", { events: resp });
+//   })
 // })
 
 
