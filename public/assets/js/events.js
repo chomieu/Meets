@@ -12,7 +12,7 @@ $(document).ready(function () {
         let input = {
             dateTime: dateTime,
             name: name,
-            numOfPeople: numOfPeople,
+            max_people: numOfPeople,
             location: location,
             category: category
         }
@@ -22,7 +22,7 @@ $(document).ready(function () {
             data: input
         }).then(resp => {
             console.log(resp);
-            window.location = ("/events")
+            window.location = ("/allevents")
         })
     })
 

@@ -24,12 +24,15 @@ router.get("/allEvents", function (req, res) {
   if (req.session.user) {
     db.Event.findAll({
       where: {
-        id: req.session.user.id
+        UserId: req.session.user.id
       },
       order: [
         ['dateTime', "DESC"]
       ]
     }).then(function (dbEvent) {
+      console.log("*************************");
+      console.log(dbEvent);
+      console.log("*************************");
       const hbsObj = {
         user: req.session.user,
         eventData: dbEvent
