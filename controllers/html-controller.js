@@ -63,7 +63,11 @@ router.get('/friends', (req, res) => {
       const userFriendsArr = userFriends.Associate.map(obj => obj.id);
       db.User.findAll({
         where: {
-          id: { [Op.notIn]: userFriendsArr }
+          id: { 
+            [Op.and]: {
+              [Op.notIn]: userFriendsArr,
+              [Op.ne]: req.session.user.id}
+            }
         }
       }).then(nonFriends => {
         const friendsArr = userFriends.Associate.map(obj => {
@@ -83,8 +87,8 @@ router.get('/friends', (req, res) => {
           friends: friendsArr,
           nonfriends: nonFriendsArr
         }
-        console.log(hbsObj)
-        res.render('./partials/friends', hbsObj)
+        res.json(hbsObj)
+        // res.render('./partials/friends', hbsObj)
       })
     }).catch(err => {
       console.log(err.message);
