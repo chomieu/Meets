@@ -2,14 +2,27 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
+    /* outline: 1px dotted green; */
 }
 
 :root {
-    --color-1: #e65100;
-    --color-2: #ff8f00;
-    --color-3: #ffffff;
-    --color-4: #ff4e4e;
-    --color-5: #ffe57f;
+    --main-1: #e65100;
+    --main-2: #ffffff;
+    --accent-1: #ff8f00;
+    --accent-2: #ff4e4e;
+    --accent-3: #ffe57f;
+
+    --text: black;
+    --text-opposite: white;
+}
+
+* {
+    color: var(--text);
+}
+
+body {
+    background: var(--main-2);
+    color: var(--text);
 }
 
 main {
@@ -27,7 +40,70 @@ main {
 nav {
     position: sticky;
     top: 0;
-    margin: 0;
+    background: var(--main-1);
+    z-index: 1;
+}
+
+.side_nav {
+    background: var(--main-2);
+    color: var(--text);
+}
+
+.side_menu {
+    position: relative;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    width: 10em;
+    height: 91vh;
+
+}
+
+.side_menu li {
+    position: relative;
+    width: 10em;
+}
+
+.side_menu_button {
+    margin: 1em;
+    position: absolute;
+    color: var(--text-opposite);
+    background: var(--accent-1);
+    left: -10em;
+    /* border: 1px solid var(--text-opposite); */
+    font-weight: bold;
+    border-radius: 10px;
+}
+
+.side_menu_button:hover {
+    position: relative;
+    animation: slideOut 0.25s linear forwards;
+    background: var(--accent-2);
+    box-shadow: 2px 2px 4px var(--text);
+}
+
+.side_menu_button a {
+    color: var(--text-opposite);
+    text-align: left;
+    text-shadow: -1px -1px 0 var(--text), 1px -1px 0 var(--text), -1px 1px 0 var(--text), 1px 1px 0 var(--text);
+}
+
+@media(min-width:1000px) {
+    .drag-target {
+        display: none;
+    }
+}
+
+@keyframes slideOut {
+    0% {
+        left: -10em;
+    }
+    50% {
+        left: -5em;
+    }
+    100% {
+        left: -1.5em;
+    }
 }
 
 .col {
@@ -47,7 +123,7 @@ nav {
     width: 30%;
     border: 1px solid black;
     border-radius: 100px;
-    background: var(--color-1);
+    background: var(--main-1);
 }
 
 .friend-box {
@@ -67,7 +143,7 @@ nav {
     padding: 0.5em 1em 0.5em 0.5em;
     margin: 1em 0;
     border-radius: 5px;
-    background: var(--color-4);
+    background: var(--accent-2);
 }
 
 .event-box {
@@ -75,7 +151,7 @@ nav {
     padding: 1em;
     border: 1px solid black;
     border-radius: 10px;
-    background-color: var(--color-5);
+    background: var(--accent-1);
 }
 
 .event-header {
@@ -101,8 +177,8 @@ nav {
 }
 
 .activePage {
-    background: var(--color-2);
-    color: var(--color-1);
+    background: var(--main-1);
+    color: var(--text);
 }
 
 .disable {
@@ -139,6 +215,15 @@ nav {
     background: white;
     border: 1px solid black;
     border-radius: 10px;
+}
+
+.chatbox-content {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-end;
+    height: 80vh;
+    background: var(--accent-1);
+    overflow: auto;
 }
 
 .btn {
@@ -179,7 +264,8 @@ p {
     font-family: 'Pacifico', cursive;
 }
 
-.tw-font, h1 {
+.tw-font,
+h1 {
     font-family: "Titillium Web";
 }
 
@@ -192,13 +278,13 @@ p {
     animation: shrinkAndGrow 3s linear infinite;
     position: relative;
 }
-  
+
 @keyframes MoveUpDown {
     0%, 100% {
-      bottom: 0;
+        bottom: 0;
     }
     50% {
-      bottom: 2vh;
+        bottom: 2vh;
     }
 }
 
@@ -211,19 +297,19 @@ p {
     }
 }
 
-@media (max-width: 640px) {
+@media(max-width: 640px) {
     .d-box {
         width: 100%;
     }
 }
 
-@media (min-width: 640px) {
+@media(min-width: 640px) {
     .d-box {
         width: 75%;
     }
 }
 
-@media (min-width: 1280px) {
+@media(min-width: 1280px) {
     .d-box {
         width: 50%;
     }
@@ -232,17 +318,17 @@ p {
 input:focus {
     border-bottom: 1px solid var(--color-1) !important;
     box-shadow: 0 1px 0 0 var(--color-1) !important;
-  }
+}
 
 a {
     color: var(--color-2);
 }
 
 .v-center {
-	position: absolute;
-	top:0;
-	bottom: 0;
-	left: 0;
-	right: 0;
-	margin: auto;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    margin: auto;
 }
