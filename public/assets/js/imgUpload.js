@@ -1,4 +1,10 @@
 $('document').ready(function () {
+  $('.settingForm').on("submit", function (e) {
+    e.preventDefault()
+    console.log($(this[0]).files);
+  })
+
+
   $('input[type=file]').on('change', function () {
     var $files = $(this).get(0).files;
 
@@ -48,7 +54,7 @@ $('document').ready(function () {
       username: $("#username").val(),
       password: $("#password").val()
     }
-    
+
     $.ajax("/profile/update", {
       type: "PUT",
       data: input
