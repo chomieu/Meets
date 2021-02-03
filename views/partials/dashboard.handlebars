@@ -17,25 +17,19 @@
                     {{#if friends}}
                     {{#each friends}}
                     <a href="/friend/{{dataValues.id}}" class="friendsBtn my-tc-black">
-                        <div class="friend-box">
+                        <div class="friend-box my-dflex">
                             <img class="userIcon" src="{{dataValues.image}}" alt="user image">
-                            {{dataValues.username}}
+                            <span class="font-scale">{{dataValues.username}}</span>
                         </div>
                     </a>
                     {{/each}}
                     {{/if}}
                     {{#unless friends}}
-                    <h1>YOU HAVE NO FRIENDS</h1> <i class="material-icons">sentiment_very_dissatisfied</i>
+                    <h3>YOU HAVE NO FRIENDS</h3> <i class="material-icons">sentiment_very_dissatisfied</i>
                     {{/unless}}
                 </div>
             </div>
-            <div class="row my-dflex my-justify-center">
-                <a href="/ai_chat" class="aichatBtn">
-                    <div class="ai-interaction-box my-dflex my-justify-center">
-                        <img class="ai-icon" src="/assets/img/AIChat.png" alt="">
-                    </div>
-                </a>
-            </div>
         </div>
+        {{> aiIcon}}
     </div>
 </div>
