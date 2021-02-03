@@ -1,5 +1,6 @@
 $('document').ready(function () {
-  $('input[type=file]').on('change', function () {
+  $('input[type=file]').on('change', function (e) {
+    e.preventDefault()
     var $files = $(this).get(0).files;
 
     if ($files.length) {
@@ -30,6 +31,7 @@ $('document').ready(function () {
         $.ajax("/profile/update", {
           type: "PUT",
           data: {
+            username: $("#setUsername").val(),
             image: response.data.link
           }
         }).then((res) => {
@@ -41,19 +43,16 @@ $('document').ready(function () {
     }
   });
 
-  $('#updateBtn').on('click', function (e) {
+  $('.updateForm').on('submit', function (e) {
     e.preventDefault()
-
-    let input = {
-      username: $("#username").val(),
-      password: $("#password").val()
-    }
-    
     $.ajax("/profile/update", {
       type: "PUT",
-      data: input
+      data: {
+        username: $("#setUsername").val(),
+        image: $("#pfp").attr("src")
+      }
     }).then((res) => {
       location.reload()
     })
-  })
+  });
 });

@@ -99,6 +99,7 @@ router.delete("/disconnect", (req, res) => {
 // allows user to update their username/profile pic/etc
 router.put("/profile/update", (req, res) => {
   if (req.session.user) {
+    console.log(req.body)
     db.User.update(
       req.body,
       {
@@ -106,6 +107,12 @@ router.put("/profile/update", (req, res) => {
           id: req.session.user.id
         }
       }).then(dbUser => {
+        req.session.user = {
+          id: req.session.user.id,
+          username: req.body.username,
+          image: req.body.image 
+        }
+        console.log('req.session.user:', req.session.user)
         res.json(dbUser)
       }).catch(err => {
         console.log(err.message);
