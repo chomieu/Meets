@@ -114,7 +114,7 @@ router.post('/api/input', (request, response) => {
     }).then(async (dbUser) => {
       let echo
       dbUser === null ? echo = `${aiRes.queryResult.fulfillmentText} no future events at this moment.` :
-        echo = `${aiRes.queryResult.fulfillmentText} planned for ${dbUser.Events[0].dataValues.dateTime}`
+        echo = `${aiRes.queryResult.fulfillmentText} an event named ${dbUser.Events[0].dataValues.name} planned for ${dbUser.Events[0].dataValues.dateTime}`
       executeQueries("echo-fmhq", sessionId, [echo], languageCode);
     })
   }
