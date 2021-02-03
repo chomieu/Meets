@@ -68,7 +68,7 @@ router.get("/dashboard", (req, res) => {
     }).then(userData => {
       userData.getAssociate(
         {
-          attributes: ['username'],
+          // attributes: ['username'], <--------------- NOTE TO BACKEND: commented out because we need associate's image not just their username
           limit: 2, // values can be changed
           include: [{
             model: db.Event,
@@ -282,9 +282,20 @@ router.get("/eventLocation/", function (req, res) {
 // })
 
 
-// TODO: new event route
+// new event route <-------------- NOTE TO BACKEND: needed hbsObj to render username and image in navbar
 router.get("/event/new", (req, res) => {
-  res.render("partials/oneEvent", { isNewRecord: true });
+  db.Event.findAll({
+    where: {
+      UserId: req.session.user.id
+    }
+  }).then(response => {
+    const hbsObj = {
+      user: req.session.user,
+      isNewRecord: true
+    }
+    console.log(hbsObj)
+    res.render("partials/oneEvent", hbsObj);
+  })
 })
 
 
@@ -347,7 +358,23 @@ router.get("/friend/one", (req, res) => {
 // maybe a POST request to the AI handler with a GET request to the database nested inside?
 //TODO:
 router.get("/ai_chat", (req, res) => {
-  res.render("partials/aiChat");
+  if (req.session.user) {
+    db.Event.findOne({
+      where: {
+        id: req.session.user.id
+      }
+    }).then(function (dbEvent) {
+      const hbsObj = {
+        user: req.session.user,
+      }
+      res.render("partials/aiChat", hbsObj);
+    }).catch(err => {
+      console.log((err.message));
+      res.status(500).send(err.message);
+    });
+  } else {
+    res.redirect("/");
+  }
 })
 
 // TODO: Bonus if needed

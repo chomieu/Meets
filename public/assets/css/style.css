@@ -5,11 +5,11 @@
 }
 
 :root {
-    --color-1: #1a535c;
-    --color-2: #4ecdc4;
-    --color-3: #f7fff7;
-    --color-4: #ff6b6b;
-    --color-5: #ffe66d;
+    --color-1: #e65100;
+    --color-2: #ff8f00;
+    --color-3: #ffffff;
+    --color-4: #ff4e4e;
+    --color-5: #ffe57f;
 }
 
 main {
@@ -18,9 +18,16 @@ main {
     align-items: center;
 }
 
+.wrapper {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
 nav {
     position: sticky;
     top: 0;
+    margin: 0;
 }
 
 .col {
@@ -44,11 +51,20 @@ nav {
 }
 
 .friend-box {
-    display: flex;
     justify-content: space-between;
     align-items: center;
     padding: 0.5em 1em 0.5em 0.5em;
+    margin: 1em 0;
+    border-radius: 5px;
+    background: var(--color-4);
+}
 
+.user-box {
+    width: 200px;
+    height: 200px;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.5em 1em 0.5em 0.5em;
     margin: 1em 0;
     border-radius: 5px;
     background: var(--color-4);
@@ -59,6 +75,8 @@ nav {
     padding: 1em;
     border: 1px solid black;
     border-radius: 10px;
+    background-color: var(--color-5);
+    color: --;
 }
 
 .event-header {
@@ -68,7 +86,7 @@ nav {
 }
 
 .event-title {
-    font-size: x-large;
+    font-size: 2vw;
     font-weight: bold;
     text-transform: uppercase;
 }
@@ -93,17 +111,17 @@ nav {
 }
 
 .ai-interaction-box {
-    width: 10em;
-    height: 10em;
-    border: 1px solid black;
-    border-radius: 10px;
-    background: var(--color-5);
-    box-shadow: 2px 2px 6px black;
+    max-width: 200px;
+    width: 25%;
+    bottom: 0;
+    right: 0;
+    z-index: 2;
+    position: absolute;
 }
 
 .ai-icon {
-    padding: 1em;
-    width: 80%;
+    width: 90%;
+    height: auto;
 }
 
 .chatbox {
@@ -126,13 +144,29 @@ nav {
 
 .btn {
     margin-top: 0.5em;
-    margin-left: 0.25em;
+    margin-right: 0.25em;
+    background-color: var(--color-2) !important;
+    font-family: "Titillium Web";
+}
+
+.btn-w {
+    width: 120px;
+    margin-right: 0 !important;
+}
+
+#logOutBtn {
+    background-color: var(--color-4) !important;
 }
 
 p {
     font-family: "Titillium Web";
     font-size: 20px;
-    overflow-wrap: break-word;
+    font-weight: bold;
+}
+
+.font-scale {
+    font-size: clamp(20px, 4vw, 30px);
+    font-weight: bold;
 }
 
 #pfp {
@@ -140,4 +174,76 @@ p {
     height: 200px;
     width: 200px;
     border: 1px solid black;
+}
+
+.meets-font {
+    font-family: 'Pacifico', cursive;
+}
+
+.tw-font, h1 {
+    font-family: "Titillium Web";
+}
+
+.up-and-down {
+    animation: MoveUpDown 3s linear infinite;
+    position: relative;
+}
+
+.shrink-and-grow {
+    animation: shrinkAndGrow 3s linear infinite;
+    position: relative;
+}
+  
+@keyframes MoveUpDown {
+    0%, 100% {
+      bottom: 0;
+    }
+    50% {
+      bottom: 2vh;
+    }
+}
+
+@keyframes shrinkAndGrow {
+    50% {
+        transform: scale(0.3);
+    }
+    0%, 100% {
+        transform: scale(0.5);
+    }
+}
+
+@media (max-width: 640px) {
+    .d-box {
+        width: 100%;
+    }
+}
+
+@media (min-width: 640px) {
+    .d-box {
+        width: 75%;
+    }
+}
+
+@media (min-width: 1280px) {
+    .d-box {
+        width: 50%;
+    }
+}
+
+input:focus {
+    border-bottom: 1px solid var(--color-1) !important;
+    box-shadow: 0 1px 0 0 var(--color-1) !important;
+  }
+
+a {
+    color: var(--color-2);
+}
+
+.v-center {
+	position: absolute;
+	top:0;
+	bottom: 0;
+	left: 0;
+	right: 0;
+	margin: auto;
 }
