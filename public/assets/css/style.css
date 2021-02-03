@@ -151,7 +151,7 @@ nav {
     padding: 1em;
     border: 1px solid black;
     border-radius: 10px;
-    background: var(--accent-1);
+    background: var(--accent-3);
 }
 
 .event-header {
@@ -161,7 +161,7 @@ nav {
 }
 
 .event-title {
-    font-size: 2vw;
+    font-size: 2em;
     font-weight: bold;
     text-transform: uppercase;
 }

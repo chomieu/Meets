@@ -9,7 +9,16 @@ $(document).ready(function () {
         setColors(color);
     });
 
-
+    $(".search").keyup(function () {
+        var filter = $(".search").val().toLowerCase();
+        $(".searchObj").each(function () {
+          if ($(this).text().toLowerCase().indexOf(filter) > -1) {
+            $(this).parent().show()
+          } else {
+            $(this).parent().hide()
+          }
+        })
+    })
 })
 
 function getColor() {
