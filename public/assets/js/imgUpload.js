@@ -33,7 +33,7 @@ $('document').ready(function () {
             image: response.data.link
           }
         }).then((res) => {
-          $("#pfp").attr("src", response.data.link)
+          location.reload()
         }).catch((err) => {
           $(".red-text").text("Picture is too large!")
         })
@@ -43,19 +43,17 @@ $('document').ready(function () {
 
   $('#updateBtn').on('click', function (e) {
     e.preventDefault()
-    let newUsername = $("#username").val()
-    let newPassword = $("#password").val()
+
+    let input = {
+      username: $("#username").val(),
+      password: $("#password").val()
+    }
+    
     $.ajax("/profile/update", {
       type: "PUT",
-      data: {
-        username: newUsername,
-        password: newPassword
-      }
+      data: input
     }).then((res) => {
-      $("#username").val("")
-      $("#password").val("")
-    }).catch((err) => {
-      $(".red-text").text("Picture is too large!")
+      location.reload()
     })
   })
 });

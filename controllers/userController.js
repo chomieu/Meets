@@ -40,7 +40,8 @@ router.post("/login", (req, res) => {
       if (bcrypt.compareSync(req.body.password, userData.password)) {
         req.session.user = {
           id: userData.id,
-          username: userData.username
+          username: userData.username,
+          image: userData.image // Added to include image on the navbar on all pages
         }
         res.json(userData)
       } else {

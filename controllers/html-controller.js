@@ -183,9 +183,9 @@ router.get("/html/sameTime/", function (req, res) {
 
 // query for any associate that has an event at the same time
 // TODO: Query for all user's events
-router.get("/events", (req, res) => {
-  res.render("partials/events");
-})
+// router.get("/events", (req, res) => {
+//   res.render("partials/events");
+// })
 
 
 // TODO: new event route
