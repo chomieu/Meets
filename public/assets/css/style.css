@@ -53,9 +53,8 @@ nav {
     display: flex;
     flex-direction: row;
     align-items: center;
-    /* width: 10em; */
+    width: 10em;
     height: 91vh;
-    z-index: 98 !important;
 
 }
 
