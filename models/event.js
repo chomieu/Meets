@@ -39,6 +39,26 @@ module.exports = function (sequelize, DataTypes) {
                 len: [1]
             }
         },
+        // category: {
+        //     type: DataTypes.STRING,
+        //     allowNull: false,
+        //     defaultValue: "Appointment",
+        //     validate: {
+        //         len: [1],
+        //     }
+        // },
+        // isIndoor: DataTypes.BOOLEAN,
+        // dateTime: {
+        //     type: DataTypes.DATE,
+        //     allowNull: false,
+        //     validate: {
+        //         len: [1]
+        //     }
+        // },
+        // description: {
+        //     type: DataTypes.TEXT,
+        //     allowNull: true,
+        // },
         description: {
             type: DataTypes.TEXT,
             allowNull: true,

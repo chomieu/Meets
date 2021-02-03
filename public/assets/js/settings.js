@@ -1,5 +1,6 @@
 $('document').ready(function () {
-  $('input[type=file]').on('change', function () {
+  $('input[type=file]').on('change', function (e) {
+    e.preventDefault()
     var $files = $(this).get(0).files;
 
     if ($files.length) {
@@ -27,9 +28,31 @@ $('document').ready(function () {
           "Authorization": "Client-ID 08bc9cecc19e296",
         }
       }).done(function (response) {
-        console.log(response);
-        $("#pfp").attr("src", response.data.link)
+        $.ajax("/profile/update", {
+          type: "PUT",
+          data: {
+            username: $("#setUsername").val(),
+            image: response.data.link
+          }
+        }).then((res) => {
+          location.reload()
+        }).catch((err) => {
+          $(".red-text").text("Picture is too large!")
+        })
       });
     }
+  });
+
+  $('.updateForm').on('submit', function (e) {
+    e.preventDefault()
+    $.ajax("/profile/update", {
+      type: "PUT",
+      data: {
+        username: $("#setUsername").val(),
+        image: $("#pfp").attr("src")
+      }
+    }).then((res) => {
+      location.reload()
+    })
   });
 });

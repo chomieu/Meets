@@ -2,7 +2,8 @@
 <nav>
     <div class="nav-wrapper my-bc1">
         <ul class="left hide-on-med-and-down">
-            <li><a href="/dashboard" class="waves-effect waves-light btn dashboardBtn">Dashboard</a></li>
+            {{id}}
+            <li><a href="/dashboard/" class="waves-effect waves-light btn dashboardBtn">Dashboard</a></li>
             <li><a href="/events" class="waves-effect waves-light btn eventBtn">All Events</a></li>
             <li><a href="/friends" class="waves-effect waves-light btn friendsBtn">Friends</a></li>
         </ul>
@@ -18,12 +19,12 @@
                 <div class="background">
                     <img src="/assets/img/userIcon.png">
                 </div>
-                <a href="#user"><img class="circle userIcon" src="/assets/img/userIcon.png" alt="user Image"></a>
-                <a href="#name"><span class="name tc4">{{username}}</span></a>
+                <a href="#user"><img class="circle userIcon" src={{user.image}} alt="user Image"></a>
+                <a href="#name"><span class="name tc4">{{user.username}}</span></a>
             </div>
         </li>
         <li><a class="dashboardBtn" href="/dashboard"><i class="material-icons">dashboard</i>Dashboard</a></li>
-        <li><a class="eventBtn" href="/events"><i class="material-icons">event_available</i>All Events</a></li>
+        <li><a class="eventBtn" href="/allevents"><i class="material-icons">event_available</i>All Events</a></li>
         <li><a class="friendsBtn" href="/friends"><i class="material-icons">emoji_people</i>Friends</a></li>
         <li><a class="aichatBtn" href="/ai_chat"><i class="material-icons">emoji_people</i>AI Chat</a></li>
         <li>
@@ -35,6 +36,6 @@
     </div>
     <div class="bottom my-dflex my-justify-around">
         <li><a href="/">Logout</a></li>
-        <li><button class="btn">Light</button></li>
+        <li><button class="btn colorMode">Light</button></li>
     </div>
 </ul>

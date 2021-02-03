@@ -1,6 +1,16 @@
 <div class="wrapper">
     {{> navbar }}
-    <div class="container">
-        <h1>Settings</h1>
+    <h1>Settings</h1>
+    <div class="container my-dflex-col">
+        <img class="row" id="pfp" src="{{user.image}}">
+        <form class="row">
+            <label for="img">Select New Profile Picture:</label><br />
+            <input type="file" id="img" name="img" accept="image/*"><br />
+        </form>
+        <form class="updateForm my-dflex-col">
+            <label for="username">Username:</label>
+            <input type="input" id="setUsername" name="username" value="{{user.username}}">
+            <button class="btn" id="updateBtn" type="submit">Update</button>
+        </form>
     </div>
 </div>
