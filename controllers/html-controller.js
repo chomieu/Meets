@@ -101,7 +101,7 @@ router.get("/events/:id", (req, res) => {
     }).then(function (dbEvent) {
       const dbEventsJson = dbEvent.toJSON()
       const hbsobj = {
-        user:req.session.user,
+        user: req.session.user,
         events: dbEventsJson
       }
       console.log(dbEventsJson);
@@ -112,7 +112,7 @@ router.get("/events/:id", (req, res) => {
       res.status(500).send(err.message);
     });
   } else {
-    res.send("please sign in")
+    res.redirect("/");
   }
 })
 
@@ -146,8 +146,7 @@ router.get("/friendEvents", (req, res) => {
 })
 
 // query for any associate that has an event at the same time
-router.get("/html/sameTime/", function (req, res) {
-  // if(req.body.dateTime===req.params.id)
+router.get("/sameTime/", function (req, res) {
   db.Event.findAll({
     where: {
       dateTime: req.body.dateTime
@@ -157,20 +156,36 @@ router.get("/html/sameTime/", function (req, res) {
       include: [{
         model: db.User,
       as: 'Associate',
-      // include: [db.Event]
+        // include: [db.Event]
       }],
     }],
-    
+
   }).then(function (dbAssociateEvents) {
     const dbAssociateEventsJson = dbAssociateEvents.map(element => element.toJSON())
     const hbsobj = {
       events: dbAssociateEventsJson,
       user: req.session.user
     }
-    // res.json(dbAssociateEvents)
-    
-    // console.log(dbEventsJson);
-    // console.log(hbsobj);
+    res.render('./partials/events', hbsobj)
+  }).catch(err => {
+    console.log(err.message);
+    res.status(500).send(err.message)
+  })
+})
+
+// Find all events by category
+
+router.get("/eventCategory/", function (req, res) {
+  db.Event.findAll({
+    where: {
+      category: req.body.category
+    },
+  }).then(function (dbEventCategory) {
+    const dbEventCategoryJson = dbEventCategory.map(element => element.toJSON())
+    const hbsobj = {
+      events: dbEventCategoryJson,
+      user: req.session.user
+    }
     res.render('./partials/events', hbsobj)
 
   }).catch(err => {
@@ -180,30 +195,114 @@ router.get("/html/sameTime/", function (req, res) {
   
 })
 
+// Find all events by whether or not it's indoor
+
+router.get("/eventIndoor/", function (req, res) {
+  db.Event.findAll({
+    where: {
+      isIndoor: req.body.isIndoor
+    },
+  }).then(function (dbEventIndoor) {
+    const dbEventIndoorJson = dbEventIndoor.map(element => element.toJSON())
+    const hbsobj = {
+      events: dbEventIndoorJson,
+      user: req.session.user
+    }
+    res.render('./partials/events', hbsobj)
+
+  }).catch(err => {
+    console.log(err.message);
+    res.status(500).send(err.message)
+  })
+  
+})
+
+// Find all events by whether or not it's public
+
+router.get("/eventPublic/", function (req, res) {
+  db.Event.findAll({
+    where: {
+      isPublic: req.body.isPublic
+    },
+  }).then(function (dbEventPublic) {
+    const dbEventPublicJson = dbEventPublic.map(element => element.toJSON())
+    const hbsobj = {
+      events: dbEventPublicJson,
+      user: req.session.user
+    }
+    res.json(dbEventPublic)
+    res.render('./partials/events', hbsobj)
+
+  }).catch(err => {
+    console.log(err.message);
+    res.status(500).send(err.message)
+  })
+  
+})
+
+// Find all events by location
+
+router.get("/eventLocation/", function (req, res) {
+  db.Event.findAll({
+    where: {
+      location: req.body.location
+    },
+  }).then(function (dbEventLocation) {
+    const dbEventLocationJson = dbEventLocation.map(element => element.toJSON())
+    const hbsobj = {
+      events: dbEventLocationJson,
+      user: req.session.user
+    }
+    res.json(dbEventLocation)
+    res.render('./partials/events', hbsobj)
+
+  }).catch(err => {
+    console.log(err.message);
+    res.status(500).send(err.message)
+  })
+
+})
+
 
 // query for any associate that has an event at the same time
 // TODO: Query for all user's events
 // router.get("/events", (req, res) => {
-//   res.render("partials/events");
+//   console.log(req.session.user);
+//   db.Event.findAll({
+//     where: {
+//       UserId: req.session.user.id
+//     }
+//   }).then(resp => {
+//     console.log({ events: resp });
+//     res.render("partials/events", { events: resp });
+//   })
 // })
 
 
 // TODO: new event route
 router.get("/event/new", (req, res) => {
-  res.render("partials/oneEvent");
+  res.render("partials/oneEvent", { isNewRecord: true });
 })
 
-// TODO: Render the edit event page if you are logged in and you are the owner
-// pass content of event with ID = X
-// send isEdit boolean --> if TRUE then EDITABLE (on frontend)
-router.get("/event/edit", (req, res) => {
-  // findOne for a single event
-  // render the data from that event to the page
-  // on submit - target the route in the eventController for the edit
-  res.render("partials/oneEvent");
-})
+
+// findOne for a single event, then check to make sure that you are logged in and that you are the admin
+// TODO: findOne() event while ensuring logged in userID and userID who created event are the same 
+
+// if true, then you can edit and access the POST request
+
+// QUERY to findOne event
+
+// // TODO: ???
+// // pass content of event with ID = X
+// // send isEdit boolean --> if TRUE then EDITABLE (on frontend)
+// router.get("/event/:event_id", (req, res) => {
+
+//   res.render("partials/oneEvent");
+// })
+
+
+
 // Already handled in eventcontroller with put request?
-
 // findAll where you have an assciation with them
 router.get("/friends", (req, res) => {
   if (req.session.user) {
