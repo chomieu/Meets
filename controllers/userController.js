@@ -41,11 +41,8 @@ router.get("/api/users", (req, res) => {
 
 // allows user to signup for an account
 router.post("/signup", (req, res) => {
-  console.log("inside signup")
-  db.User.create({
-    username: req.body.username,
-    password: req.body.password
-  }).then(data => {
+  db.User.create(req.body).then(data => {
+    console.log(req.body);
     res.json(data);
   }).catch(err => {
     res.status(500).json(err)
@@ -136,7 +133,7 @@ router.put("/profile/update", (req, res) => {
         req.session.user = {
           id: req.session.user.id,
           username: req.body.username,
-          image: req.body.image 
+          image: req.body.image
         }
         console.log('req.session.user:', req.session.user)
         res.json(dbUser)

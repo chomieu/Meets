@@ -35,9 +35,6 @@ router.get("/upcomingEvents", function (req, res) {
         ['dateTime', "ASC"]
       ],
     }).then(function (dbEvent) {
-      console.log("*************************");
-      console.log(dbEvent);
-      console.log("*************************");
       const hbsObj = {
         user: req.session.user,
         eventData: dbEvent
@@ -371,7 +368,7 @@ router.get("/event/edit/:event_id", (req, res) => {
 })
 
 
-// TODO: Query for all user's events
+// query for all user's events
 router.get("/events", (req, res) => {
   if (req.session.user) {
   console.log(req.session.user);
