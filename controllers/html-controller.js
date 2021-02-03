@@ -59,7 +59,7 @@ router.get("/dashboard", (req, res) => {
   }).then(userData => {
     userData.getAssociate(
       {
-        attributes: ['username'],
+        // attributes: ['username'], <----------- NOTE TO BACKEND - commented out because we need more than just username here
         limit: 2, // values can be changed
         include: [{
           model: db.Event,
@@ -68,17 +68,11 @@ router.get("/dashboard", (req, res) => {
         }]
       }
     ).then(aSockData => {
-      // console.log('-------------------');
-      // console.log(aSockData);
-      // console.log('-------------------');
-      // console.log(userData);
-      // res.json(aSockData)
       const hbsObj = {
         user: req.session.user, // include this in EVERY hbars object for every route that renders a page
         userEvents: userData.Events,
         friends: aSockData
       }
-      console.log(hbsObj);
       // res.json(hbsObj)
       res.render("partials/dashboard", hbsObj);
     })
