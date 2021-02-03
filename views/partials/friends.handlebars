@@ -1,0 +1,16 @@
+<div class="wrapper">
+    {{> navbar }}
+    <div class="container">
+        <h1>Friends</h1>
+        <div class="friend-box-all">
+            {{#each username.Associate}}
+            <a href="/friends" class="my-tc-black">
+                <div class="friend-box">
+                    <img class="userIcon" src={{image}} alt="user image">
+                    {{username}}
+                </div>
+            </a>
+            {{/each}}
+        </div>
+    </div>
+</div>
