@@ -51,6 +51,7 @@ function setColors(color) {
         r.style.setProperty("--accent-1", "#284b63");
         r.style.setProperty("--accent-2", "#d9d9d9");
         r.style.setProperty("--accent-3", "#ffffff");
+        r.style.setProperty("--accent-4", "#757575");
         r.style.setProperty("--text", "white");
         r.style.setProperty("--text-opposite", "black");
     } else {
@@ -61,6 +62,7 @@ function setColors(color) {
         r.style.setProperty("--accent-1", "#ff8f00");
         r.style.setProperty("--accent-2", "#ff4e4e");
         r.style.setProperty("--accent-3", "#ffe57f");
+        r.style.setProperty("--accent-4", "#ffab40;");
         r.style.setProperty("--text", "black");
         r.style.setProperty("--text-opposite", "white");
     }
