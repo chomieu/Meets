@@ -11,10 +11,6 @@
     --color-4: #ff6b6b;
     --color-5: #ffe66d;
 }
-/* 
-.btn {
-    background-color: var(--color-5);
-} */
 
 main {
     display: flex;
@@ -137,4 +133,11 @@ p {
     font-family: "Titillium Web";
     font-size: 20px;
     overflow-wrap: break-word;
+}
+
+#pfp {
+    margin: 0 auto;
+    height: 200px;
+    width: 200px;
+    border: 1px solid black;
 }
