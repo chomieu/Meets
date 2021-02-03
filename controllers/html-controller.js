@@ -155,7 +155,7 @@ router.get("/sameTime/", function (req, res) {
       model: db.User,
       include: [{
         model: db.User,
-      as: 'Associate',
+        as: 'Associate',
         // include: [db.Event]
       }],
     }],
@@ -192,7 +192,7 @@ router.get("/eventCategory/", function (req, res) {
     console.log(err.message);
     res.status(500).send(err.message)
   })
-  
+
 })
 
 // Find all events by whether or not it's indoor
@@ -214,7 +214,7 @@ router.get("/eventIndoor/", function (req, res) {
     console.log(err.message);
     res.status(500).send(err.message)
   })
-  
+
 })
 
 // Find all events by whether or not it's public
@@ -237,7 +237,7 @@ router.get("/eventPublic/", function (req, res) {
     console.log(err.message);
     res.status(500).send(err.message)
   })
-  
+
 })
 
 // Find all events by location
@@ -266,17 +266,9 @@ router.get("/eventLocation/", function (req, res) {
 
 // query for any associate that has an event at the same time
 // TODO: Query for all user's events
-router.get("/events", (req, res) => {
-  console.log(req.session.user);
-  db.Event.findAll({
-    where: {
-      UserId: req.session.user.id
-    }
-  }).then(resp => {
-    console.log({ events: resp });
-    res.render("partials/events", { events: resp });
-  })
-})
+// router.get("/events", (req, res) => {
+//   res.render("partials/events");
+// })
 
 
 // TODO: new event route
@@ -322,10 +314,9 @@ router.get("/friends", (req, res) => {
       // make an object that is just the usernames of the associations
       const hbsObj = {
         user: req.session.user,
-        username: userJson.username
+        username: userJson
       }
       //pass that object to the frontend
-      // res.json(userData)
       res.render("partials/friends", hbsObj);
     }).catch(err => {
       res.status(500).json(err)
@@ -371,7 +362,8 @@ router.get("/settings", (req, res) => {
       const hbsObj = {
         user: req.session.user,
         username: userJson.username,
-        password: userJson.password
+        password: userJson.password,
+        image: userJson.image // Added image to return to the setting page for preview
       }
       //pass that object to the frontend
       res.render("partials/settings", hbsObj);
