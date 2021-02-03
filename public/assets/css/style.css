@@ -280,8 +280,7 @@ h1 {
 }
 
 @keyframes MoveUpDown {
-    0,
-    100% {
+    0%, 100% {
         bottom: 0;
     }
     50% {
@@ -293,8 +292,7 @@ h1 {
     50% {
         transform: scale(0.3);
     }
-    0%,
-    100% {
+    0%, 100% {
         transform: scale(0.5);
     }
 }

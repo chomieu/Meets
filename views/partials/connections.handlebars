@@ -1,12 +1,12 @@
 <div class="user-box my-dflex-col">
   <img class="userIcon" src={{image}} alt="user image">
   <span class="font-scale">{{username}}</span>
-  <button class="btn" data-id="">
-  {{!-- <button class="btn" data-id="{{user.id}}"> --}}
-    {{!-- {{#if UserAssociate}} --}}
-    Connect
-    {{!-- {{#else}}
+  {{!-- Grabbing other user's id and the connection boolean --}}
+  <button class="btn" data-id="{{id}}" data-connection="{{connected}}">
+    {{#if connected}}
     Disconnect
-    {{/if}} --}}
+    {{else}}
+    Connect
+    {{/if}}
   </button>
 </div>
