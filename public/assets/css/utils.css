@@ -283,35 +283,35 @@
 
 /* background color */
 .my-bc1 {
-    background: var(--color-1);
+    background: var(--main-1);
 }
 .my-bc2 {
-    background: var(--color-2);
+    background: var(--main-2);
 }
 .my-bc3 {
-    background: var(--color-3);
+    background: var(--accent-1);
 }
 .my-bc4 {
-    background: var(--color-4);
+    background: var(--accent-2);
 }
 .my-bc5 {
-    background: var(--color-5);
+    background: var(--accent-3);
 }
 /* text color */
 .my-tc1 {
-    color: var(--color-1);
+    color: var(--main-1);
 }
 .my-tc2 {
-    color: var(--color-2);
+    color: var(--main-2);
 }
 .my-tc3 {
-    color: var(--color-3);
+    color: var(--accent-1);
 }
 .my-tc4 {
-    color: var(--color-4);
+    color: var(--accent-2);
 }
 .my-tc5 {
-    color: var(--color-5);
+    color: var(--accent-3);
 }
 .my-tc-white {
     color: white;

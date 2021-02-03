@@ -69,7 +69,7 @@ nav {
     position: absolute;
     color: var(--text-opposite);
     background: var(--accent-1);
-    left: -10em;
+    left: -8em;
     /* border: 1px solid var(--text-opposite); */
     font-weight: bold;
     border-radius: 10px;
@@ -80,12 +80,6 @@ nav {
     animation: slideOut 0.25s linear forwards;
     background: var(--accent-2);
     box-shadow: 2px 2px 4px var(--text);
-}
-
-.side_menu_button a {
-    color: var(--text-opposite);
-    text-align: left;
-    text-shadow: -1px -1px 0 var(--text), 1px -1px 0 var(--text), -1px 1px 0 var(--text), 1px 1px 0 var(--text);
 }
 
 @media(min-width:1000px) {
@@ -280,7 +274,7 @@ h1 {
 }
 
 @keyframes MoveUpDown {
-    0,
+    0%,
     100% {
         bottom: 0;
     }
