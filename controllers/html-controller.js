@@ -1,5 +1,7 @@
 var express = require("express");
 const { Session } = require("express-session");
+const Sequelize = require("sequelize")
+const Op = Sequelize.Op;
 
 var router = express.Router();
 const db = require('../models')
@@ -43,6 +45,57 @@ router.get("/allEvents", function (req, res) {
     res.redirect(401, '/login')
   }
 });
+
+router.get('/friends', (req,res) => {
+  if (req.session.user) {
+    db.User.findOne({
+      where: {
+        id: req.session.user.id
+      },
+      include: [{
+        model: db.User,
+        as: 'Associate'
+      }]
+    }).then(userFriends => {
+      // findAll users via the UserAssociate table
+      // the UserId in that table != req.session.user.id
+      db.User.findAll({
+        include: [{
+          model: db.User,
+          as: 'Associate',
+          where: {
+            id: {
+              [Op.ne]: req.session.user.id
+            }
+          }
+        }]
+      }).then(userNonFriends => {
+        const userFriendsArr = userFriends.Associate.map(obj => {
+          const friendObj = obj.toJSON()
+          friendObj.isConnected = true;
+          return friendObj;
+        });
+
+        const userNonFriendsArr = userNonFriends.map(obj => {
+          const nonfriendObj = obj.toJSON()
+          nonfriendObj.isConnected = false;
+          return nonfriendObj;
+        });
+        const hbsObj = {
+          user: req.session.user,
+          friends : userFriendsArr,
+          nonfriends: userNonFriendsArr
+        }
+        res.render('./partials/friends', hbsObj)
+      })
+    }).catch(err => {
+      console.log(err.message);
+      res.status(500).send(err.message)
+    });
+  } else {
+    res.redirect(401, '/login')
+  }
+})
 
 
 // GET route to fetch associations and events from the database to display on the dashboard
@@ -325,35 +378,36 @@ router.get("/event/edit/:event_id", (req, res) => {
 })
 
 // findAll where you have an association with them
-router.get("/friends", (req, res) => {
-  if (req.session.user) {
-    // find a single user that is logged in
-    db.User.findOne({
-      where: {
-        id: req.session.user.id
-      },
-      include: [{
-        model: db.User,
-        as: 'Associate',
-      }]
-    }).then(userData => {
-      // take data that is an object with all of the users associations, turn it into JSON
-      console.log(userData);
-      const userJson = userData.toJSON();
-      // make an object that is just the usernames of the associations
-      const hbsObj = {
-        user: req.session.user,
-        username: userJson
-      }
-      //pass that object to the frontend
-      res.render("partials/friends", hbsObj);
-    }).catch(err => {
-      res.status(500).json(err)
-    })
-  } else {
-    res.redirect(401, '/login')
-  }
-})
+// redundant
+// router.get("/friends", (req, res) => {
+//   if (req.session.user) {
+//     // find a single user that is logged in
+//     db.User.findOne({
+//       where: {
+//         id: req.session.user.id
+//       },
+//       include: [{
+//         model: db.User,
+//         as: 'Associate',
+//       }]
+//     }).then(userData => {
+//       // take data that is an object with all of the users associations, turn it into JSON
+//       console.log(userData);
+//       const userJson = userData.toJSON();
+//       // make an object that is just the usernames of the associations
+//       const hbsObj = {
+//         user: req.session.user,
+//         username: userJson
+//       }
+//       //pass that object to the frontend
+//       res.render("partials/friends", hbsObj);
+//     }).catch(err => {
+//       res.status(500).json(err)
+//     })
+//   } else {
+//     res.redirect(401, '/login')
+//   }
+// })
 
 // findOne user, findAll events for that user
 router.get("/friend/one/:friend_id", (req, res) => {
