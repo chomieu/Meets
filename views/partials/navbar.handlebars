@@ -1,29 +1,56 @@
 <script src="/assets/js/navScripts.js"></script>
 <nav>
-    <div class="nav-wrapper my-bc1">
+    <div class="nav-wrapper">
         <ul class="left hide-on-med-and-down">
             {{id}}
             <li><a href="/dashboard/" class="waves-effect waves-light btn dashboardBtn btn-w">Dashboard</a></li>
-            <li><a href="/allevents" class="waves-effect waves-light btn eventBtn btn-w">All Events</a></li>
-            <li><a href="/friends" class="waves-effect waves-light btn friendsBtn btn-w">Connections</a></li>
-            <li><a href="/settings" class="waves-effect waves-light btn settingsBtn btn-w">Settings</a></li>
+            <li><a href="/logout" class="btn-w">Logout</a></li>
+            {{!-- <li><a href="/friends" class="waves-effect waves-light btn friendsBtn btn-w">Connections</a></li> --}}
+            {{!-- <li><a href="/settings" class="waves-effect waves-light btn settingsBtn btn-w">Settings</a></li> --}}
         </ul>
         <a href="#" data-target="slide-out" class="sidenav-trigger hamIcon"><i class="material-icons">menu</i></a>
         <a href="!#" class="meets-font brand-logo right">mee+s</a>
     </div>
+    <div class="hide-on-med-and-down side_menu">
+        <ul class="my-dflex-col">
+            <section class="my-dflex-col">
+                <li class="side_menu_button"><a href="/allevents">All Events</a></li>
+                <li class="side_menu_button"><a href="/friends">Connections</a></li>
+                <li class="side_menu_button"><a href="/ai_chat">Ai Chat</a></li>
+                <li class="side_menu_button"><a href="/settings">Settings</a></li>
+            </section>
+            <section class="my-dflex-col">
+                <li class="side_menu_button"><a class="colorMode" href="#">Light</a></li>
+            </section>
+        </ul>
+    </div>
 </nav>
 
-<ul id="slide-out" class="sidenav my-dflex-col my-justify-between">
+<ul id="slide-out" class="sidenav my-dflex-col my-justify-between side_nav">
     <div class="top">
         <li>
             <div class="user-view">
-                <div class="background">
-                    <img src="/assets/img/userIcon.png">
-                </div>
                 <a href="#user"><img class="circle userIcon" src={{user.image}} alt="user Image"></a>
-                <a href="#name"><span class="name tc4">{{user.username}}</span></a>
+                <a href="#name"><span class="name">{{user.username}}</span></a>
             </div>
         </li>
+        {{!-- <li><a class="dashboardBtn" href="/dashboard"><i class="material-icons">dashboard</i><span
+                    class="my-tc-default">Dashboard</span></a></li>
+        <li><a class="eventBtn" href="/allevents"><i class="material-icons">event_available</i><span
+                    class="my-tc-default">All Events</span></a></li>
+        <li><a class="friendsBtn" href="/friends"><i class="material-icons">emoji_people</i><span
+                    class="my-tc-default">Friends</span></a></li>
+        <li><a class="aichatBtn" href="/ai_chat"><i class="material-icons">emoji_people</i><span
+                    class="my-tc-default">AI
+                    Chat</span></a></li>
+        <li>
+            <div class="divider"></div>
+        </li>
+        <li><a class="subheader">Your Info</a></li>
+        <li><a class="profileBtn" href="/profile"><i class="material-icons">emoji_people</i><span
+                    class="my-tc-default">Profile</span></a></li>
+        <li><a class="settingsBtn" href="/settings"><i class="material-icons">settings</i><span
+                    class="my-tc-default">Settings</span></a></li> --}}
         <li><a class="dashboardBtn" href="/dashboard"><i class="material-icons">dashboard</i>Dashboard</a></li>
         <li><a class="eventBtn" href="/allevents"><i class="material-icons">event_available</i>All Events</a></li>
         <li><a class="friendsBtn" href="/friends"><i class="material-icons">emoji_people</i>Friends</a></li>

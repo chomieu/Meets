@@ -3,13 +3,18 @@
 
     <div class="row container my-dflex my-full-height">
         <div class="col s6">
+            {{#if userEvents}}
             {{#each userEvents}}
             <a href="/event/{{dataValues.id}}" class="eventBtn my-tc-black">
                 <div class="event-box my-bc2">
                     <div class="event-title">{{dataValues.name}}</div>
                 </div>
             </a>
-           {{/each}}
+            {{/each}}
+            {{else}}
+            <h3>Add an event</h3>
+            <a class="btn" href="/event/new">Add Event</a>
+            {{/if}}
         </div>
         <div class="col s6 my-dflex-col my-justify-between align-center">
             <div class="row">
