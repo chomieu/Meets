@@ -13,6 +13,7 @@
     --accent-3: #ffe57f;
 
     --text: black;
+    --text-opposite: white;
 }
 
 * {
@@ -66,22 +67,25 @@ nav {
 .side_menu_button {
     margin: 1em;
     position: absolute;
-    color: var(--text);
+    color: var(--text-opposite);
     background: var(--accent-1);
     left: -10em;
-    border: 1px solid var(--text);
+    /* border: 1px solid var(--text-opposite); */
     font-weight: bold;
+    border-radius: 10px;
 }
 
 .side_menu_button:hover {
     position: relative;
     animation: slideOut 0.25s linear forwards;
     background: var(--accent-2);
+    box-shadow: 2px 2px 4px var(--text);
 }
 
 .side_menu_button a {
+    color: var(--text-opposite);
     text-align: left;
-    text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000;
+    text-shadow: -1px -1px 0 var(--text), 1px -1px 0 var(--text), -1px 1px 0 var(--text), 1px 1px 0 var(--text);
 }
 
 @media(min-width:1000px) {
@@ -98,7 +102,7 @@ nav {
         left: -5em;
     }
     100% {
-        left: -1em;
+        left: -1.5em;
     }
 }
 
