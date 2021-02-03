@@ -2,17 +2,18 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
+    /* outline: 1px dotted green; */
 }
 
-/* :root {
-    --main-1: #1a535c;
-    --main-2: white;
-    --accent-1: #4ecdc4;
-    --accent-2: #ff6b6b;
-    --accent-3: #ffe66d;
+:root {
+    --main-1: #e65100;
+    --main-2: #ffffff;
+    --accent-1: #ff8f00;
+    --accent-2: #ff4e4e;
+    --accent-3: #ffe57f;
 
     --text: black;
-} */
+}
 
 * {
     color: var(--text);
@@ -47,8 +48,59 @@ nav {
     color: var(--text);
 }
 
-side_menu {
-    background: rebeccapurple;
+.side_menu {
+    position: relative;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    /* width: 10em; */
+    height: 91vh;
+    z-index: 98 !important;
+
+}
+
+.side_menu li {
+    position: relative;
+    width: 10em;
+}
+
+.side_menu_button {
+    margin: 1em;
+    position: absolute;
+    color: var(--text);
+    background: var(--accent-1);
+    left: -10em;
+    border: 1px solid var(--text);
+    font-weight: bold;
+}
+
+.side_menu_button:hover {
+    position: relative;
+    animation: slideOut 0.25s linear forwards;
+    background: var(--accent-2);
+}
+
+.side_menu_button a {
+    text-align: left;
+    text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000;
+}
+
+@media(min-width:1000px) {
+    .drag-target {
+        display: none;
+    }
+}
+
+@keyframes slideOut {
+    0% {
+        left: -10em;
+    }
+    50% {
+        left: -5em;
+    }
+    100% {
+        left: -1em;
+    }
 }
 
 .col {

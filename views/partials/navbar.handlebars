@@ -4,18 +4,19 @@
         <ul class="left hide-on-med-and-down">
             {{id}}
             <li><a href="/dashboard/" class="waves-effect waves-light btn dashboardBtn btn-w">Dashboard</a></li>
-            <li><a href="/allevents" class="waves-effect waves-light btn eventBtn btn-w">All Events</a></li>
-            <li><a href="/friends" class="waves-effect waves-light btn friendsBtn btn-w">Connections</a></li>
-            <li><a href="/settings" class="waves-effect waves-light btn settingsBtn btn-w">Settings</a></li>
+            <li><a href="/logout" class="btn-w">Logout</a></li>
+            {{!-- <li><a href="/friends" class="waves-effect waves-light btn friendsBtn btn-w">Connections</a></li> --}}
+            {{!-- <li><a href="/settings" class="waves-effect waves-light btn settingsBtn btn-w">Settings</a></li> --}}
         </ul>
         <a href="#" data-target="slide-out" class="sidenav-trigger hamIcon"><i class="material-icons">menu</i></a>
         <a href="!#" class="meets-font brand-logo right">mee+s</a>
     </div>
     <div class="hide-on-med-and-down side_menu">
-        <ul>
-            <li>Dashboard</li>
-            <li>events</li>
-            <li>friends</li>
+        <ul class="my-dflex-col">
+            <li class="side_menu_button"><a href="/allevents">All Events</a></li>
+            <li class="side_menu_button"><a href="/friends">Connections</a></li>
+            <li class="side_menu_button"><a href="/ai_chat">Ai</a></li>
+            <li class="side_menu_button"><a class="colorMode" href="#">Light</a></li>
         </ul>
     </div>
 </nav>

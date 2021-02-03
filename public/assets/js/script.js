@@ -4,9 +4,12 @@ $(document).ready(function () {
     setColors(color);
 
     $(".colorMode").on("click", (e) => {
+        console.log("color mode change");
         color = switchColor(color);
         setColors(color);
     });
+
+
 })
 
 function getColor() {
@@ -43,11 +46,11 @@ function setColors(color) {
     } else {
         // LIGHT MODE
         $(".colorMode").text("Dark Mode");
-        r.style.setProperty("--main-1", "#1a535c");
-        r.style.setProperty("--main-2", "white");
-        r.style.setProperty("--accent-1", "#4ecdc4");
-        r.style.setProperty("--accent-2", "#ff6b6b");
-        r.style.setProperty("--accent-3", "#ffe66d");
+        r.style.setProperty("--main-1", "#e65100");
+        r.style.setProperty("--main-2", "#ffffff");
+        r.style.setProperty("--accent-1", "#ff8f00");
+        r.style.setProperty("--accent-2", "#ff4e4e");
+        r.style.setProperty("--accent-3", "#ffe57f");
         r.style.setProperty("--text", "black");
     }
 }
