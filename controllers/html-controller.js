@@ -22,7 +22,7 @@ router.get("/login", (req, res) => {
 })
 
 // list of the upcoming events for user
-router.get("/allEvents", function (req, res) {
+router.get("/upcomingEvents", function (req, res) {
   if (req.session.user) {
     db.Event.findAll({
       where: {
