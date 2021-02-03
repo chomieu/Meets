@@ -24,12 +24,15 @@ router.get("/allEvents", function (req, res) {
   if (req.session.user) {
     db.Event.findAll({
       where: {
-        id: req.session.user.id
+        UserId: req.session.user.id
       },
       order: [
         ['dateTime', "DESC"]
       ]
     }).then(function (dbEvent) {
+      console.log("*************************");
+      console.log(dbEvent);
+      console.log("*************************");
       const hbsObj = {
         user: req.session.user,
         eventData: dbEvent
@@ -65,7 +68,7 @@ router.get("/dashboard", (req, res) => {
     }).then(userData => {
       userData.getAssociate(
         {
-          attributes: ['username'],
+          // attributes: ['username'], <--------------- NOTE TO BACKEND: commented out because we need associate's image not just their username
           limit: 2, // values can be changed
           include: [{
             model: db.Event,
@@ -155,7 +158,7 @@ router.get("/sameTime/", function (req, res) {
       model: db.User,
       include: [{
         model: db.User,
-      as: 'Associate',
+        as: 'Associate',
         // include: [db.Event]
       }],
     }],
@@ -192,7 +195,7 @@ router.get("/eventCategory/", function (req, res) {
     console.log(err.message);
     res.status(500).send(err.message)
   })
-  
+
 })
 
 // Find all events by whether or not it's indoor
@@ -214,7 +217,7 @@ router.get("/eventIndoor/", function (req, res) {
     console.log(err.message);
     res.status(500).send(err.message)
   })
-  
+
 })
 
 // Find all events by whether or not it's public
@@ -237,7 +240,7 @@ router.get("/eventPublic/", function (req, res) {
     console.log(err.message);
     res.status(500).send(err.message)
   })
-  
+
 })
 
 // Find all events by location
@@ -266,22 +269,33 @@ router.get("/eventLocation/", function (req, res) {
 
 // query for any associate that has an event at the same time
 // TODO: Query for all user's events
-router.get("/events", (req, res) => {
-  console.log(req.session.user);
+// router.get("/events", (req, res) => {
+//   console.log(req.session.user);
+//   db.Event.findAll({
+//     where: {
+//       UserId: req.session.user.id
+//     }
+//   }).then(resp => {
+//     console.log({ events: resp });
+//     res.render("partials/events", { events: resp });
+//   })
+// })
+
+
+// new event route <-------------- NOTE TO BACKEND: needed hbsObj to render username and image in navbar
+router.get("/event/new", (req, res) => {
   db.Event.findAll({
     where: {
       UserId: req.session.user.id
     }
-  }).then(resp => {
-    console.log({ events: resp });
-    res.render("partials/events", { events: resp });
+  }).then(response => {
+    const hbsObj = {
+      user: req.session.user,
+      isNewRecord: true
+    }
+    console.log(hbsObj)
+    res.render("partials/oneEvent", hbsObj);
   })
-})
-
-
-// TODO: new event route
-router.get("/event/new", (req, res) => {
-  res.render("partials/oneEvent", { isNewRecord: true });
 })
 
 
@@ -322,10 +336,9 @@ router.get("/friends", (req, res) => {
       // make an object that is just the usernames of the associations
       const hbsObj = {
         user: req.session.user,
-        username: userJson.username
+        username: userJson
       }
       //pass that object to the frontend
-      // res.json(userData)
       res.render("partials/friends", hbsObj);
     }).catch(err => {
       res.status(500).json(err)
@@ -345,7 +358,23 @@ router.get("/friend/one", (req, res) => {
 // maybe a POST request to the AI handler with a GET request to the database nested inside?
 //TODO:
 router.get("/ai_chat", (req, res) => {
-  res.render("partials/aiChat");
+  if (req.session.user) {
+    db.Event.findOne({
+      where: {
+        id: req.session.user.id
+      }
+    }).then(function (dbEvent) {
+      const hbsObj = {
+        user: req.session.user,
+      }
+      res.render("partials/aiChat", hbsObj);
+    }).catch(err => {
+      console.log((err.message));
+      res.status(500).send(err.message);
+    });
+  } else {
+    res.redirect("/");
+  }
 })
 
 // TODO: Bonus if needed
