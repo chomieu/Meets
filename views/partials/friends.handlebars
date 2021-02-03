@@ -1,18 +1,27 @@
+<script src="/assets/js/connection.js"></script>
 <div class="wrapper">
     {{> navbar }}
     <h1>Friends</h1>
-    <div class="container">
-        <div class="friend-box-all">
+    <div class="row my-width-50">
+        <div class="col s12 my-width-full">
+            <ul class="tabs my-width-full">
+                <li class="tab col s6 friend-tab active">Your Connections</li>
+                <li class="tab col s6 people-tab">All People</li>
+            </ul>
+        </div>
+    </div>
+    <div class="container my-dflex-col">
+        <div class="friend-box-all box-container" id="friend-box">
             {{!-- From all nonfriends --}}
-            {{#each nonfriends}} 
+            {{#each nonfriends}}
             {{!-- Unless they're connected/associate --}}
-            {{#unless isConnected}} 
+            {{#unless isConnected}}
             {{!-- Their connect button will say "connect" --}}
             {{> connections connected=false}}
             {{/unless}}
             {{/each}}
         </div>
-        <div class="people-box-all">
+        <div class="people-box-all box-container" id="people-box">
             {{!-- From all users --}}
             {{#each friends}}
             {{!-- If they're connected/already associate --}}

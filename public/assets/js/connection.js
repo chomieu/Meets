@@ -1,4 +1,5 @@
 $('document').ready(function () {
+  // $('.tabs').tabs();
   // Initiates when connectBtn is clicked
   $(".connectBtn").on("click", function () {
     var id = $(this).data("id") // Grabs the other user's id
@@ -21,4 +22,20 @@ $('document').ready(function () {
       });
     }
   })
+
+  $('.friend-tab').on('click', function(){
+    console.log(this);
+    $(this).addClass("active")
+    $('.people-tab').removeClass("active")
+    $('#friend-box').css("display", "flex")
+    $('#people-box').css("display", "none")
+  })
+  
+  $('.people-tab').on('click', function(){
+    $(this).addClass("active")
+    $('.friend-tab').removeClass("active")
+    $('#people-box').css("display", "flex")
+    $('#friend-box').css("display", "none")
+  })
+
 })
