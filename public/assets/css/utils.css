@@ -1,4 +1,3 @@
-
 /* utils */
 /* flex */
 .my-dflex {
@@ -25,27 +24,27 @@
 }
 /* sizing */
 
-.my-width-full{
+.my-width-full {
     width: 100%;
 }
 
-.my-width-50{
+.my-width-50 {
     width: 50%;
 }
 
-.my-width-25{
+.my-width-25 {
     width: 25%;
 }
 
-.my-height-full{
+.my-height-full {
     height: 100%;
 }
 
-.my-height-50{
+.my-height-50 {
     height: 50%;
 }
 
-.my-height-25{
+.my-height-25 {
     height: 25%;
 }
 
@@ -161,8 +160,8 @@
     margin: 0.my-75em 0;
 }
 .my-mtb-4 {
-    margin: 1em 0 ;
-} 
+    margin: 1em 0;
+}
 
 /* padding */
 
@@ -310,11 +309,12 @@
 .my-tc5 {
     color: var(--color-5);
 }
-.my-tc-white{
+.my-tc-white {
     color: white;
 }
-.my-tc-black{
+.my-tc-black {
     color: black;
 }
-
-
+.my-tc-default {
+    color: var(--text);
+}

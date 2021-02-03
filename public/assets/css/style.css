@@ -4,16 +4,23 @@
     box-sizing: border-box;
 }
 
-:root {
+/* :root {
     --main-1: #1a535c;
     --main-2: white;
     --accent-1: #4ecdc4;
     --accent-2: #ff6b6b;
     --accent-3: #ffe66d;
+
+    --text: black;
+} */
+
+* {
+    color: var(--text);
 }
 
 body {
     background: var(--main-2);
+    color: var(--text);
 }
 
 main {
@@ -29,8 +36,13 @@ nav {
     z-index: 1;
 }
 
-.sidenav {
+.side_nav {
     background: var(--main-2);
+    color: var(--text);
+}
+
+side_menu {
+    background: rebeccapurple;
 }
 
 .col {
@@ -96,7 +108,7 @@ nav {
 
 .activePage {
     background: var(--main-1);
-    color: var(--main-1);
+    color: var(--text);
 }
 
 .disable {
