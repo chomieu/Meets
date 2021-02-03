@@ -3,22 +3,22 @@
     <h1>Friends</h1>
     <div class="container">
         <div class="friend-box-all">
-            {{!-- From all users --}}
-            {{#each username.Associate}} 
+            {{!-- From all nonfriends --}}
+            {{#each nonfriends}} 
             {{!-- Unless they're connected/associate --}}
-            {{#unless connect}} 
+            {{#unless isConnected}} 
             {{!-- Their connect button will say "connect" --}}
-            {{> connections connect=true}}
+            {{> connections connected=false}}
             {{/unless}}
             {{/each}}
         </div>
         <div class="people-box-all">
             {{!-- From all users --}}
-            {{#each username.Associate}}
+            {{#each friends}}
             {{!-- If they're connected/already associate --}}
-            {{#if connected}}
+            {{#if isConnected}}
             {{!-- Their connect button will say "disconnect" --}}
-            {{> connections connect=false}}
+            {{> connections connected=true}}
             {{/if}}
             {{/each}}
         </div>
