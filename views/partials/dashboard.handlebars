@@ -1,0 +1,40 @@
+<div class="wrapper">
+    {{> navbar}}
+
+    <div class="row container my-dflex my-full-height">
+        <div class="col s6">
+            {{#if userEvents}}
+            {{#each userEvents}}
+            <a href="/event/{{dataValues.id}}" class="eventBtn my-tc-black">
+                <div class="event-box my-bc2">
+                    <div class="event-title">{{dataValues.name}}</div>
+                </div>
+            </a>
+            {{/each}}
+            {{else}}
+            <h3>Add an event</h3>
+            <a class="btn" href="/event/new">Add Event</a>
+            {{/if}}
+        </div>
+        <div class="col s6 my-dflex-col my-justify-between align-center">
+            <div class="row">
+                <div class="friends">
+                    {{#if friends}}
+                    {{#each friends}}
+                    <a href="/friend/{{dataValues.id}}" class="friendsBtn my-tc-black">
+                        <div class="friend-box my-dflex">
+                            <img class="userIcon" src="{{dataValues.image}}" alt="user image">
+                            <span class="font-scale">{{dataValues.username}}</span>
+                        </div>
+                    </a>
+                    {{/each}}
+                    {{/if}}
+                    {{#unless friends}}
+                    <h3>YOU HAVE NO FRIENDS</h3> <i class="material-icons">sentiment_very_dissatisfied</i>
+                    {{/unless}}
+                </div>
+            </div>
+        </div>
+        {{> aiIcon}}
+    </div>
+</div>

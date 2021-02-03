@@ -1,0 +1,21 @@
+<div class="wrapper">
+    {{> navbar }}
+    <h1>Settings</h1>
+    <div class="container my-dflex-col my-pt-4">
+        <form class="row my-dflex-col">
+            <img class="row" id="pfp" src="{{user.image}}">
+            <label for="img">Select New Profile Picture:</label>
+            <input type="file" id="img" name="img" accept="image/*">
+        </form>
+        <form class="updateForm row input-field my-align-center">
+            <label for="username">Username:</label>
+            <input type="text" id="setUsername" name="username" value="{{user.username}}">
+            <button class="btn btn-w waves-effect waves-light" id="updateBtn" type="submit">Update</button>
+        </form>
+        <div class="row my-dflex">
+            <button class="btn btn-w waves-effect waves-light colorMode my-mb-4">Light</button>
+            <a class="btn btn-w waves-effect waves-light my-ml-4" id="logOutBtn" href="/logout">Logout</a>
+        </div>
+    </div>
+    {{> aiIcon}}
+</div>
