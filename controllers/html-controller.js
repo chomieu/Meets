@@ -282,9 +282,20 @@ router.get("/eventLocation/", function (req, res) {
 // })
 
 
-// TODO: new event route
+// new event route <-------------- NOTE TO BACKEND: needed hbsObj to render username and image in navbar
 router.get("/event/new", (req, res) => {
-  res.render("partials/oneEvent", { isNewRecord: true });
+  db.Event.findAll({
+    where: {
+      UserId: req.session.user.id
+    }
+  }).then(response => {
+    const hbsObj = {
+      user: req.session.user,
+      isNewRecord: true
+    }
+    console.log(hbsObj)
+    res.render("partials/oneEvent", hbsObj);
+  })
 })
 
 
