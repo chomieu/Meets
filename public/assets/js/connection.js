@@ -21,4 +21,19 @@ $('document').ready(function () {
       });
     }
   })
+
+  $('.friend-tab').on('click', function(){
+    $(this).addClass("active")
+    $('.people-tab').removeClass("active")
+    $('#friend-box').css("display", "flex")
+    $('#people-box').css("display", "none")
+  })
+  
+  $('.people-tab').on('click', function(){
+    $(this).addClass("active")
+    $('.friend-tab').removeClass("active")
+    $('#people-box').css("display", "flex")
+    $('#friend-box').css("display", "none")
+  })
+
 })
