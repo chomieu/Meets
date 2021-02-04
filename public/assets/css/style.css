@@ -112,10 +112,15 @@ nav {
 }
 
 .userIcon {
-    width: 30%;
+    width: 40%;
     border: 1px solid black;
     border-radius: 100px;
     background: var(--main-1);
+}
+
+.people-box-all {
+  display: flex;
+  flex-flow: row wrap;
 }
 
 .friend-box {
@@ -244,6 +249,7 @@ nav {
 
 .tabs {
     background: var(--main-2);
+    cursor: pointer;
 }
 
 .icon-activate{
