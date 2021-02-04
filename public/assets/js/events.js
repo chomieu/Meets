@@ -1,7 +1,5 @@
 $(document).ready(function () {
     $('select').formSelect();
-    $('.textarea1').val();
-    M.textareaAutoResize($('.textarea1'));
 
     $('.newEvent').on("submit", (e) => {
         e.preventDefault()
@@ -10,7 +8,10 @@ $(document).ready(function () {
         let numOfPeople = $('#numOfPeople').val()
         let location = $('#location').val()
         let category = $('#category').val()
-        let description = $('.textarea1').val()
+        let description = $('#textarea1').val()
+        let isIndoor = $('#isIndoor').val()
+        let isPublic = $('#isPublic').val()
+
 
         let input = {
             dateTime: dateTime,
@@ -18,7 +19,9 @@ $(document).ready(function () {
             max_people: numOfPeople,
             location: location,
             category: category,
-            description: description
+            description: description,
+            isIndoor: isIndoor,
+            isPublic: isPublic
         }
 
         $.ajax("/api/events", {
