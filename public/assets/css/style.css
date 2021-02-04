@@ -63,7 +63,7 @@ nav {
 
 .side_menu li {
     position: relative;
-    width: 15em;
+    width: 10em;
 }
 
 .side_menu_button {
@@ -71,7 +71,7 @@ nav {
     position: absolute;
     color: var(--text-opposite);
     background: var(--accent-1);
-    left: -13em;
+    left: -8em;
     /* border: 1px solid var(--text-opposite); */
     font-weight: bold;
     border-radius: 10px;
