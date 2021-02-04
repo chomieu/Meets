@@ -4,13 +4,12 @@
     <div class="container my-dflex-col my-align-center">
         <h1>All Events</h1>
         <a href="event/new" class="btn my-bc4"><i class="material-icons my-mr-4">control_point</i>Add Event</a>
+        <input class="search" type="text">
         <div class="all-events-box my-full-width">
             {{#each eventData}}
             <div class="event-box my-full-width">
-                <div class="event-header">
-                    <span class="event-title">{{dataValues.name}}</span>
-                    <span class="event-date">{{dataValues.dateTime}}</span>
-                </div>
+                <span class="event-title event-header searchObj">{{dataValues.name}}</span>
+                <span class="event-date">{{dataValues.dateTime}}</span>
                 <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Autem aspernatur deleniti modi quo rem eos,
                     temporibus ipsam. In, error numquam aliquid iusto dicta vero nemo illum, autem ipsum perspiciatis
                     itaque!</p>

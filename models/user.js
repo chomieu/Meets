@@ -19,27 +19,27 @@ module.exports = function (sequelize, DataTypes) {
         len: [1]
       }
     },
-    // email: {
-    //   type: DataTypes.STRING,
-    //   allowNull: false,
-    //   validate: {
-    //     isEmail:true
-    //   }
-    // },
-    // first_name: {
-    //   type: DataTypes.STRING,
-    //   allowNull: false,
-    //   validate: {
-    //     len: [1]
-    //   }
-    // },
-    // last_name: {
-    //   type: DataTypes.STRING,
-    //   allowNull: false,
-    //   validate: {
-    //     len: [1]
-    //   }
-    // },
+    email: {
+      type: DataTypes.STRING,
+      allowNull: false,
+      validate: {
+        isEmail:true
+      }
+    },
+    first_name: {
+      type: DataTypes.STRING,
+      allowNull: false,
+      validate: {
+        len: [1]
+      }
+    },
+    last_name: {
+      type: DataTypes.STRING,
+      allowNull: false,
+      validate: {
+        len: [1]
+      }
+    },
     // will be null by default,
     // total number of plans in lifetime of account
     plans: {

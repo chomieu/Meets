@@ -11,6 +11,7 @@
     --accent-1: #ff8f00;
     --accent-2: #ff4e4e;
     --accent-3: #ffe57f;
+    --accent-4: #ffe0b2;
 
     --text: black;
     --text-opposite: white;
@@ -58,7 +59,6 @@ nav {
     align-items: center;
     width: 10em;
     height: 91vh;
-
 }
 
 .side_menu li {
@@ -137,17 +137,22 @@ nav {
     justify-content: space-between;
     align-items: center;
     padding: 0.5em 1em 0.5em 0.5em;
-    margin: 1em 0;
+    margin: 1em 1em;
     border-radius: 5px;
     background: var(--accent-2);
 }
+
+.box-container {
+    display: flex;
+}
+
 
 .event-box {
     margin: 1em 0;
     padding: 1em;
     border: 1px solid black;
     border-radius: 10px;
-    background: var(--accent-1);
+    background: var(--accent-4);
 }
 
 .event-header {
@@ -157,7 +162,7 @@ nav {
 }
 
 .event-title {
-    font-size: 2vw;
+    font-size: 2em;
     font-weight: bold;
     text-transform: uppercase;
 }
@@ -218,20 +223,24 @@ nav {
     flex-direction: row;
     align-items: flex-end;
     height: 80vh;
-    background: var(--accent-1);
+    background: var(--main-2);
     overflow: auto;
 }
 
 .btn {
     margin-top: 0.5em;
     margin-right: 0.25em;
-    background-color: var(--color-2) !important;
+    background-color: var(--accent-1) !important;
     font-family: "Titillium Web";
 }
 
 .btn-w {
     width: 120px;
     margin-right: 0 !important;
+}
+
+.active {
+    border-bottom: 2px solid var(--accent-1);
 }
 
 #logOutBtn {
@@ -327,4 +336,20 @@ a {
     left: 0;
     right: 0;
     margin: auto;
+}
+
+.btn-bc-1 {
+    background: var(--main-1) !important;
+}
+.btn-bc-2 {
+    background: var(--main-2) !important;
+}
+.btn-bc-3 {
+    background: var(--main-3) !important;
+}
+.btn-bc-4 {
+    background: var(--main-4) !important;
+}
+.btn-bc-5 {
+    background: var(--main-5) !important;
 }
