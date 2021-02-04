@@ -81,16 +81,11 @@ router.get('/friends', (req, res) => {
           nonfriendObj.isConnected = false;
           return nonfriendObj;
         });
-        
+
         const hbsObj = {
           user: req.session.user,
           friends: friendsArr,
           nonfriends: nonFriendsArr
-        }
-        if (friendsArr.length === 0) {
-          hbsObj.hasFriends = false;
-        } else {
-          hbsObj.hasFriends = true;
         }
         res.render('./partials/friends', hbsObj)
       })
@@ -374,7 +369,7 @@ router.get("/event/edit/:event_id", (req, res) => {
 
 
 // query for all user's events
-router.get("/allevents", (req, res) => {
+router.get("/events", (req, res) => {
   if (req.session.user) {
   console.log(req.session.user);
   db.Event.findAll({

@@ -22,7 +22,7 @@ $(document).ready(function () {
             data: input
         }).then(resp => {
             console.log(resp);
-            window.location = ("/allevents")
+            window.location = ("/upcomingEvents")
         })
     })
 
