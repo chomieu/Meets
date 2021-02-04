@@ -1,7 +1,9 @@
 <script src="/assets/js/connection.js"></script>
 <div class="wrapper">
     {{> navbar }}
-    <h1>Friends</h1>
+    <div class="container">
+
+        <h1>Connections</h1>
     <div class="row my-width-50">
         <div class="col s12 my-width-full">
             <ul class="tabs my-width-full">
@@ -10,7 +12,7 @@
             </ul>
         </div>
     </div>
-    <div class="container my-dflex-col">
+    <div class="my-dflex-col">
         <div class="friend-box-all box-container">
             <div class="container">
                 <input class="search" type="text" placeholder="Search Connections">
@@ -26,7 +28,7 @@
                 </div>
                 <div class="friend-box-all box-container" id="friend-box">
                     {{!-- From all users --}}
-                    {{#if hasfriends}}
+                    {{#if hasFriends}}
                     {{#each friends}}
                     {{!-- If they're connected/already associate --}}
                     {{#if isConnected}}
@@ -41,3 +43,4 @@
             </div>
             {{> aiIcon}}
         </div>
+    </div>
