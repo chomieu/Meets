@@ -8,7 +8,7 @@ Next generation social planning app with A.I. integration. Winner of the Best UX
 | Name | Email  | Github  | LinkedIn |
 | :--: | :----: | :-----: | :------: |
 | Chomie Usaneerungrueng | chomieu@gmail.com | [![Github](./Assets/images/github.png)](https://github.com/chomieu) | [![LinkedIn](./Assets/images/linkedin.png)](https://www.linkedin.com/in/chomieu/) |
-| Your Name Here | @mail.com | [![Github](./Assets/images/github.png)](https://github.com/) | [![LinkedIn](./Assets/images/linkedin.png)](https://www.linkedin.com/in/) |
+| Tyler Thibault | tyler.thibault@protonmail.com | [![Github](./Assets/images/github.png)](https://github.com/Tbone8098) | [![LinkedIn](./Assets/images/linkedin.png)](https://www.linkedin.com/in/tyler-thibault-a4404178/) |
 | Your Name Here | @mail.com | [![Github](./Assets/images/github.png)](https://github.com/) | [![LinkedIn](./Assets/images/linkedin.png)](https://www.linkedin.com/in/) |
 | Your Name Here | @mail.com | [![Github](./Assets/images/github.png)](https://github.com/) | [![LinkedIn](./Assets/images/linkedin.png)](https://www.linkedin.com/in/) |
 <br>
