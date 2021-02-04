@@ -374,7 +374,7 @@ router.get("/event/edit/:event_id", (req, res) => {
 
 
 // query for all user's events
-router.get("/events", (req, res) => {
+router.get("/allevents", (req, res) => {
   if (req.session.user) {
   console.log(req.session.user);
   db.Event.findAll({
