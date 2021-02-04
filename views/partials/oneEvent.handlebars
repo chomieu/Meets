@@ -49,11 +49,11 @@
         <form>
             <div class="checkboxes my-dflex my-justify-around">
                 <label>
-                    <input type="checkbox" value="true" />
+                    <input type="checkbox" value="{{events.isIndoor}}" id="isPublic" />
                     <span>Public Event</span>
                 </label>
                 <label>
-                    <input type="checkbox" value="true" />
+                    <input type="checkbox" value="{{events.isPublic}}" id="isIndoor"/>
                     <span>Indoor</span>
                 </label>
             </div>
@@ -64,8 +64,9 @@
             <input type="number" name="max_people" id="numOfPeople" placeholder="Max number of People" value="{{events.max_people}}" />
             <input type="text" name="location" id="location" placeholder="location" value="{{events.location}}" />
             <input type="text" name="category" id="category" placeholder="Pick a Category" value="{{events.category}}" />
+            {{!-- <input type="text" name="description" id="description" placeholder="description" value="{{events.description}}" /> --}}
             <div class="input-field my-m-0">
-                <textarea id="textarea1" class="materialize-textarea" data-length="120" placeholder="Description (Limit: 120 characters)"></textarea>
+                <textarea id="textarea2" class="materialize-textarea" data-length="120" placeholder="Description (Limit: 120 characters)"value="{{events.description}}"></textarea>
             </div>
             <div class="input-field">
                 <select id="category">
