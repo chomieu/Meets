@@ -3,6 +3,7 @@
 
     <div class="row container my-dflex my-full-height">
         <div class="col s6">
+            <h3 class="">Events</h3><hr>
             {{#if userEvents}}
             {{#each userEvents}}
             <a href="/events/{{dataValues.id}}" class="eventBtn my-tc-black">
@@ -12,12 +13,13 @@
             </a>
             {{/each}}
             {{else}}
-            <h3>Add an event</h3>
+            <h6>Add an event</h6>
             <a class="btn" href="/event/new">Add Event</a>
             {{/if}}
         </div>
         <div class="col s6 my-dflex-col my-justify-between align-center">
             <div class="row">
+                <h3 class="">Connections</h3><hr>
                 <div class="friends">
                     {{#if friends}}
                     {{#each friends}}
@@ -30,7 +32,7 @@
                     {{/each}}
                     {{/if}}
                     {{#unless friends}}
-                    <h3>You have no connections</h3>
+                    <h6>You have no connections</h6>
                     <section>
                         <a class="btn" href="/friends">find connection</a>
                     </section>
