@@ -63,7 +63,7 @@ nav {
 
 .side_menu li {
     position: relative;
-    width: 15em;
+    width: 10em;
 }
 
 .side_menu_button {
@@ -71,7 +71,7 @@ nav {
     position: absolute;
     color: var(--text-opposite);
     background: var(--accent-1);
-    left: -13em;
+    left: -8em;
     /* border: 1px solid var(--text-opposite); */
     font-weight: bold;
     border-radius: 10px;
@@ -140,6 +140,7 @@ nav {
 
 .box-container {
     display: flex;
+    flex-flow: row wrap;
 }
 
 
@@ -187,19 +188,19 @@ nav {
     width: 25%;
     bottom: 0;
     right: 0;
-    z-index: 2;
-    position: absolute;
+    z-index: 7;
+    position: fixed;
+}
+
+.ai-icon {
+    width: 90%;
+    height: auto;
 }
 
 .dayNightLandingPage {
     position: absolute;
     bottom: 10px;
     right: 10px;
-}
-
-.ai-icon {
-    width: 90%;
-    height: auto;
 }
 
 .chatbox {
