@@ -5,6 +5,11 @@ $(document).ready(function () {
 
     let page = localStorage['currentPage']
     $(`.${page}`).addClass("activePage")
+    console.log(page);
+    let pageEl = $(`.${page}`)[0]
+    console.log(pageEl);
+    let pageElLastChild = pageEl.lastChild;
+    $(pageElLastChild).addClass("icon-activate")
 
     $('.dashboardBtn').on("click", function () {
         localStorage['currentPage'] = "dashboardBtn"
@@ -21,7 +26,7 @@ $(document).ready(function () {
     $('.settingsBtn').click(function () {
         localStorage['currentPage'] = "settingsBtn"
     })
-    $('.aichatBtn').click(function () {
+    $('.aiChatBtn').click(function () {
         localStorage['currentPage'] = "aiChatBtn"
     })
 })
