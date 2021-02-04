@@ -12,7 +12,7 @@ $('document').ready(function () {
       }).then(() => {
         location.reload();
       });
-    } else { // Otherwise make a PUTrequest
+    } else { // Otherwise make a PUT request
       $.ajax("/connect", {
         type: "PUT",
         data: { associateId: id }

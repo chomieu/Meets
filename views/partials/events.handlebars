@@ -2,20 +2,20 @@
 <div class="wrapper">
     {{> navbar }}
     <div class="container my-dflex-col my-align-center">
-        <h1>Upcoming Events</h1>
-        <a href="event/new" class="btn my-bc4"><i class="material-icons my-mr-4">control_point</i>Add Event</a>
-        <input class="search" type="text">
-        <div class="all-events-box my-full-width">
+        <h2 class="center">Upcoming Events</h2>
+        <a href="event/new" class="btn my-bc4 my-dflex"><i class="material-icons my-mr-4 white-text">control_point</i>Add Event</a>
+        <input class="search" type="text" placeholder="Search Upcoming Events">
+        <div class="all-events-box my-width-full">
             {{#each eventData}}
-            <div class="event-box my-full-width">
+            <div class="event-box my-width-full">
                 <span class="event-title event-header searchObj">{{dataValues.name}}</span>
                 <span class="event-date">{{dataValues.dateTime}}</span>
-                <p>{{dataValues.description}}</p>
+                <p class="word-wrapper">{{dataValues.description}}</p>
                 <div class="btns my-mt-4">
                     <a class="btn" href="/events/{{dataValues.id}}"> Edit </a>
                     <a class="btn deleteEvent" data-id="{{dataValues.id}}" data-userId="{{dataValues.UserId}}"> Delete
                     </a>
-                    <a class="btn" href=""> Share </a>
+                    {{!-- <a class="btn" href=""> Share </a> --}}
                 </div>
             </div>
             {{/each}}

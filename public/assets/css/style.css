@@ -26,8 +26,6 @@ body {
     color: var(--text);
 }
 
-
-
 main {
     display: flex;
     flex-flow: column nowrap;
@@ -118,8 +116,16 @@ nav {
     background: var(--main-1);
 }
 
+.connectedUserIcon {
+    width: 25%;
+    margin-right: 1em;
+    border: 1px solid black;
+    border-radius: 100px;
+    background: var(--main-1);
+}
+
 .friend-box {
-    justify-content: space-between;
+    justify-content: start;
     align-items: center;
     padding: 0.5em 1em 0.5em 0.5em;
     margin: 1em 0;
@@ -135,7 +141,7 @@ nav {
     padding: 0.5em 1em 0.5em 0.5em;
     margin: 1em 1em;
     border-radius: 5px;
-    background: var(--accent-2);
+    background: var(--accent-4);
 }
 
 .box-container {
@@ -193,6 +199,7 @@ nav {
 }
 
 .ai-icon {
+    max-width: 300px;
     width: 90%;
     height: auto;
 }
@@ -313,8 +320,8 @@ p {
 }
 
 .font-scale {
-    font-size: clamp(20px, 4vw, 30px);
-    font-weight: bold;
+    font-size: 2.5vw;
+    font-weight: 500;
 }
 
 #pfp {
@@ -330,8 +337,13 @@ p {
 
 .tw-font,
 h1,
+h2,
 h3 {
     font-family: "Titillium Web";
+}
+
+.word-wrapper {
+    word-wrap: break-word;
 }
 
 .up-and-down {
@@ -349,17 +361,16 @@ h3 {
   background: #ffac40;
   padding: 5px;
   text-align: center;
-  font-weight: 900;
+  font-weight: 600;
+  font-family: "Titillium Web";
   color: #fff;
   position:absolute;
   height: 110px;
-  top: 50px;
   left: -100%;
   width: 100%;
   font-size: 22px;
-  border-radius: 0.25em;
+  border-radius: 0.5em;
 }
-  /* z-index: 10; */
 
 .speech-bubble1:before {
   content: "";
@@ -368,10 +379,10 @@ h3 {
   position: absolute;
   border-left: 10px solid #ffac40;
   border-right: 10px solid transparent;
-  border-top: 10px solid #ffac40;
-  border-bottom: 10px solid transparent;
+  border-top: 10px solid transparent;
+  border-bottom: 10px solid #ffac40;
   right: -20px;
-  top: 6px;
+  top: 30px;
 }
 
 .mascot-box {
@@ -420,20 +431,38 @@ h3 {
 }
 
 @media(max-width: 640px) {
-    .d-box {
-        width: 100%;
+    .speech-bubble {
+        display: none;
     }
 }
 
-@media(min-width: 640px) {
+@media(max-width: 800px) {
+    .d-box {
+        width: 100%;
+    }
+    h3 {
+        font-size: 4vw;
+    }
+}
+
+@media(min-width: 800px) {
     .d-box {
         width: 75%;
+    }
+    .tw-font, h3 {
+        font-size: 2em;
+    }
+    .font-scale {
+        font-size: 1.5em
     }
 }
 
 @media(min-width: 1280px) {
     .d-box {
         width: 50%;
+    }
+    .tw-font, h3 {
+        font-size: 3em;
     }
 }
 
