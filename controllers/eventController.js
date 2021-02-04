@@ -6,6 +6,90 @@ const user = require("../models/user");
 // Routes
 // =============================================================
 
+//bulk event create
+router.get('/seedevents', (req,res) => {
+  db.Event.findAll().then(allEvents => {
+    if (allEvents.length === 0) {
+      db.Event.bulkCreate([{
+        UserId: req.session.user.id,
+        name: "Build a Rocket",
+        max_people: 100,
+        isPublic: false,
+        location: 'Planet Earth',
+        category: 'Casual',
+        isIndoor: true,
+        dateTime: "3/1/21 12:00",
+        description: "We are building a rocket to fly to the moon!"
+      },
+      {
+        UserId: req.session.user.id,
+        name: "Dance Party on the Moon!",
+        max_people: 4,
+        isPublic: false,
+        location: 'Europa',
+        category: 'Casual',
+        isIndoor: false,
+        dateTime: "3/15/21 16:00",
+        description: "It is time to dance on the moon!"
+      },
+      {
+        UserId: req.session.user.id,
+        name: "Space burgers",
+        max_people: 4,
+        isPublic: false,
+        location: 'Saturn',
+        category: 'Food',
+        isIndoor: false,
+        dateTime: "3/15/21 17:00",
+        description: "We brought burgers with us to the moon"
+      },
+      {
+        UserId: req.session.user.id,
+        name: "Return to home",
+        max_people: 4,
+        isPublic: false,
+        location: 'Space',
+        category: 'Casual',
+        isIndoor: false,
+        dateTime: "3/17/21 06:00",
+        description: "Time to return to home"
+      },
+      {
+        UserId: req.session.user.id,
+        name: "Pet the cats and relax",
+        max_people: 20,
+        isPublic: true,
+        location: 'Neko Cat Cafe',
+        category: 'Casual',
+        isIndoor: true,
+        dateTime: "3/18/21 17:00",
+        description: "After a long day on the moon, its time to relax with some friends and pet a cat"
+      },
+      {
+        UserId: req.session.user.id,
+        name: "Sleep",
+        max_people: 1,
+        isPublic: false,
+        location: 'Bed',
+        category: 'Casual',
+        isIndoor: true,
+        dateTime: "3/18/21 21:00",
+        description: "Sleep it off"
+      }]).then(eventSeed => {
+        res.send('Seeds created')
+      }).catch(err => {
+        console.log(err);
+        res.json(err)
+      })
+    } else {
+      res.send('Already seeded')
+    }
+  }).catch(err => {
+    console.log(err);
+    res.json(err);
+  })
+})
+
 // GET route for getting all of the events and return them to user
 router.get("/", function (req, res) {
   db.Event.findAll({}).then(function (dbEvent) {
@@ -140,6 +224,8 @@ router.delete("/:id", function (req, res) {
   }
 
 })
+
+
 
 // Export routes for server.js to use.
 module.exports = router;
