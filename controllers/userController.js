@@ -132,17 +132,17 @@ router.put("/profile/update", (req, res) => {
         where: {
           id: req.session.user.id
         }
-      }).then(dbUser => {
+      }).then(userData => {
         req.session.user = {
-          id: userData.id,
-          username: userData.username,
-          first_name: userData.first_name,
-          last_name: userData.last_name,
-          status: userData.status,
-          image: userData.image
+          id: req.session.user.id,
+          username: req.body.username,
+          first_name: req.body.first_name,
+          last_name: req.body.last_name,
+          status: req.body.status,
+          image: req.body.image
         }
         console.log('req.session.user:', req.session.user)
-        res.json(dbUser)
+        res.json(userData)
       }).catch(err => {
         console.log(err.message);
         res.status(500).send(err.message);
