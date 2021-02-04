@@ -26,8 +26,6 @@ body {
     color: var(--text);
 }
 
-
-
 main {
     display: flex;
     flex-flow: column nowrap;
@@ -143,7 +141,7 @@ nav {
     padding: 0.5em 1em 0.5em 0.5em;
     margin: 1em 1em;
     border-radius: 5px;
-    background: var(--accent-2);
+    background: var(--accent-4);
 }
 
 .box-container {
@@ -200,6 +198,7 @@ nav {
 }
 
 .ai-icon {
+    max-width: 300px;
     width: 90%;
     height: auto;
 }
@@ -336,8 +335,13 @@ p {
 
 .tw-font,
 h1,
+h2,
 h3 {
     font-family: "Titillium Web";
+}
+
+.word-wrapper {
+    word-wrap: break-word;
 }
 
 .up-and-down {
