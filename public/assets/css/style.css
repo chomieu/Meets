@@ -106,10 +106,6 @@ nav {
     margin: 0 1em;
 }
 
-.container {
-    min-height: 90vh;
-}
-
 .content {
     padding: 10px;
     width: 80%;
