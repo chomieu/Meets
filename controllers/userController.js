@@ -3,6 +3,12 @@ const router = express.Router();
 const db = require('../models')
 const bcrypt = require('bcrypt')
 
+// BULK CREATE USERS ON PAGE LOAD? ON BUTTON CLICK?
+
+
+
+
+
 // GET route for retrieving all users from USER table
 router.get("/api/users", (req, res) => {
   db.User.findAll({
@@ -39,11 +45,67 @@ router.get("/api/users", (req, res) => {
   });
 });
 
+router.get('/userseeds', (req,res) => {
+  db.User.findAll().then(allUsers => {
+    if (allUsers.length === 0) {
+      db.User.bulkCreate([{
+        username: 'red5',
+        password: 'password',
+        email: 'red5@hotmail.com',
+        first_name: 'Red',
+        last_name: 'Smoulders'
+      },
+      {
+        username: 'bubbles',
+        password: 'password',
+        email: 'bubbles@yahoo.com',
+        first_name: 'Bubbles',
+        last_name: 'Utonium'
+      },
+      {
+        username: 'jimbo',
+        password: 'password',
+        email: 'jimbo@aol.com',
+        first_name: 'Jim',
+        last_name: 'Bobbert'
+      },
+      {
+        username: 'blossom',
+        password: 'password',
+        email: 'blossom@yahoo.com',
+        first_name: 'Blossom',
+        last_name: 'Utonium'
+      },
+      {
+        username: 'alf',
+        password: 'password',
+        email: 'alf@yahoo.com',
+        first_name: 'Gordon',
+        last_name: 'Shumway'
+      },
+      {
+        username: 'buttercup',
+        password: 'password',
+        email: 'buttercup@yahoo.com',
+        first_name: 'Buttercup',
+        last_name: 'Utonium'
+      }]).then(userSeed => {
+        res.send('Seeds created')
+      })
+    } else {
+      res.send('Already seeded')
+    }
+  }).catch(err => {
+    console.log(err);
+    res.json(err);
+  })
+})
+
 // allows user to signup for an account
 router.post("/signup", (req, res) => {
   db.User.create(req.body).then(data => {
     console.log(req.body);
-    res.json(data);
+      res.json(data);
   }).catch(err => {
     res.status(500).json(err)
   });
@@ -187,5 +249,6 @@ router.delete("/api/users/:id", (req, res) => {
     res.status(500).send(err.message);
   });
 });
+
 
 module.exports = router;

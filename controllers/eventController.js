@@ -6,6 +6,79 @@ const user = require("../models/user");
 // Routes
 // =============================================================
 
+//bulk event create
+router.get('/seedevents', (req,res) => {
+  db.Event.findAll().then(allEvents => {
+    // if (allEvents.length === 0) {
+    //   db.Event.bulkCreate([{
+    //     name: "Build a Rocket",
+    //     max_people: 100,
+    //     isPublic: false,
+    //     category: 'Casual',
+    //     isIndoor: true,
+    //     dateTime: "3/1/21 12:00",
+    //     description: "We are building a rocket to fly to the moon!"
+    //   },
+    //   {
+    //     name: "Dance Party on the Moon!",
+    //     max_people: 4,
+    //     isPublic: false,
+    //     category: 'Casual',
+    //     isIndoor: false,
+    //     dateTime: "3/15/21 16:00",
+    //     description: "It is time to dance on the moon!"
+    //   },
+    //   {
+    //     name: "Space burgers",
+    //     max_people: 4,
+    //     isPublic: false,
+    //     category: 'Food',
+    //     isIndoor: false,
+    //     dateTime: "3/15/21 17:00",
+    //     description: "We brought burgers with us to the moon"
+    //   },
+    //   {
+    //     name: "Return to home",
+    //     max_people: 4,
+    //     isPublic: false,
+    //     category: 'Casual',
+    //     isIndoor: false,
+    //     dateTime: "3/17/21 06:00",
+    //     description: "Time to return to home"
+    //   },
+    //   {
+    //     name: "Pet the cats and relax",
+    //     max_people: 20,
+    //     isPublic: true,
+    //     category: 'Casual',
+    //     isIndoor: true,
+    //     dateTime: "3/18/21 17:00",
+    //     description: "After a long day on the moon, its time to relax with some friends and pet a cat"
+    //   },
+    //   {
+    //     name: "Sleep",
+    //     max_people: 1,
+    //     isPublic: false,
+    //     category: 'Casual',
+    //     isIndoor: true,
+    //     dateTime: "3/18/21 21:00",
+    //     description: "Sleep it off"
+    //   }]).then(eventSeed => {
+    //     res.send('Seeds created')
+    //   }).catch(err => {
+    //     console.log(err);
+    //     res.json(err)
+    //   })
+    // } else {
+    //   res.send('Already seeded')
+    // }
+    res.json(allEvents)
+  }).catch(err => {
+    console.log(err);
+    res.json(err);
+  })
+})
+
 // GET route for getting all of the events and return them to user
 router.get("/", function (req, res) {
   db.Event.findAll({}).then(function (dbEvent) {
@@ -138,6 +211,8 @@ router.delete("/:id", function (req, res) {
   }
 
 })
+
+
 
 // Export routes for server.js to use.
 module.exports = router;
