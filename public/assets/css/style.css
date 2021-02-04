@@ -187,19 +187,19 @@ nav {
     width: 25%;
     bottom: 0;
     right: 0;
-    z-index: 2;
-    position: absolute;
+    z-index: 7;
+    position: fixed;
+}
+
+.ai-icon {
+    width: 90%;
+    height: auto;
 }
 
 .dayNightLandingPage {
     position: absolute;
     bottom: 10px;
     right: 10px;
-}
-
-.ai-icon {
-    width: 90%;
-    height: auto;
 }
 
 .chatbox {
