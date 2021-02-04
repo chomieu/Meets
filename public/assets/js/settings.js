@@ -32,6 +32,9 @@ $('document').ready(function () {
           type: "PUT",
           data: {
             username: $("#setUsername").val(),
+            first_name: $("#setFirstName").val(),
+            last_name: $("#setLastName").val(),
+            status: $("#setStatus").val(),
             image: response.data.link
           }
         }).then((res) => {
@@ -49,10 +52,13 @@ $('document').ready(function () {
       type: "PUT",
       data: {
         username: $("#setUsername").val(),
+        first_name: $("#setFirstName").val(),
+        last_name: $("#setLastName").val(),
+        status: $("#setStatus").val(),
         image: $("#pfp").attr("src")
       }
     }).then((res) => {
-      location.reload()
+      $(".green-text").text("Successfully Updated!")
     })
   });
 });

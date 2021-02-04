@@ -64,7 +64,7 @@ module.exports = function (sequelize, DataTypes) {
       validate: {
         len: [0, 30]
       },
-      defaultValue: 0
+      defaultValue: ""
     }
   });
 

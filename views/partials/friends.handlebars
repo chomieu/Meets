@@ -6,14 +6,14 @@
         <div class="col s12 my-width-full">
             <ul class="tabs my-width-full">
                 <li class="tab col s6 friend-tab active">Your Connections</li>
-                <li class="tab col s6 people-tab">All People</li>
+                <li class="tab col s6 people-tab">New Connections</li>
             </ul>
         </div>
     </div>
     <div class="container my-dflex-col">
         <div class="friend-box-all box-container">
             <div class="container">
-                <input class="search" type="text">
+                <input class="search" type="text" placeholder="Search Connections">
                 <div class="people-box-all" id="people-box" style="display: none;">
                     {{!-- From all nonfriends --}}
                     {{#each nonfriends}}
@@ -26,6 +26,7 @@
                 </div>
                 <div class="friend-box-all box-container" id="friend-box">
                     {{!-- From all users --}}
+                    {{#if hasfriends}}
                     {{#each friends}}
                     {{!-- If they're connected/already associate --}}
                     {{#if isConnected}}
@@ -33,6 +34,9 @@
                     {{> connections connected=true}}
                     {{/if}}
                     {{/each}}
+                    {{else}}
+                    <h3>You have no connections</h3>
+                    {{/if}}
                 </div>
             </div>
             {{> aiIcon}}
