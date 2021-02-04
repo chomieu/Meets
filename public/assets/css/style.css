@@ -118,8 +118,16 @@ nav {
     background: var(--main-1);
 }
 
+.connectedUserIcon {
+    width: 25%;
+    margin-right: 1em;
+    border: 1px solid black;
+    border-radius: 100px;
+    background: var(--main-1);
+}
+
 .friend-box {
-    justify-content: space-between;
+    justify-content: start;
     align-items: center;
     padding: 0.5em 1em 0.5em 0.5em;
     margin: 1em 0;
@@ -311,8 +319,8 @@ p {
 }
 
 .font-scale {
-    font-size: clamp(20px, 4vw, 30px);
-    font-weight: bold;
+    font-size: 2.5vw;
+    font-weight: 500;
 }
 
 #pfp {
@@ -330,6 +338,7 @@ p {
 h1,
 h3 {
     font-family: "Titillium Web";
+    font-size: 1.5em;
 }
 
 .up-and-down {
@@ -423,15 +432,24 @@ h3 {
     }
 }
 
-@media(min-width: 640px) {
+@media(min-width: 800px) {
     .d-box {
         width: 75%;
+    }
+    .tw-font, h3 {
+        font-size: 2em;
+    }
+    .font-scale {
+        font-size: 2em
     }
 }
 
 @media(min-width: 1280px) {
     .d-box {
         width: 50%;
+    }
+    .tw-font, h3 {
+        font-size: 3em;
     }
 }
 

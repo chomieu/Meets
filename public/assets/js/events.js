@@ -1,7 +1,7 @@
 $(document).ready(function () {
     $('select').formSelect();
-    // $('.textarea1').val();
-    // M.textareaAutoResize($('.textarea1'));
+    $('.textarea1').val();
+    M.textareaAutoResize($('.textarea1'));
 
     $('.newEvent').on("submit", (e) => {
         e.preventDefault()

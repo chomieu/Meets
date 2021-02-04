@@ -19,13 +19,15 @@
         </div>
         <div class="col s6 my-dflex-col my-justify-between align-center">
             <div class="row">
-                <h3 class="">Connections</h3><hr>
+                <h3 class="">Connections</h3>
+                <span></span>
+                <hr>
                 <div class="friends">
                     {{#if friends}}
                     {{#each friends}}
                     <a href="/friend/{{dataValues.id}}" class="friendsBtn my-tc-black">
                         <div class="friend-box my-dflex">
-                            <img class="userIcon" src="{{dataValues.image}}" alt="user image">
+                            <img class="connectedUserIcon" src="{{dataValues.image}}" alt="user image">
                             <span class="font-scale">{{dataValues.first_name}} {{dataValues.last_name}}</span>
                         </div>
                     </a>
