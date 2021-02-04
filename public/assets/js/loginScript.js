@@ -19,7 +19,7 @@ $(document).ready(function () {
             localStorage['currentPage'] = "dashboardBtn"
             window.location = ("/dashboard")
         }).catch((err) => {
-            $(".red-text").text(err)
+            $(".red-text").text("Login Failed!")
         })
 
     })
@@ -45,9 +45,9 @@ $(document).ready(function () {
         }).then((resp) => {
             sessionStorage['user'] = JSON.stringify(resp)
             localStorage['currentPage'] = "dashboardBtn"
-            window.location = ("/login") // daniel -- replace dashboard with login, signup does not automatically log you in
+            window.location = ("/login")
         }).catch((err) => {
-            $(".red-text").text(err)
+            $(".red-text").text("You did not enter a valid input.")
         })
     })
 })
