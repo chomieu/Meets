@@ -1,7 +1,7 @@
 $(document).ready(function () {
     $('select').formSelect();
-    $('#textarea1').val('');
-    M.textareaAutoResize($('#textarea1'));
+    // $('.textarea1').val();
+    // M.textareaAutoResize($('.textarea1'));
 
     $('.newEvent').on("submit", (e) => {
         e.preventDefault()
@@ -10,7 +10,7 @@ $(document).ready(function () {
         let numOfPeople = $('#numOfPeople').val()
         let location = $('#location').val()
         let category = $('#category').val()
-        let description = $('#textarea1').val()
+        let description = $('.textarea1').val()
 
         let input = {
             dateTime: dateTime,
