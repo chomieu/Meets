@@ -9,7 +9,7 @@ Next generation social planning app with A.I. integration. Winner of the Best UX
 | :--: | :----: | :-----: | :------: |
 | Chomie Usaneerungrueng | chomieu@gmail.com | [![Github](./Assets/images/github.png)](https://github.com/chomieu) | [![LinkedIn](./Assets/images/linkedin.png)](https://www.linkedin.com/in/chomieu/) |
 | Tyler Thibault | tyler.thibault@protonmail.com | [![Github](./Assets/images/github.png)](https://github.com/Tbone8098) | [![LinkedIn](./Assets/images/linkedin.png)](https://www.linkedin.com/in/tyler-thibault-a4404178/) |
-| Your Name Here | @mail.com | [![Github](./Assets/images/github.png)](https://github.com/) | [![LinkedIn](./Assets/images/linkedin.png)](https://www.linkedin.com/in/) |
+| Daniel Sasser | desasser79@gmail.com | [![Github](./Assets/images/github.png)](https://github.com/) | [![LinkedIn](./Assets/images/linkedin.png)](https://www.linkedin.com/in/) |
 | Your Name Here | @mail.com | [![Github](./Assets/images/github.png)](https://github.com/) | [![LinkedIn](./Assets/images/linkedin.png)](https://www.linkedin.com/in/) |
 <br>
 <br>
@@ -18,6 +18,9 @@ Next generation social planning app with A.I. integration. Winner of the Best UX
 
 * Responsive UI.
 * Customizable light and dark mode
+* Create new users and events
+* Allow for associations between users
+* Future - Allow users to invite associations to their events
 
 <br>
 <br>
