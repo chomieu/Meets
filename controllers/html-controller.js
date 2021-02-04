@@ -439,16 +439,17 @@ router.get("/friend/one/:friend_id", (req, res) => {
     // find a single user that is logged in
     db.User.findOne({
       where: {
-        id: req.session.user.id
+        id: req.params.friend_id
       },
-      include: [{
-        model: db.User,
-        as: 'Associate',
-        where: {
-          id: req.params.friend_id
-        },
-        include: [db.Event]
-      }]
+      include: [db.Event]
+      // include: [{
+      //   model: db.User,
+      //   as: 'Associate',
+      //   where: {
+      //     id: req.params.friend_id
+      //   },
+      //   include: [db.Event]
+      // }]
     }).then(friendEvents => {
       // take data that is an object with all of the users associations, turn it into JSON
       const userEventsJson = friendEvents.toJSON();
@@ -458,6 +459,7 @@ router.get("/friend/one/:friend_id", (req, res) => {
         username: userEventsJson
       }
       //pass that object to the frontend
+      console.log(hbsObj);
       res.render("partials/oneFriend", hbsObj);
     }).catch(err => {
       res.status(500).json(err)
