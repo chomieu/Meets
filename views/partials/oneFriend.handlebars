@@ -1,16 +1,38 @@
 <div class="wrapper">
     {{> navbar}}
-    <div class="container">
-        <h1>One Friend</h1>
-        <img class="userIcon" src="/assets/img/userIcon.png" alt="user image">
-        <p><strong>Name:</strong> Daniel</p>
-        <p>
-            <strong>Bio:</strong> Lorem ipsum dolor sit amet consectetur adipisicing elit. Vero excepturi adipisci
-            pariatur
-            provident illo
-            quisquam architecto repellat laborum corporis cupiditate nam quos est alias autem, accusantium similique
-            corrupti
-            voluptate veritatis?
-        </p>
+    <div class="container row my-dflex-col">
+        <h1>{{username.username}}</h1>
+        <div class="row my-dflex">
+            <div class="col s6 my-dflex-col">
+                <img class="userIcon" src="{{username.image}}" alt="user image">
+            </div>
+            <div class="col s6 my-dflex-col">
+                <button class="btn my-m-4">Connect with me</button>
+                <hr>
+                <div class="row my-m-4">
+                    <section class="my-pl-4">
+                        <h4>Details:</h4>
+                        <p><strong>Name:</strong> {{username.first_name}} {{username.last_name}}</p>
+                    </section>
+                </div>
+                <hr>
+                <div class="row my-dflex-col my-align-center">
+                    <h3>Upcoming Events</h3>
+                    {{#each username.Events}}
+                    <div class="event-box">
+                        <h4>{{name}}</h4>
+                        <h5>{{dateTime}}</h5>
+                        <strong>Location: </strong>{{location}} <br>
+                        <strong>Category: </strong>{{category}} <br>
+                        <strong>Max People:</strong>{{max_people}} <br>
+                    </div>
+                    {{/each}}
+
+                    {{#if username.events}}
+
+                    {{/if}}
+                </div>
+            </div>
+        </div>
     </div>
 </div>
