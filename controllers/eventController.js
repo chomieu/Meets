@@ -177,15 +177,17 @@ router.post("/", function (req, res) {
 })
 
 // PUT route to UPDATE events
-router.put("/", function (req, res) {
+router.put("/:id", function (req, res) {
   if (req.session.user) {
     db.Event.update(req.body,
       {
         where: {
-          id: req.body.id
+          id: req.params.id
         }
       }).then(function (dbEvent) {
+      console.log(dbEvent);
         res.json(dbEvent)
+
       }).catch(err => {
         console.log(err.message);
         res.status(500).send(err.message)

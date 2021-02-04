@@ -6,7 +6,7 @@
 
         <h1>New Event</h1>
         <form class="newEvent">
-            <div class="checkboxes my-dflex my-justify-around">
+            {{!-- <div class="checkboxes my-dflex my-justify-around">
                 <label>
                     <input type="checkbox" value="true" />
                     <span>Public Event</span>
@@ -15,14 +15,15 @@
                     <input type="checkbox" value="true" />
                     <span>Indoor</span>
                 </label>
-            </div>
+            </div> --}}
             <input type="datetime-local" name="dateTime" id="dateTime" size="2">
             <input type="text" name="name" id="name" placeholder="Name" />
             <input type="number" name="max_people" id="numOfPeople" placeholder="Max number of People" />
             <input type="text" name="location" id="location" placeholder="location" />
-            <div class="input-field my-m-0">
+            <input type="text" name="description" id="description" placeholder="Description (Limit: 120 characters)" value="{{events.description}}" />
+            {{!-- <div class="input-field my-m-0">
                 <textarea class="materialize-textarea textarea1" data-length="120" placeholder="Description (Limit: 120 characters)"></textarea>
-            </div>
+            </div> --}}
             <div class="input-field my-m-0">
                 <select id="category">
                     <option value="Casual" selected disabled>Pick a Category</option>
@@ -46,8 +47,8 @@
 
         {{else}}
         <h1>{{events.name}}</h1>
-        <form>
-            <div class="checkboxes my-dflex my-justify-around">
+        <form class="editForm"  data-id="{{events.id}}" >
+            {{!-- <div class="checkboxes my-dflex my-justify-around">
                 <label>
                     <input type="checkbox" value="{{events.isIndoor}}" id="isPublic" />
                     <span>Public Event</span>
@@ -56,9 +57,9 @@
                     <input type="checkbox" value="{{events.isPublic}}" id="isIndoor"/>
                     <span>Indoor</span>
                 </label>
-            </div>
-            <input type="checkbox" value="{{events.isIndoor}}" />
-            <input type="checkbox" value="{{events.isPublic}}" />
+            </div> --}}
+            {{!-- <input type="checkbox" value="{{events.isIndoor}}" />
+            <input type="checkbox" value="{{events.isPublic}}" /> --}}
             <input type="datetime-local" name="dateTime" id="dateTime" value="{{events.dateTime}}">
             <input type="text" name="name" id="name" placeholder="Name" value="{{events.name}}" />
             <input type="number" name="max_people" id="numOfPeople" placeholder="Max number of People" value="{{events.max_people}}" />
