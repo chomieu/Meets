@@ -6,10 +6,6 @@
 // =============================================================
 const express = require("express");
 const session = require("express-session")
-var mysql = require('mysql');
-var connection = mysql.createConnection(process.env.JAWSDB_URL);
-
-connection.connect();
 
 // Sets up the Express App
 // =============================================================
