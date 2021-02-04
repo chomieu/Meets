@@ -57,6 +57,14 @@ module.exports = function (sequelize, DataTypes) {
       type: DataTypes.STRING,
       allowNull: true,
       defaultValue: 'https://i.imgur.com/0I3sDie.png'
+    },
+    status: {
+      type: DataTypes.STRING,
+      allowNull: true,
+      validate: {
+        len: [0, 30]
+      },
+      defaultValue: ""
     }
   });
 
