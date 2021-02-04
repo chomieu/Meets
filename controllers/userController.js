@@ -64,7 +64,10 @@ router.post("/login", (req, res) => {
         req.session.user = {
           id: userData.id,
           username: userData.username,
-          image: userData.image // Added to include image on the navbar on all pages
+          first_name: userData.first_name,
+          last_name: userData.last_name,
+          status: userData.status,
+          image: userData.image
         }
         res.json(userData)
       } else {
@@ -131,9 +134,12 @@ router.put("/profile/update", (req, res) => {
         }
       }).then(dbUser => {
         req.session.user = {
-          id: req.session.user.id,
-          username: req.body.username,
-          image: req.body.image
+          id: userData.id,
+          username: userData.username,
+          first_name: userData.first_name,
+          last_name: userData.last_name,
+          status: userData.status,
+          image: userData.image
         }
         console.log('req.session.user:', req.session.user)
         res.json(dbUser)
