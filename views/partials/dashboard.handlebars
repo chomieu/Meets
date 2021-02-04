@@ -8,7 +8,7 @@
             {{#each userEvents}}
             <a href="/events/{{dataValues.id}}" class="eventBtn my-tc-black">
                 <div class="event-box my-bc2">
-                    <div class="event-title">{{dataValues.name}}</div>
+                    <div class="event-title font-scale">{{dataValues.name}}</div>
                 </div>
             </a>
             {{/each}}
@@ -19,7 +19,7 @@
         </div>
         <div class="col s6 my-dflex-col my-justify-between align-center">
             <div class="row">
-                <h3 class="">Connections</h3>
+                <h3 class="">Connections {{friends.length}}</h3>
                 <span></span>
                 <hr>
                 <div class="friends">

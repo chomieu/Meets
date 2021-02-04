@@ -114,6 +114,11 @@ router.get("/dashboard", (req, res) => {
       include: [{
         model: db.Event,
         attributes: ['UserId', 'id', 'name'],
+        where: {
+          dateTime: {
+            [Op.gte]: new Date()
+          }
+        },
         limit: 10
       }]
     }).then(userData => {
