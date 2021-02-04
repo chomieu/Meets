@@ -1,20 +1,24 @@
 $(document).ready(function () {
     $('select').formSelect();
+    $('#textarea1').val('');
+    M.textareaAutoResize($('#textarea1'));
 
     $('.newEvent').on("submit", (e) => {
         e.preventDefault()
         let dateTime = $('#dateTime').val()
-        let name = $('#name').val();
-        let numOfPeople = $('#numOfPeople').val();
-        let location = $('#location').val();
-        let category = $('#category').val();
+        let name = $('#name').val()
+        let numOfPeople = $('#numOfPeople').val()
+        let location = $('#location').val()
+        let category = $('#category').val()
+        let description = $('#textarea1').val()
 
         let input = {
             dateTime: dateTime,
             name: name,
             max_people: numOfPeople,
             location: location,
-            category: category
+            category: category,
+            description: description
         }
 
         $.ajax("/api/events", {
@@ -22,7 +26,7 @@ $(document).ready(function () {
             data: input
         }).then(resp => {
             console.log(resp);
-            window.location = ("/upcomingevents")
+            window.location = ("/upcomingEvents")
         })
     })
 

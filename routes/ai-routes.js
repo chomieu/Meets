@@ -17,7 +17,7 @@ router.post('/api/input', (request, response) => {
   const fs = require('fs'); // for writing audio output
   const util = require('util');
 
-  async function detectIntent(projectId, sessionId, query, contexts, languageCode) {
+  async function detectIntent(projectId, sessionId, query, contexts, languageCode, first) {
     // The path to identify the agent that owns the created intent.
     const sessionPath = sessionClient.projectAgentSessionPath(projectId, sessionId);
 
@@ -32,7 +32,7 @@ router.post('/api/input', (request, response) => {
       },
     };
 
-    if (projectId === "echo-fmhq") {
+    if (!first) {
       request.outputAudioConfig = { audioEncoding: 'OUTPUT_AUDIO_ENCODING_LINEAR_16', }
     }
 
@@ -41,6 +41,11 @@ router.post('/api/input', (request, response) => {
     }
 
     const responses = await sessionClient.detectIntent(request)
+    
+    if (!first) {
+      responses[0].queryResult.intent.displayName = "Echo"
+    }
+
     return responses[0];
   }
 
@@ -66,7 +71,7 @@ router.post('/api/input', (request, response) => {
       let echo
       dbUser === null ? echo = `${aiRes.queryResult.fulfillmentText} nothing planned.` :
         echo = `${aiRes.queryResult.fulfillmentText} ${dbUser.Events[0].dataValues.name} on ${dbUser.Events[0].dataValues.dateTime}`
-      executeQueries("echo-fmhq", sessionId, [echo], languageCode);
+      executeQueries(projectId, sessionId, [`Echoing ${echo} EndOutput`], languageCode, false);
     })
   }
 
@@ -90,7 +95,7 @@ router.post('/api/input', (request, response) => {
       let echo
       dbUser === null ? echo = `${aiRes.queryResult.fulfillmentText} seems to be available. ${aiRes.queryResult.fulfillmentText} has nothing planned on their schedule for the past hour.` :
         echo = `${aiRes.queryResult.fulfillmentText} is currently unavailable. ${aiRes.queryResult.fulfillmentText} has ${dbUser.Events[0].dataValues.name} planned for ${dbUser.Events[0].dataValues.dateTime}`
-      executeQueries("echo-fmhq", sessionId, [echo], languageCode);
+      executeQueries(projectId, sessionId, [`Echoing ${echo} EndOutput`], languageCode, false);
     })
   }
 
@@ -115,25 +120,25 @@ router.post('/api/input', (request, response) => {
       let echo
       dbUser === null ? echo = `${aiRes.queryResult.fulfillmentText} no future events at this moment.` :
         echo = `${aiRes.queryResult.fulfillmentText} an event named ${dbUser.Events[0].dataValues.name} planned for ${dbUser.Events[0].dataValues.dateTime}`
-      executeQueries("echo-fmhq", sessionId, [echo], languageCode);
+      executeQueries(projectId, sessionId, [`Echoing ${echo} EndOutput`], languageCode, false);
     })
   }
 
-  async function executeQueries(projectId, sessionId, queries, languageCode) {
+  async function executeQueries(projectId, sessionId, queries, languageCode, first) {
     const writePromise = util.promisify(fs.writeFile)
     // Keeping the context across queries let's us simulate an ongoing conversation with the bot
     let context, aiRes, echo, aiName = 'Meets A.I'
     for (const query of queries) {
       try {
-        aiRes = await detectIntent(projectId, sessionId, query, context, languageCode);
+        aiRes = await detectIntent(projectId, sessionId, query, context, languageCode, first);
         context = aiRes.queryResult.outputContexts;
-
+        console.log(aiRes.queryResult.intent.displayName)
         switch (aiRes.queryResult.intent.displayName) {
           case "Echo":
             var random = Date.now()
             var filepath = path.join(__dirname + `/../public/assets/js/ai-audio-${random}.wav`)
             await writePromise(filepath, aiRes.outputAudio, 'binary');
-            response.json({text: aiRes.queryResult.fulfillmentText, random: random})
+            response.json({ text: aiRes.queryResult.fulfillmentText, random: random })
             return
           case "AgentNameGet":
             if (aiName) {
@@ -159,13 +164,13 @@ router.post('/api/input', (request, response) => {
           default: echo = aiRes.queryResult.fulfillmentText
         }
         // Use the context from this response for next queries
-        executeQueries("echo-fmhq", sessionId, [echo], languageCode);
+        executeQueries(projectId, sessionId, [`Echoing ${echo} EndOutput`], languageCode, false);
       } catch (error) {
         console.log(error);
       }
     }
   }
-  executeQueries(projectId, sessionId, queries, languageCode);
+  executeQueries(projectId, sessionId, queries, languageCode, true);
 })
 
 module.exports = router

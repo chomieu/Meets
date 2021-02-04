@@ -5,7 +5,7 @@
         <div class="col s6">
             {{#if userEvents}}
             {{#each userEvents}}
-            <a href="/event/{{dataValues.id}}" class="eventBtn my-tc-black">
+            <a href="/events/{{dataValues.id}}" class="eventBtn my-tc-black">
                 <div class="event-box my-bc2">
                     <div class="event-title">{{dataValues.name}}</div>
                 </div>
@@ -30,9 +30,9 @@
                     {{/each}}
                     {{/if}}
                     {{#unless friends}}
-                    <h3>YOU HAVE NO FRIENDS</h3> <i class="material-icons">sentiment_very_dissatisfied</i>
+                    <h3>You have no connections</h3>
                     <section>
-                    <a class="btn" href="/friends">find a friend here</a>
+                        <a class="btn" href="/friends">find connection</a>
                     </section>
                     {{/unless}}
                 </div>
