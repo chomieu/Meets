@@ -327,7 +327,8 @@ p {
 }
 
 .tw-font,
-h1 {
+h1,
+h3 {
     font-family: "Titillium Web";
 }
 
@@ -463,9 +464,13 @@ h1 {
   100% {opacity:1}
 }
 
-input:focus {
+input:focus, textarea:focus {
     border-bottom: 1px solid var(--color-1) !important;
     box-shadow: 0 1px 0 0 var(--color-1) !important;
+}
+
+.dropdown-content li>span {
+    color: var(--main-1) !important;
 }
 
 a {
@@ -548,3 +553,4 @@ a {
 .btn-bc-5 {
     background: var(--main-5) !important;
 }
+
