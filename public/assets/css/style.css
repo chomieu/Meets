@@ -276,6 +276,63 @@ h1 {
     position: relative;
 }
 
+.speech-bubble {
+  width: 20%;
+  background: #ffac40;
+  padding: 5px;
+  text-align: center;
+  font-weight: 900;
+  color: #fff;
+  position:absolute;
+  height: 110px;
+  top: 50px;
+  left: -100%;
+  width: 100%;
+  font-size: 22px;
+  border-radius: 0.25em;
+}
+  /* z-index: 10; */
+
+.speech-bubble1:before {
+  content: "";
+  width: 0px;
+  height: 0px;
+  position: absolute;
+  border-left: 10px solid #ffac40;
+  border-right: 10px solid transparent;
+  border-top: 10px solid #ffac40;
+  border-bottom: 10px solid transparent;
+  right: -20px;
+  top: 6px;
+}
+
+.mascot-box {
+  position:relative;
+  width:100%;
+  border: 1px solid black;
+  justify-content: center;
+}
+
+.picture-wrapper {
+  display: flex;
+  position: relative;
+  flex-direction: column;
+  /* width: 30vw;
+  margin: 0 auto; */
+}
+
+.bubble-animate {
+  animation: fadeinout 8s linear forwards;
+  -webkit-animation: fadeinout 8s linear forwards;
+  -moz-animation: fadeinout 8s linear forwards;
+  -ms-animation: fadeinout 8s linear forwards;
+  -o-animation: fadeinout 8s linear forwards;
+}
+
+/* .picture-wrapper > img {
+  width: 200px;
+} */
+
 @keyframes MoveUpDown {
     0%, 100% {
         bottom: 0;
@@ -310,6 +367,35 @@ h1 {
     .d-box {
         width: 50%;
     }
+}
+
+@keyframes fadeinout {
+  0%, 100% {opacity:0;}
+  20% {opacity:1}
+}
+
+/* Firefox < 16 */
+@-moz-keyframes fadeinout {
+  0%, 100% {opacity:0;}
+  20% {opacity:1}
+}
+
+/* Safari, Chrome and Opera > 12.1 */
+@-webkit-keyframes fadeinout {
+  0%, 100% {opacity:0;}
+  20% {opacity:1}
+}
+
+/* Internet Explorer */
+@-ms-keyframes fadeinout {
+  0%, 100% {opacity:0;}
+  20% {opacity:1}
+}
+
+/* Opera < 12.1 */
+@-o-keyframes fadeinout {
+  0%, 100% {opacity:0;}
+  20% {opacity:1}
 }
 
 input:focus {
