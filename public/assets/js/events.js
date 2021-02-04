@@ -1,9 +1,5 @@
 $(document).ready(function () {
     $('select').formSelect();
-    $('#textarea1').val('');
-    M.textareaAutoResize($('#textarea1'));
-    $('#textarea2').val();
-    M.textareaAutoResize($('#textarea2'));
 
     $('.newEvent').on("submit", (e) => {
         e.preventDefault()
@@ -15,6 +11,7 @@ $(document).ready(function () {
         let description = $('#textarea1').val()
         let isIndoor = $('#isIndoor').val()
         let isPublic = $('#isPublic').val()
+
 
         let input = {
             dateTime: dateTime,

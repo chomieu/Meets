@@ -7,6 +7,7 @@ const sound = require("sound-play")
 const now = new Date()
 const Sequelize = require('sequelize');
 const Op = Sequelize.Op
+const options = {weekday: 'long', month: 'long', day: 'numeric', year: 'numeric', hour: 'numeric', minute: 'numeric', hour12: true}
 
 router.post('/api/input', (request, response) => {
   const projectId = 'meets-dnx9';
@@ -50,11 +51,14 @@ router.post('/api/input', (request, response) => {
   }
 
   // Find user's friend in the request and get their events
-  async function getPast(friend, aiRes) {
+  async function getPast(friend, reply) {
     // grab one from past/future/now depending on time
     db.User.findOne({
       where: {
-        username: friend
+        [Op.or]: [
+          { username: friend },
+          { first_name: friend }
+        ]
       },
       include: [
         {
@@ -69,17 +73,20 @@ router.post('/api/input', (request, response) => {
       order: [['Events', 'dateTime', 'ASC']]
     }).then(async (dbUser) => {
       let echo
-      dbUser === null ? echo = `${aiRes.queryResult.fulfillmentText} nothing planned.` :
-        echo = `${aiRes.queryResult.fulfillmentText} ${dbUser.Events[0].dataValues.name} on ${dbUser.Events[0].dataValues.dateTime}`
+      dbUser === null ? echo = `${reply} nothing planned.` :
+        echo = `${reply} ${dbUser.Events[0].dataValues.name} on ${dbUser.Events[0].dataValues.dateTime.toLocaleString('en-US', options)}`
       executeQueries(projectId, sessionId, [`Echoing ${echo} EndOutput`], languageCode, false);
     })
   }
 
-  async function getPresent(friend, aiRes) {
+  async function getPresent(friend, reply) {
     // grab one from past/future/now depending on time
     db.User.findOne({
       where: {
-        username: friend
+        [Op.or]: [
+          { username: friend },
+          { first_name: friend }
+        ]
       },
       include: [
         {
@@ -93,17 +100,20 @@ router.post('/api/input', (request, response) => {
       ]
     }).then(async (dbUser) => {
       let echo
-      dbUser === null ? echo = `${aiRes.queryResult.fulfillmentText} seems to be available. ${aiRes.queryResult.fulfillmentText} has nothing planned on their schedule for the past hour.` :
-        echo = `${aiRes.queryResult.fulfillmentText} is currently unavailable. ${aiRes.queryResult.fulfillmentText} has ${dbUser.Events[0].dataValues.name} planned for ${dbUser.Events[0].dataValues.dateTime}`
+      dbUser === null ? echo = `${reply} seems to be available. ${reply} has nothing planned on their schedule for the past hour.` :
+        echo = `${reply} is currently unavailable. ${reply} has ${dbUser.Events[0].dataValues.name} planned for ${dbUser.Events[0].dataValues.dateTime.toLocaleString('en-US', options)}`
       executeQueries(projectId, sessionId, [`Echoing ${echo} EndOutput`], languageCode, false);
     })
   }
 
-  async function getFuture(friend, aiRes) {
+  async function getFuture(friend, reply) {
     // grab one from past/future/now depending on time
     db.User.findOne({
       where: {
-        username: friend
+        [Op.or]: [
+          { username: friend },
+          { first_name: friend }
+        ]
       },
       include: [
         {
@@ -118,8 +128,8 @@ router.post('/api/input', (request, response) => {
       order: [['Events', 'dateTime', 'ASC']]
     }).then(async (dbUser) => {
       let echo
-      dbUser === null ? echo = `${aiRes.queryResult.fulfillmentText} no future events at this moment.` :
-        echo = `${aiRes.queryResult.fulfillmentText} an event named ${dbUser.Events[0].dataValues.name} planned for ${dbUser.Events[0].dataValues.dateTime}`
+      dbUser === null ? echo = `${reply} no future events at this moment.` :
+        echo = `${reply} an event named ${dbUser.Events[0].dataValues.name} planned for ${dbUser.Events[0].dataValues.dateTime.toLocaleString('en-US', options)}`
       executeQueries(projectId, sessionId, [`Echoing ${echo} EndOutput`], languageCode, false);
     })
   }
@@ -127,22 +137,27 @@ router.post('/api/input', (request, response) => {
   async function executeQueries(projectId, sessionId, queries, languageCode, first) {
     const writePromise = util.promisify(fs.writeFile)
     // Keeping the context across queries let's us simulate an ongoing conversation with the bot
-    let context, aiRes, echo, aiName = 'Meets A.I'
+    let context, aiRes, echo, name, result, intent, aiName = 'Meets A.I'
     for (const query of queries) {
       try {
+
         aiRes = await detectIntent(projectId, sessionId, query, context, languageCode, first);
-        context = aiRes.queryResult.outputContexts;
-        console.log(aiRes.queryResult.intent.displayName)
-        switch (aiRes.queryResult.intent.displayName) {
+        context = aiRes.queryResult.outputContexts
+        intent = aiRes.queryResult.intent.displayName
+        result = aiRes.queryResult.fulfillmentText
+
+        console.log(intent)
+
+        switch (intent) {
           case "Echo":
             var random = Date.now()
             var filepath = path.join(__dirname + `/../public/assets/js/ai-audio-${random}.wav`)
             await writePromise(filepath, aiRes.outputAudio, 'binary');
-            response.json({ text: aiRes.queryResult.fulfillmentText, random: random })
+            response.json({ text: result, random: random })
             return
           case "AgentNameGet":
             if (aiName) {
-              echo = `${aiRes.queryResult.fulfillmentText} ${aiName}.`
+              echo = `${result} ${aiName}.`
             } else {
               echo = `I don't have a name, why don't you give me one?`
             }
@@ -150,18 +165,18 @@ router.post('/api/input', (request, response) => {
           case "AgentNameChange":
           case "AgentNameSave":
             aiName = aiRes.queryResult.parameters.fields['given-name'].stringValue
-            echo = aiRes.queryResult.fulfillmentText
+            echo = result
             break
           case "Past":
-            await getPast(aiRes.queryResult.parameters.fields.person.structValue.fields.name.stringValue, aiRes)
+            await getPast(aiRes.queryResult.parameters.fields.person.structValue.fields.name.stringValue, result)
             return
           case "Now":
-            await getPresent(aiRes.queryResult.parameters.fields.person.structValue.fields.name.stringValue, aiRes)
+            await getPresent(aiRes.queryResult.parameters.fields.person.structValue.fields.name.stringValue, result)
             return
           case "Future":
-            await getFuture(aiRes.queryResult.parameters.fields.person.structValue.fields.name.stringValue, aiRes)
+            await getFuture(aiRes.queryResult.parameters.fields.person.structValue.fields.name.stringValue, result)
             return
-          default: echo = aiRes.queryResult.fulfillmentText
+          default: echo = result
         }
         // Use the context from this response for next queries
         executeQueries(projectId, sessionId, [`Echoing ${echo} EndOutput`], languageCode, false);

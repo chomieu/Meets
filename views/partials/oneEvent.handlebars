@@ -4,7 +4,7 @@
     <div class="container">
         {{#if isNewRecord}}
 
-        <h1>New Event</h1> <hr class="white">
+        <h1>New Event</h1>
         <form class="newEvent">
             <div class="checkboxes my-dflex my-justify-around">
                 <label>
@@ -21,7 +21,7 @@
             <input type="number" name="max_people" id="numOfPeople" placeholder="Max number of People" />
             <input type="text" name="location" id="location" placeholder="location" />
             <div class="input-field my-m-0">
-                <textarea id="textarea1" class="materialize-textarea" data-length="120" placeholder="Description (Limit: 120 characters)"></textarea>
+                <textarea class="materialize-textarea textarea1" data-length="120" placeholder="Description (Limit: 120 characters)"></textarea>
             </div>
             <div class="input-field my-m-0">
                 <select id="category">
@@ -64,10 +64,12 @@
             <input type="number" name="max_people" id="numOfPeople" placeholder="Max number of People" value="{{events.max_people}}" />
             <input type="text" name="location" id="location" placeholder="location" value="{{events.location}}" />
             <input type="text" name="category" id="category" placeholder="Pick a Category" value="{{events.category}}" />
+
             <input type="text" name="description" id="description" placeholder="description" value="{{events.description}}" />
             {{!-- <div class="input-field my-m-0">
                 <textarea id="textarea2" class="materialize-textarea" data-length="120" placeholder="Description (Limit: 120 characters)"value="{{events.description}}"></textarea>
             </div> --}}
+
             <div class="input-field">
                 <select id="category">
                     <option value="Casual" selected disabled>Pick a Category</option>
@@ -87,7 +89,7 @@
         </form>
         <div class="btns my-mt-4">
             <a class="btn deleteEvent" data-id="{{events.id}}" data-userId="{{events.UserId}}"> Delete </a>
-            <a class="btn" href=""> Share </a>
+            {{!-- <a class="btn" href=""> Share </a> --}}
         </div>
         {{/if}}
     </div>
