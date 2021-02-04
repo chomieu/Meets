@@ -113,7 +113,7 @@ router.get("/dashboard", (req, res) => {
       },
       include: [{
         model: db.Event,
-        attributes: ['UserId', 'name'],
+        attributes: ['UserId', 'id', 'name'],
         limit: 10
       }]
     }).then(userData => {

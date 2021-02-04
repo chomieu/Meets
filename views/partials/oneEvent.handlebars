@@ -56,12 +56,12 @@
             </div>
             <input type="datetime-local" name="dateTime" id="dateTime" value="{{events.dateTime}}">
             <input type="text" name="name" id="name" placeholder="Name" value="{{events.name}}" />
-            <input type="number" name="max_people" id="numOfPeople" placeholder="Max number of People" />
-            <input type="text" name="location" id="location" placeholder="location" />
+            <input type="number" name="max_people" id="numOfPeople" placeholder="Max number of People" value="{{events.max_people}}" />
+            <input type="text" name="location" id="location" placeholder="location" value="{{events.location}}" />
             <div class="input-field">
                 <select id="category">
-                    <option value="Causual" selected disabled>Pick a Category</option>
-                    <option value="Causual">Causual</option>
+                    <option value="Casual" selected disabled>Pick a Category</option>
+                    <option value="Casual">Casual</option>
                     <option value="Sporting">Sporting</option>
                     <option value="Music">Music</option>
                     <option value="Food">Food</option>
