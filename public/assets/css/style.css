@@ -191,6 +191,12 @@ nav {
     position: absolute;
 }
 
+.dayNightLandingPage {
+    position: absolute;
+    bottom: 10px;
+    right: 10px;
+}
+
 .ai-icon {
     width: 90%;
     height: auto;
