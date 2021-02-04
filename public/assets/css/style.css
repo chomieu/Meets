@@ -253,8 +253,14 @@ nav {
     0%, 100%{
         transform: rotate(0deg);
     }
-    50%{
+    25%{
         transform: rotate(45deg);
+    }
+    50% {
+        transform: rotate(0deg);
+    }
+    75% {
+        transform: rotate(-45deg);
     }
 }
 
@@ -387,6 +393,58 @@ a {
     left: 0;
     right: 0;
     margin: auto;
+}
+
+.splashscreen {
+    position: absolute;
+    background: var(--main-2);
+    width: 100vw;
+    height:100vh ;
+    z-index: 10;
+    animation: robotBackground 2s linear forwards ;
+}
+
+@keyframes robotBackground {
+    95% {
+        opacity: 100;
+    }
+    100%{
+        opacity: 0;
+        display: none;
+        pointer-events: none;
+    }
+}
+
+.splashBall {
+    position: absolute;
+    /* width: 1em;
+    height: 1.2em; */
+    /* border-radius: 100px; */
+    /* background: #ffac40; */
+    z-index: 11;
+    animation: robotAnimate 2s linear forwards;
+}
+
+@keyframes robotAnimate {
+    0% {
+        left: 0;
+        top: 0;
+    }
+    50% {
+        left: 30vw;
+        top: 15vh;
+        transform: scale(1);
+    }
+    75% {
+        left: 40vw;
+        top: 25vh;
+        transform: scale(2);
+    }
+    100% {
+        left: 49vw;
+        top: 37vh;
+        transform: scale(7);
+    }
 }
 
 .btn-bc-1 {
