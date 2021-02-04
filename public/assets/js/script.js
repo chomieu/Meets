@@ -1,8 +1,16 @@
+let color = getColor();
+setColors(color);
+
+$(".colorMode").on("click", (e) => {
+    console.log("color mode change");
+    color = switchColor(color);
+    setColors(color);
+});
 $(document).ready(function () {
     // Light and Dark mode
     let color = getColor();
     setColors(color);
-
+    
     $(".colorMode").on("click", (e) => {
         console.log("color mode change");
         color = switchColor(color);
