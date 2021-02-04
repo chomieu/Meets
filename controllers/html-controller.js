@@ -81,15 +81,15 @@ router.get('/friends', (req, res) => {
           nonfriendObj.isConnected = false;
           return nonfriendObj;
         });
-        if (friendsArr.length === 0) {
-          hbsObj.hasFriends = false;
-        } else {
-          hbsObj.hasFriends = true;
-        }
         const hbsObj = {
           user: req.session.user,
           friends: friendsArr,
           nonfriends: nonFriendsArr
+        }
+        if (friendsArr.length === 0) {
+          hbsObj.hasFriends = false;
+        } else {
+          hbsObj.hasFriends = true;
         }
         res.render('./partials/friends', hbsObj)
       })
