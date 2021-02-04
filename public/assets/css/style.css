@@ -235,8 +235,12 @@ nav {
     margin-right: 0 !important;
 }
 
+.tabs {
+    background: var(--main-2);
+}
+
 .icon-activate{
-    animation: iconActivate 1s linear forwards;
+    animation: iconActivate 0.5s linear forwards;
 }
 
 @keyframes iconActivate {
