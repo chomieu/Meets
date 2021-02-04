@@ -19,7 +19,7 @@ $(document).ready(function () {
             localStorage['currentPage'] = "dashboardBtn"
             window.location = ("/dashboard")
         }).catch((err) => {
-            $(".red-text").text("Login Failed!")
+            $(".red-text").text(err)
         })
 
     })
@@ -47,15 +47,7 @@ $(document).ready(function () {
             localStorage['currentPage'] = "dashboardBtn"
             window.location = ("/login") // daniel -- replace dashboard with login, signup does not automatically log you in
         }).catch((err) => {
-            $(".red-text").text("This username is already taken!")
+            $(".red-text").text(err)
         })
-    })
-
-    $('.content').mouseover(function () {
-        $(this).removeClass('bc1')
-        $(this).addClass('bc2')
-    }).mouseleave(function () {
-        $(this).removeClass('bc2')
-        $(this).addClass('bc1')
     })
 })
