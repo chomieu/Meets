@@ -87,15 +87,15 @@ router.get('/friends', (req, res) => {
           nonfriendObj.isConnected = false;
           return nonfriendObj;
         });
-        if (friendsArr.length === 0) {
-          hbsObj.hasFriends = false;
-        } else {
-          hbsObj.hasFriends = true;
-        }
         const hbsObj = {
           user: req.session.user,
           friends: friendsArr,
           nonfriends: nonFriendsArr
+        }
+        if (friendsArr.length === 0) {
+          hbsObj.hasFriends = false;
+        } else {
+          hbsObj.hasFriends = true;
         }
         res.render('./partials/friends', hbsObj)
       })
@@ -433,6 +433,7 @@ router.get("/event/new", (req, res) => {
 })
 
 // findOne user, findAll events for that user
+// TODO: route not working
 router.get("/friend/one/:friend_id", (req, res) => {
   if (req.session.user) {
     // find a single user that is logged in
