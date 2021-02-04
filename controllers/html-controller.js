@@ -419,6 +419,7 @@ router.get("/event/new", (req, res) => {
 })
 
 // findOne user, findAll events for that user
+// TODO: route not working
 router.get("/friend/one/:friend_id", (req, res) => {
   if (req.session.user) {
     // find a single user that is logged in
