@@ -50,7 +50,7 @@ $(document).ready(function () {
             type: "DELETE",
             data: input
         }).then(resp => {
-            window.location = ("/events")
+            window.location = ("/upcomingEvents")
         })
     })
 })
