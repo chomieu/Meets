@@ -106,10 +106,6 @@ nav {
     margin: 0 1em;
 }
 
-.container {
-    min-height: 90vh;
-}
-
 .content {
     padding: 10px;
     width: 80%;
@@ -237,6 +233,19 @@ nav {
 .btn-w {
     width: 120px;
     margin-right: 0 !important;
+}
+
+.icon-activate{
+    animation: iconActivate 1s linear forwards;
+}
+
+@keyframes iconActivate {
+    0%, 100%{
+        transform: rotate(0deg);
+    }
+    50%{
+        transform: rotate(45deg);
+    }
 }
 
 .active {
