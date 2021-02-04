@@ -7,7 +7,7 @@ const sound = require("sound-play")
 const now = new Date()
 const Sequelize = require('sequelize');
 const Op = Sequelize.Op
-const options = {weekday: 'monday', month: 'long', day: 'numeric', year: 'numeric', hour: 'numeric', minute: 'numeric', hour12: true}
+const options = {weekday: 'long', month: 'long', day: 'numeric', year: 'numeric', hour: 'numeric', minute: 'numeric', hour12: true}
 
 router.post('/api/input', (request, response) => {
   const projectId = 'meets-dnx9';

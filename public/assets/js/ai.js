@@ -16,8 +16,10 @@ $('document').ready(function () {
       $("#history").append($("<p>", { class: "col s12 my-tc1", text: res.text }))
       let sX = new Audio(`/assets/js/ai-audio-${res.random}.wav`)
       await sX.play()
-    }
-    );
+      if (!res) {
+        $("#history").append($("<p>", { class: "col s12 my-tc1", text: "Something went wrong, please try again." }))
+      }
+    })
   });
 
   $("#recBtn").on("click", function () {
@@ -46,12 +48,14 @@ $('document').ready(function () {
           type: "POST",
           data: toAI
         }).then((res) => {
-            $("#history").append($("<p>", { class: "col s12 my-tc1", text: res }))
+          $("#history").append($("<p>", { class: "col s12 my-tc1", text: res }))
+          if (!res) {
+            $("#history").append($("<p>", { class: "col s12 my-tc1", text: "Something went wrong, please try again." }))
           }
-        );
+        })
+
         // Log the result.
         window.console.log(result)
-
 
         // Close the SpeechRecognizer object, and set the variable to undefined.
         recognizer.close();
