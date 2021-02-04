@@ -45,7 +45,7 @@ router.get("/api/users", (req, res) => {
   });
 });
 
-router.get('/userseeds', (req,res) => {
+router.get('/seedusers', (req, res) => {
   db.User.findAll().then(allUsers => {
     if (allUsers.length === 0) {
       db.User.bulkCreate([{
@@ -53,42 +53,104 @@ router.get('/userseeds', (req,res) => {
         password: 'password',
         email: 'red5@hotmail.com',
         first_name: 'Red',
-        last_name: 'Smoulders'
+        last_name: 'Smoulders',
+        image: 'https://i.imgur.com/0wuozMK.jpg'
       },
       {
         username: 'bubbles',
         password: 'password',
         email: 'bubbles@yahoo.com',
         first_name: 'Bubbles',
-        last_name: 'Utonium'
+        last_name: 'Utonium',
+        image: 'https://i.imgur.com/j75ehPT.png'
       },
       {
         username: 'jimbo',
         password: 'password',
         email: 'jimbo@aol.com',
         first_name: 'Jim',
-        last_name: 'Bobbert'
+        last_name: 'Bobbert',
+        image: 'https://i.imgur.com/g5nJYHn.jpg'
       },
       {
         username: 'blossom',
         password: 'password',
         email: 'blossom@yahoo.com',
         first_name: 'Blossom',
-        last_name: 'Utonium'
+        last_name: 'Utonium',
+        image: 'https://i.imgur.com/ka6KYJR.png'
+      },
+      {
+        username: 'jessie',
+        password: 'password',
+        email: 'jessie@teamrocket.com',
+        first_name: 'Jessie',
+        last_name: 'Musashi',
+        image: 'https://i.imgur.com/tMid8JV.png'
       },
       {
         username: 'alf',
         password: 'password',
         email: 'alf@yahoo.com',
         first_name: 'Gordon',
-        last_name: 'Shumway'
+        last_name: 'Shumway',
+        image: 'https://i.imgur.com/QmWpQ1t.jpg'
+      },
+      {
+        username: 'james',
+        password: 'password',
+        email: 'james@teamrocket.com',
+        first_name: 'James',
+        last_name: 'Kojirou',
+        image: 'https://i.imgur.com/rWqVsmW.png'
+      },
+      {
+        username: 'misty',
+        password: 'password',
+        email: 'misty@cerulean.com',
+        first_name: 'Misty',
+        last_name: 'Kasumi',
+        image: 'https://i.imgur.com/roJg3Q0.jpg'
       },
       {
         username: 'buttercup',
         password: 'password',
         email: 'buttercup@yahoo.com',
         first_name: 'Buttercup',
-        last_name: 'Utonium'
+        last_name: 'Utonium',
+        image: 'https://i.imgur.com/OdcZNA0.png'
+      },
+      {
+        username: 'mojojojo',
+        password: 'password',
+        email: 'mojo@hotmail.com',
+        first_name: 'Mojo',
+        last_name: 'Jojo',
+        image: 'https://i.imgur.com/3Uw0g5M.jpg'
+      },
+      {
+        username: 'ash420',
+        password: 'password',
+        email: 'ash@aol.com',
+        first_name: 'Ash',
+        last_name: 'Ketchum',
+        image: 'https://i.imgur.com/et4s0zi.jpg'
+      },
+      {
+        username: 'brock',
+        password: 'password',
+        email: 'brock@pewter.com',
+        first_name: 'Brock',
+        last_name: 'Takeshi',
+        image: 'https://i.imgur.com/IsHnlJS.jpg'
+      },
+      {
+        username: 'meowth',
+        password: 'password',
+        email: 'meowth@teamrocket.com',
+        first_name: 'Meowth',
+        last_name: 'Nyarth',
+        image: 'https://i.imgur.com/uzaOKWo.jpg'
       }]).then(userSeed => {
         res.send('Seeds created')
       })
@@ -105,7 +167,7 @@ router.get('/userseeds', (req,res) => {
 router.post("/signup", (req, res) => {
   db.User.create(req.body).then(data => {
     console.log(req.body);
-      res.json(data);
+    res.json(data);
   }).catch(err => {
     res.status(500).json(err)
   });
