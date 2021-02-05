@@ -61,8 +61,8 @@ Handlebars, Materialize, Microsoft-Speech SDK
 NodeJS, Express, Dialogflow, Bcrypt, Sequelize, JAWSDB
 #### Languages:
 ![javascript](https://img.shields.io/badge/javascript-97.4%25-yellow)
-![html](https://img.shields.io/badge/handlebars-<1.7%25-blue)
-![css](https://img.shields.io/badge/css-<0.9%25-red)
+![html](https://img.shields.io/badge/handlebars-1.7%25-blue)
+![css](https://img.shields.io/badge/css-0.9%25-red)
 
 ## License
 [MIT](https://choosealicense.com/licenses/mit/) License
