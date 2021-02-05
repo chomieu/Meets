@@ -7,7 +7,7 @@ Next generation social planning app with A.I. integration. Winner of the Best UX
 ## Table of Contents
 * [Developers](#developers)
 * [Features](#features)
-* [Future Development](#future development)
+* ['Future Development'](#'future development')
 * [Product](#product)
 * [Technologies](#technologies)
 * [License](#license)
