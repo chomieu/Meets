@@ -1,7 +1,17 @@
 # Project #2: Meets
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://choosealicense.com/licenses/mit/)
+
+## Description
 Next generation social planning app with A.I. integration. Winner of the Best UX & UI Design as well as People's Choice awards for the Winter 2020 University of Washington Coding Bootcamp.
-<br>
-<br>
+
+## Table of Contents
+* [Developers](#developers)
+* [Features](#features)
+* [Future Development](#future development)
+* [Product](#product)
+* [Technologies](#technologies)
+* [License](#license)
+* [Questions](#questions)
 
 ## Developers
 | Name | Email  | Github  | LinkedIn |
@@ -10,8 +20,6 @@ Next generation social planning app with A.I. integration. Winner of the Best UX
 | Tyler Thibault | tyler.thibault@protonmail.com | [![Github](https://i.imgur.com/1c0aVK2.png)](https://github.com/Tbone8098) | [![LinkedIn](https://i.imgur.com/mtOoqnh.png)](https://www.linkedin.com/in/tyler-thibault-a4404178/) |
 | Daniel Sasser | desasser79@gmail.com | [![Github](https://i.imgur.com/1c0aVK2.png)](https://github.com/) | [![LinkedIn](https://i.imgur.com/mtOoqnh.png)](https://www.linkedin.com/in/) |
 | Elias Calagiu | @mail.com | [![Github](https://i.imgur.com/1c0aVK2.png)](https://github.com/) | [![LinkedIn](https://i.imgur.com/mtOoqnh.png)](https://www.linkedin.com/in/) |
-<br>
-<br>
 
 ## Features
 * Responsive UI
@@ -27,7 +35,7 @@ Next generation social planning app with A.I. integration. Winner of the Best UX
 * More intents and A.I. functionalities
 
 ## Product
-[Live Site URL](https://uw-meets.herokuapp.com/)
+[Deployment on Heroku](https://uw-meets.herokuapp.com/)
 
 1. Login Screen
 ![Screenshot](https://i.imgur.com/tcIoVIe.png)
@@ -51,14 +59,22 @@ Next generation social planning app with A.I. integration. Winner of the Best UX
 #### Frontend: 
 Handlebars, Materialize, Microsoft-Speech SDK
 #### Backend: 
-NodeJS, Express, Dialogflow, Bcrypt, Sequelize
-
+NodeJS, Express, Dialogflow, Bcrypt, Sequelize, JAWSDB
+#### Languages:
 ![javascript](https://img.shields.io/badge/javascript-97.4%25-yellow)
 ![html](https://img.shields.io/badge/handlebars-<1.7%25-blue)
 ![css](https://img.shields.io/badge/css-<0.9%25-red)
-<br>
-<br>
 
 ## License
+[MIT](https://choosealicense.com/licenses/mit/) License
 
-[CC0 1.0 Universal](https://creativecommons.org/publicdomain/zero/1.0/)
+Copyright (c) 2021 Chomkan Usaneerungrueng
+
+Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+
+## Questions
+For questions, contact [chomieu](https://github.com/chomieu) or email chomieu@gmail.com
