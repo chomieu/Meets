@@ -1,13 +1,12 @@
 # Project #2: Meets
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://choosealicense.com/licenses/mit/)
 
-## Description
 Next generation social planning app with A.I. integration. Winner of the Best UX & UI Design as well as People's Choice awards for the Winter 2020 University of Washington Coding Bootcamp.
 
 ## Table of Contents
 * [Developers](#developers)
 * [Features](#features)
-* ['Future Development'](#'future development')
+* [Future Development](#'future-development')
 * [Product](#product)
 * [Technologies](#technologies)
 * [License](#license)
