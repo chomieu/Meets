@@ -18,7 +18,7 @@ Next generation social planning app with A.I. integration. Winner of the Best UX
 | Chomie Usaneerungrueng | chomieu@gmail.com | [![Github](https://i.imgur.com/1c0aVK2.png)](https://github.com/chomieu) | [![LinkedIn](https://i.imgur.com/mtOoqnh.png)](https://www.linkedin.com/in/chomieu/) |
 | Tyler Thibault | tyler.thibault@protonmail.com | [![Github](https://i.imgur.com/1c0aVK2.png)](https://github.com/Tbone8098) | [![LinkedIn](https://i.imgur.com/mtOoqnh.png)](https://www.linkedin.com/in/tyler-thibault-a4404178/) |
 | Daniel Sasser | desasser79@gmail.com | [![Github](https://i.imgur.com/1c0aVK2.png)](https://github.com/) | [![LinkedIn](https://i.imgur.com/mtOoqnh.png)](https://www.linkedin.com/in/) |
-| Elias Calagiu | @mail.com | [![Github](https://i.imgur.com/1c0aVK2.png)](https://github.com/) | [![LinkedIn](https://i.imgur.com/mtOoqnh.png)](https://www.linkedin.com/in/) |
+| Elias Calagiu | eliasc81@gmail.com | [![Github](https://i.imgur.com/1c0aVK2.png)](https://github.com/) | [![LinkedIn](https://i.imgur.com/mtOoqnh.png)](https://www.linkedin.com/in/) |
 
 ## Features
 * Responsive UI
