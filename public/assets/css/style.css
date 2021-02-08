@@ -114,7 +114,6 @@ nav {
     border: 1px solid black;
     border-radius: 100px;
     background: var(--main-1);
-    object-fit: scale-down;
 }
 
 .connectedUserIcon {
