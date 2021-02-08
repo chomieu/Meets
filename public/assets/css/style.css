@@ -108,25 +108,22 @@ nav {
     width: 80%;
 }
 
-.userIcon {
+.userIcon, .connectedUserIcon {
     height: 100px;
     width: 100px;
     border: 1px solid black;
     border-radius: 100px;
     background: var(--main-1);
+    object-fit: scale-down;
+}
+
+.connectedUserIcon {
+    margin-right: 1em;
 }
 
 .people-box-all {
   display: flex;
   flex-flow: row wrap;
-}
-
-.connectedUserIcon {
-    width: 25%;
-    margin-right: 1em;
-    border: 1px solid black;
-    border-radius: 100px;
-    background: var(--main-1);
 }
 
 .friend-box {
@@ -438,9 +435,9 @@ h3 {
     .speech-bubble {
         display: none;
     }
-    .tabs {
-        word-wrap: break-word;
+    .tabs-all {
         font-size: 0.75em;
+        width: 100%;
     }
 }
 
