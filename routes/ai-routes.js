@@ -3,7 +3,6 @@ const router = express.Router();
 const db = require("../models");
 const dialogflow = require("@google-cloud/dialogflow").v2;
 const path = require('path')
-const sound = require("sound-play")
 const now = new Date()
 const Sequelize = require('sequelize');
 const Op = Sequelize.Op
