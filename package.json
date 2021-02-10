@@ -31,7 +31,6 @@
     "mysql": "^2.18.1",
     "mysql2": "^2.2.5",
     "sequelize": "^6.5.0",
-    "sound-play": "^1.1.0",
     "yargs": "^16.2.0"
   },
   "devDependencies": {}
