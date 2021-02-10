@@ -1,17 +1,19 @@
 // Dependencies
 const express = require("express");
 const session = require("express-session")
+
+// Set up the Express app
 const app = express();
 const PORT = process.env.PORT || 8080;
 
-// Requiring our models for syncing
+// Requiring models for syncing
 const db = require("./models");
 
-// Optimization
+// App optimization
 const compression = require("conpression")
 app.use(compression())
 
-// Sets up the Express app to handle data parsing
+// Handle data parsing
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
