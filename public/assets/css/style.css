@@ -69,7 +69,6 @@ nav {
     color: var(--text-opposite);
     background: var(--accent-1);
     left: -8em;
-    /* border: 1px solid var(--text-opposite); */
     font-weight: bold;
     border-radius: 10px;
 }
@@ -396,8 +395,6 @@ h3 {
   display: flex;
   position: relative;
   flex-direction: column;
-  /* width: 30vw;
-  margin: 0 auto; */
 }
 
 .bubble-animate {
@@ -407,10 +404,6 @@ h3 {
   -ms-animation: fadein 5s linear forwards;
   -o-animation: fadein 5s linear forwards;
 }
-
-/* .picture-wrapper > img {
-  width: 200px;
-} */
 
 @keyframes MoveUpDown {
     0%, 100% {
@@ -437,6 +430,10 @@ h3 {
     .tabs-all {
         font-size: 0.75em;
         width: 100%;
+    }
+    .connectedUserIcon {
+        height: 70px;
+        width: 70px;
     }
 }
 
@@ -543,10 +540,6 @@ a {
 
 .splashBall {
     position: absolute;
-    /* width: 1em;
-    height: 1.2em; */
-    /* border-radius: 100px; */
-    /* background: #ffac40; */
     z-index: 11;
     animation: robotAnimate 2s linear forwards;
 }
@@ -588,4 +581,3 @@ a {
 .btn-bc-5 {
     background: var(--main-5) !important;
 }
-
