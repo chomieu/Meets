@@ -1,21 +1,19 @@
-// *****************************************************************************
-// Server.js - This file is the initial starting point for the Node/Express server.
-//
-// ******************************************************************************
-// *** Dependencies
-// =============================================================
+// Dependencies
 const express = require("express");
 const session = require("express-session")
 
-// Sets up the Express App
-// =============================================================
+// Set up the Express app
 const app = express();
 const PORT = process.env.PORT || 8080;
 
-// Requiring our models for syncing
+// Requiring models for syncing
 const db = require("./models");
 
-// Sets up the Express app to handle data parsing
+// App optimization
+const compression = require("conpression")
+app.use(compression())
+
+// Handle data parsing
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
