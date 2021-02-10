@@ -1,8 +1,6 @@
-// Dependencies
+// Set up the Express app
 const express = require("express");
 const session = require("express-session")
-
-// Set up the Express app
 const app = express();
 const PORT = process.env.PORT || 8080;
 
@@ -30,7 +28,7 @@ app.use(session({
   }
 }))
 
-// Set Handlebars.
+// Set Handlebars
 const exphbs = require("express-handlebars");
 
 app.engine("handlebars", exphbs({ defaultLayout: "main" }));
@@ -44,7 +42,6 @@ app.use("/api", userDialogueRoutes)
 const userRoutes = require("./controllers/userController.js");
 app.use(userRoutes)
 
-
 // Event routes
 const eventRoutes = require("./controllers/eventController.js");
 app.use("/api/events", eventRoutes)
@@ -56,10 +53,6 @@ app.use(htmlRoutes)
 // AI route
 const aiRoutes = require("./routes/ai-routes.js");
 app.use(aiRoutes)
-
-app.get('/img', (req, res) => {
-  res.json(req.body)
-})
 
 // Syncing our sequelize models and then starting our express app
 db.sequelize.sync({ force: false }).then(function () {
