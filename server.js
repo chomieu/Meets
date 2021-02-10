@@ -8,7 +8,7 @@ const PORT = process.env.PORT || 8080;
 const db = require("./models");
 
 // App optimization
-const compression = require("conpression")
+const compression = require("compression")
 app.use(compression())
 
 // Handle data parsing
